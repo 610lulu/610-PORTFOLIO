@@ -7,10 +7,60 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js"></script>
+    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=project-image-4"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- 视频区块：由下方脚本插入到 React 内容的 Hero 区域之后 -->
+    <div id="video-block" style="display: none;">
+      <section id="showreel-section" style="width: 100%; background: #05080a; padding: 120px 6vw; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 48px;">
+        <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 300; color: #ffffff; letter-spacing: 0.15em; text-transform: uppercase; text-align: center;">Showreel</h2>
+        <div style="width: 100%; max-width: 1200px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 32px 80px rgba(0,0,0,0.55);">
+          <video src="./video/0604视频.mp4" controls autoplay muted loop playsinline preload="metadata" style="width: 100%; height: auto; display: block; background: #000;"></video>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        function insertVideoBlock() {
+          var root = document.getElementById('root');
+          var videoBlock = document.getElementById('video-block');
+          if (!root || !videoBlock) return;
+
+          var section = videoBlock.querySelector('#showreel-section');
+          if (!section) return;
+
+          // 尝试把视频区块插入到 React 第一个 section（Hero）之后
+          var firstSection = root.querySelector('section');
+          if (firstSection && firstSection.parentNode) {
+            firstSection.parentNode.insertBefore(section, firstSection.nextSibling);
+          } else {
+            // 如果找不到，就追加到 root 末尾
+            root.appendChild(section);
+          }
+          videoBlock.remove();
+        }
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        // 监听 React 应用渲染完成
+        var observer = new MutationObserver(function () {
+          if (root.querySelector('section')) {
+            observer.disconnect();
+            insertVideoBlock();
+          }
+        });
+        observer.observe(root, { childList: true, subtree: true });
+
+        // 兜底：页面完全加载后再执行一次
+        window.addEventListener('load', function () {
+          setTimeout(insertVideoBlock, 100);
+        });
+      })();
+    </script>
   </body>
 </html>
