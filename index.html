@@ -35,8 +35,8 @@
 
           // 把视频区块放在 Motivation 之后
           var philosophy = root.querySelector('#philosophy');
-          if (philosophy && philosophy.parentNode) {
-            philosophy.parentNode.insertBefore(section, philosophy.nextSibling);
+          if (philosophy) {
+            philosophy.appendChild(section);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(section);
