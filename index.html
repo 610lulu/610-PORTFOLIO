@@ -33,10 +33,10 @@
           var section = videoBlock.querySelector('#showreel-section');
           if (!section) return;
 
-          // 尝试把视频区块插入到 React 第一个 section（Hero）之后
-          var firstSection = root.querySelector('section');
-          if (firstSection && firstSection.parentNode) {
-            firstSection.parentNode.insertBefore(section, firstSection.nextSibling);
+          // 把视频区块放在 Motivation 之后
+          var philosophy = root.querySelector('#philosophy');
+          if (philosophy && philosophy.parentNode) {
+            philosophy.parentNode.insertBefore(section, philosophy.nextSibling);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(section);
@@ -49,7 +49,7 @@
 
         // 监听 React 应用渲染完成
         var observer = new MutationObserver(function () {
-          if (root.querySelector('section')) {
+          if (root.querySelector('#philosophy')) {
             observer.disconnect();
             insertVideoBlock();
           }
