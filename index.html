@@ -23,25 +23,58 @@
       </section>
     </div>
 
+    <div id="deepscape-block" style="display: none;">
+      <section id="deepscape-project" style="width: 100%; background: #05080a; padding: 120px 6vw; box-sizing: border-box; color: #fff;">
+        <div style="width: 100%; max-width: 1440px; margin: 0 auto;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 40px; flex-wrap: wrap;">
+            <div>
+              <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Featured Project · Interactive Website</p>
+              <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">Deepscape Reverie</h2>
+              <p style="margin: 14px 0 0; font-family: 'Noto Serif SC', serif; font-size: clamp(18px, 2vw, 28px); font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.18em;">深景迴梦</p>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="https://htmlpreview.github.io/?https://github.com/610lulu/Deepscape-Reverie/blob/main/index.html" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">Open Full Experience ↗</a>
+              <a href="https://github.com/610lulu/Deepscape-Reverie" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
+            </div>
+          </div>
+          <div style="width: 100%; height: min(82vh, 900px); min-height: 560px; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 32px 90px rgba(0,0,0,0.58); background: #03080b;">
+            <iframe
+              src="https://htmlpreview.github.io/?https://github.com/610lulu/Deepscape-Reverie/blob/main/index.html"
+              title="Deepscape Reverie interactive project"
+              loading="lazy"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+              style="width: 100%; height: 100%; border: 0; display: block; background: #03080b;"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <script>
       (function () {
         function insertVideoBlock() {
           var root = document.getElementById('root');
           var videoBlock = document.getElementById('video-block');
-          if (!root || !videoBlock) return;
+          var deepscapeBlock = document.getElementById('deepscape-block');
+          if (!root || !videoBlock || !deepscapeBlock) return;
 
           var section = videoBlock.querySelector('#showreel-section');
-          if (!section) return;
+          var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
+          if (!section || !deepscapeSection) return;
 
-          // 把视频区块放在 Motivation 之后
+          // 把视频和 Deepscape 项目依次放在 Motivation 之后
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
             philosophy.appendChild(section);
+            philosophy.appendChild(deepscapeSection);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(section);
+            root.appendChild(deepscapeSection);
           }
           videoBlock.remove();
+          deepscapeBlock.remove();
         }
 
         var root = document.getElementById('root');
