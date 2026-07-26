@@ -53,15 +53,15 @@
           var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
           if (!section || !deepscapeSection) return;
 
-          // 把视频和 Deepscape 项目依次放在 Motivation 之后
+          // 把 Deepscape 项目和视频依次放在 Motivation 之后
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
-            philosophy.appendChild(section);
             philosophy.appendChild(deepscapeSection);
+            philosophy.appendChild(section);
           } else {
             // 如果找不到，就追加到 root 末尾
-            root.appendChild(section);
             root.appendChild(deepscapeSection);
+            root.appendChild(section);
           }
           videoBlock.remove();
           deepscapeBlock.remove();
