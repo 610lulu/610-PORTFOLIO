@@ -9,24 +9,96 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=project-image-4"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
+    <style>
+      #deepscape-project {
+        width: 100%;
+        min-height: 100vh;
+        padding: 9vh 6vw 5vh;
+        box-sizing: border-box;
+        display: flex;
+        background: #05080a;
+        color: #fff;
+      }
+      .deepscape-shell {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 4vh;
+      }
+      .deepscape-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+      .deepscape-preview {
+        flex: 1;
+        min-height: 380px;
+        padding: 28px;
+        display: grid;
+        grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.55fr);
+        gap: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(207,109,82,.22);
+        background: linear-gradient(135deg, rgba(255,235,215,.035), rgba(3,8,11,.88));
+        box-shadow: 0 28px 80px rgba(0,0,0,.45);
+      }
+      .deepscape-preview-intro {
+        padding: 20px 24px 20px 6px;
+        border-right: 1px solid rgba(207,109,82,.18);
+      }
+      .deepscape-preview-intro h3 {
+        margin: 0 0 12px;
+        color: #e9c2ad;
+        font: 300 clamp(24px, 2.5vw, 38px)/1.2 'Noto Serif SC', serif;
+        letter-spacing: .16em;
+      }
+      .deepscape-preview-intro p {
+        margin: 28px 0 0;
+        color: rgba(233,194,173,.55);
+        font: 300 13px/2 'Noto Serif SC', serif;
+        letter-spacing: .08em;
+      }
+      .deepscape-quotes {
+        display: grid;
+        gap: 12px;
+        align-content: center;
+      }
+      .deepscape-quote {
+        padding: 17px 20px;
+        border: 1px solid rgba(207,109,82,.17);
+        background: rgba(255,235,216,.025);
+      }
+      .deepscape-quote small {
+        color: #bd745f;
+        font: 500 9px/1 'Noto Sans SC', sans-serif;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+      }
+      .deepscape-quote p {
+        margin: 10px 0 0;
+        color: rgba(239,224,208,.72);
+        font: 300 15px/1.7 'Noto Serif SC', serif;
+      }
+      @media (max-width: 720px) {
+        #deepscape-project { min-height: auto; padding: 11vh 7vw 7vh; }
+        .deepscape-preview { grid-template-columns: 1fr; padding: 20px; }
+        .deepscape-preview-intro { border-right: 0; border-bottom: 1px solid rgba(207,109,82,.18); padding: 6px 0 20px; }
+        .deepscape-preview-intro p { display: none; }
+        .deepscape-quote:nth-child(n+3) { display: none; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
 
-    <!-- 视频区块：由下方脚本插入到 React 内容的 Hero 区域之后 -->
-    <div id="video-block" style="display: none;">
-      <section id="showreel-section" style="width: 100%; background: #05080a; padding: 120px 6vw; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 48px;">
-        <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 300; color: #ffffff; letter-spacing: 0.15em; text-transform: uppercase; text-align: center;">Showreel</h2>
-        <div style="width: 100%; max-width: 1200px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 32px 80px rgba(0,0,0,0.55);">
-          <video src="./video/0604视频.mp4?v=40m" controls autoplay muted loop playsinline preload="metadata" style="width: 100%; height: auto; display: block; background: #000;"></video>
-        </div>
-      </section>
-    </div>
-
     <div id="deepscape-block" style="display: none;">
-      <section id="deepscape-project" style="width: 100%; background: #05080a; padding: 120px 6vw; box-sizing: border-box; color: #fff;">
-        <div style="width: 100%; max-width: 1440px; margin: 0 auto;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap;">
+      <section id="deepscape-project">
+        <div class="deepscape-shell">
+          <div class="deepscape-heading">
             <div>
               <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Featured Project · Interactive Website</p>
               <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">Deepscape Reverie</h2>
@@ -37,33 +109,40 @@
               <a href="https://github.com/610lulu/Deepscape-Reverie" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
             </div>
           </div>
+          <div class="deepscape-preview" aria-label="Deepscape Reverie interview archive preview">
+            <div class="deepscape-preview-intro">
+              <h3>访谈记录</h3>
+              <div style="color:#bd745f;font:500 9px/1 'Noto Sans SC',sans-serif;letter-spacing:.22em;text-transform:uppercase;">Interview Fragments · Oral Memory</div>
+              <p>从深井村的日常问答里截取几段声音：船、学校、公园、旧房子和商业街，慢慢变成空间叙事的证据。</p>
+            </div>
+            <div class="deepscape-quotes">
+              <article class="deepscape-quote"><small>Curio Shop Owner · Commercial Street</small><p>“船停了本身是一个循环的闭环，现在断了，到这边死不动了。”</p></article>
+              <article class="deepscape-quote"><small>Snack Shop Owner · After School</small><p>“之前他们放学很多人直接来我店里，现在少了。”</p></article>
+              <article class="deepscape-quote"><small>Primary School Guard · Old Campus</small><p>“旧的学校现在还使用吗？没有，上锁了。”</p></article>
+            </div>
+          </div>
         </div>
       </section>
     </div>
 
     <script>
       (function () {
-        function insertVideoBlock() {
+        function insertDeepscapeBlock() {
           var root = document.getElementById('root');
-          var videoBlock = document.getElementById('video-block');
           var deepscapeBlock = document.getElementById('deepscape-block');
-          if (!root || !videoBlock || !deepscapeBlock) return;
+          if (!root || !deepscapeBlock) return;
 
-          var section = videoBlock.querySelector('#showreel-section');
           var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
-          if (!section || !deepscapeSection) return;
+          if (!deepscapeSection) return;
 
-          // 把 Deepscape 项目和视频依次放在 Motivation 之后
+          // 把 Deepscape 项目放在 Motivation 之后
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
             philosophy.appendChild(deepscapeSection);
-            philosophy.appendChild(section);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(deepscapeSection);
-            root.appendChild(section);
           }
-          videoBlock.remove();
           deepscapeBlock.remove();
         }
 
@@ -74,14 +153,14 @@
         var observer = new MutationObserver(function () {
           if (root.querySelector('#philosophy')) {
             observer.disconnect();
-            insertVideoBlock();
+            insertDeepscapeBlock();
           }
         });
         observer.observe(root, { childList: true, subtree: true });
 
         // 兜底：页面完全加载后再执行一次
         window.addEventListener('load', function () {
-          setTimeout(insertVideoBlock, 100);
+          setTimeout(insertDeepscapeBlock, 100);
         });
       })();
     </script>
