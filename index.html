@@ -73,7 +73,15 @@
             </div>
           </div>
           <div class="deepscape-video" aria-label="Deepscape Reverie video preview">
-            <video src="./video/0604视频.mp4?v=40m" controls autoplay muted loop playsinline preload="metadata"></video>
+            <video
+              data-src="./video/deepscape-preview-720p.mp4"
+              poster="./images/0604封面.jpg"
+              controls
+              muted
+              loop
+              playsinline
+              preload="none"
+            ></video>
           </div>
         </div>
       </section>
@@ -81,6 +89,31 @@
 
     <script>
       (function () {
+        function initLazyVideo(section) {
+          var video = section.querySelector('video[data-src]');
+          if (!video) return;
+
+          function loadVideo() {
+            if (!video.dataset.src) return;
+            video.src = video.dataset.src;
+            video.removeAttribute('data-src');
+            video.load();
+          }
+
+          if (!('IntersectionObserver' in window)) {
+            loadVideo();
+            return;
+          }
+
+          var videoObserver = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            videoObserver.disconnect();
+            loadVideo();
+          }, { rootMargin: '300px 0px' });
+
+          videoObserver.observe(video);
+        }
+
         function insertDeepscapeBlock() {
           var root = document.getElementById('root');
           var deepscapeBlock = document.getElementById('deepscape-block');
@@ -97,6 +130,7 @@
             // 如果找不到，就追加到 root 末尾
             root.appendChild(deepscapeSection);
           }
+          initLazyVideo(deepscapeSection);
           deepscapeBlock.remove();
         }
 
