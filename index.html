@@ -53,6 +53,48 @@
         #deepscape-project { min-height: auto; padding: 11vh 7vw 7vh; }
         .deepscape-video { min-height: 260px; }
       }
+      #snapshot-gallery {
+        width: 100%;
+        padding: 9vh 0 10vh;
+        box-sizing: border-box;
+        background: #05080a;
+        color: #fff;
+        overflow: hidden;
+      }
+      .snapshot-shell {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 6vw;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 4vh;
+      }
+      .snapshot-strip {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        padding: 0 6vw 20px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,.25) transparent;
+      }
+      .snapshot-strip img {
+        height: 340px;
+        width: auto;
+        flex: 0 0 auto;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,.12);
+        scroll-snap-align: start;
+        display: block;
+        background: #0b1014;
+      }
+      @media (max-width: 720px) {
+        #snapshot-gallery { padding: 9vh 0 8vh; }
+        .snapshot-strip img { height: 240px; }
+      }
     </style>
   </head>
   <body>
@@ -149,6 +191,80 @@
         // 兜底：页面完全加载后再执行一次
         window.addEventListener('load', function () {
           setTimeout(insertDeepscapeBlock, 100);
+        });
+      })();
+    </script>
+    <div id="snapshot-block" style="display: none;">
+      <section id="snapshot-gallery">
+        <div class="snapshot-shell">
+          <div>
+            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Snapshots · Inspiration</p>
+            <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">灵感快照</h2>
+            <p style="margin: 14px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em;">摄影:小红书 @OKMyLittleTelevision</p>
+          </div>
+        </div>
+        <div class="snapshot-strip" aria-label="Inspiration photo strip">
+          <img src="./images/xhs-01.jpg" alt="Inspiration photo 1" loading="lazy" />
+          <img src="./images/xhs-02.jpg" alt="Inspiration photo 2" loading="lazy" />
+          <img src="./images/xhs-03.jpg" alt="Inspiration photo 3" loading="lazy" />
+          <img src="./images/xhs-04.jpg" alt="Inspiration photo 4" loading="lazy" />
+          <img src="./images/xhs-05.jpg" alt="Inspiration photo 5" loading="lazy" />
+          <img src="./images/xhs-06.jpg" alt="Inspiration photo 6" loading="lazy" />
+          <img src="./images/xhs-07.jpg" alt="Inspiration photo 7" loading="lazy" />
+          <img src="./images/xhs-08.jpg" alt="Inspiration photo 8" loading="lazy" />
+          <img src="./images/xhs-09.jpg" alt="Inspiration photo 9" loading="lazy" />
+          <img src="./images/xhs-10.jpg" alt="Inspiration photo 10" loading="lazy" />
+          <img src="./images/xhs-11.jpg" alt="Inspiration photo 11" loading="lazy" />
+          <img src="./images/xhs-12.jpg" alt="Inspiration photo 12" loading="lazy" />
+          <img src="./images/xhs-13.jpg" alt="Inspiration photo 13" loading="lazy" />
+          <img src="./images/xhs-14.jpg" alt="Inspiration photo 14" loading="lazy" />
+          <img src="./images/xhs-15.jpg" alt="Inspiration photo 15" loading="lazy" />
+          <img src="./images/xhs-16.jpg" alt="Inspiration photo 16" loading="lazy" />
+          <img src="./images/xhs-17.jpg" alt="Inspiration photo 17" loading="lazy" />
+          <img src="./images/xhs-18.jpg" alt="Inspiration photo 18" loading="lazy" />
+          <img src="./images/xhs-19.jpg" alt="Inspiration photo 19" loading="lazy" />
+          <img src="./images/xhs-20.jpg" alt="Inspiration photo 20" loading="lazy" />
+          <img src="./images/xhs-21.jpg" alt="Inspiration photo 21" loading="lazy" />
+          <img src="./images/xhs-22.jpg" alt="Inspiration photo 22" loading="lazy" />
+          <img src="./images/xhs-23.jpg" alt="Inspiration photo 23" loading="lazy" />
+          <img src="./images/xhs-24.jpg" alt="Inspiration photo 24" loading="lazy" />
+        </div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        function insertSnapshotBlock() {
+          var root = document.getElementById('root');
+          var block = document.getElementById('snapshot-block');
+          if (!root || !block) return;
+
+          var section = block.querySelector('#snapshot-gallery');
+          if (!section) return;
+
+          // 照片墙放在 Deepscape 项目之后（或 root 末尾）
+          var deepscape = root.querySelector('#deepscape-project');
+          if (deepscape && deepscape.parentNode) {
+            deepscape.parentNode.insertBefore(section, deepscape.nextSibling);
+          } else {
+            root.appendChild(section);
+          }
+          block.remove();
+        }
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        var observer = new MutationObserver(function () {
+          if (root.querySelector('#deepscape-project')) {
+            observer.disconnect();
+            insertSnapshotBlock();
+          }
+        });
+        observer.observe(root, { childList: true, subtree: true });
+
+        window.addEventListener('load', function () {
+          setTimeout(insertSnapshotBlock, 300);
         });
       })();
     </script>
