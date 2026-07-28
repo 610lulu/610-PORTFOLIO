@@ -53,6 +53,22 @@
         #deepscape-project { min-height: auto; padding: 11vh 7vw 7vh; }
         .deepscape-video { min-height: 260px; }
       }
+      #photography-project {
+        width: 100%;
+        height: 100vh;
+        min-height: 640px;
+        background: #000;
+        overflow: hidden;
+      }
+      #photography-project iframe {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 0;
+      }
+      @media (max-width: 720px) {
+        #photography-project { min-height: 560px; }
+      }
       #snapshot-gallery {
         width: 100%;
         padding: 9vh 0 10vh;
@@ -194,6 +210,52 @@
         });
       })();
     </script>
+    <div id="photography-block" style="display: none;">
+      <section id="photography-project">
+        <iframe
+          src="https://610lulu.github.io/Photography-Portfolio-2/"
+          title="Photography Portfolio"
+          allow="fullscreen"
+        ></iframe>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        function insertPhotographyBlock() {
+          var root = document.getElementById('root');
+          var block = document.getElementById('photography-block');
+          if (!root || !block) return;
+
+          var section = block.querySelector('#photography-project');
+          if (!section) return;
+
+          var deepscape = root.querySelector('#deepscape-project');
+          if (deepscape && deepscape.parentNode) {
+            deepscape.parentNode.insertBefore(section, deepscape.nextSibling);
+          } else {
+            root.appendChild(section);
+          }
+          block.remove();
+        }
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        var observer = new MutationObserver(function () {
+          if (root.querySelector('#deepscape-project')) {
+            observer.disconnect();
+            insertPhotographyBlock();
+          }
+        });
+        observer.observe(root, { childList: true, subtree: true });
+
+        window.addEventListener('load', function () {
+          setTimeout(insertPhotographyBlock, 200);
+        });
+      })();
+    </script>
+
     <div id="snapshot-block" style="display: none;">
       <section id="snapshot-gallery">
         <div class="snapshot-shell">
@@ -242,10 +304,10 @@
           var section = block.querySelector('#snapshot-gallery');
           if (!section) return;
 
-          // 照片墙放在 Deepscape 项目之后（或 root 末尾）
-          var deepscape = root.querySelector('#deepscape-project');
-          if (deepscape && deepscape.parentNode) {
-            deepscape.parentNode.insertBefore(section, deepscape.nextSibling);
+          // 照片墙放在摄影网站之后（或 root 末尾）
+          var photography = root.querySelector('#photography-project');
+          if (photography && photography.parentNode) {
+            photography.parentNode.insertBefore(section, photography.nextSibling);
           } else {
             root.appendChild(section);
           }
@@ -256,7 +318,7 @@
         if (!root) return;
 
         var observer = new MutationObserver(function () {
-          if (root.querySelector('#deepscape-project')) {
+          if (root.querySelector('#photography-project')) {
             observer.disconnect();
             insertSnapshotBlock();
           }
