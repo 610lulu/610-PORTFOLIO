@@ -71,28 +71,17 @@
       }
       #snapshot-gallery {
         width: 100%;
-        padding: 9vh 0 10vh;
+        padding: 4vh 0 10vh;
         box-sizing: border-box;
         background: #05080a;
         color: #fff;
         overflow: hidden;
-      }
-      .snapshot-shell {
-        width: 100%;
-        max-width: 1440px;
-        margin: 0 auto;
-        padding: 0 6vw;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        gap: 4vh;
       }
       .snapshot-strip {
         display: flex;
         gap: 18px;
         overflow-x: auto;
         padding: 0 6vw 20px;
-        scroll-snap-type: x proximity;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
         scrollbar-color: rgba(255,255,255,.25) transparent;
@@ -103,12 +92,11 @@
         flex: 0 0 auto;
         border-radius: 10px;
         border: 1px solid rgba(255,255,255,.12);
-        scroll-snap-align: start;
         display: block;
         background: #0b1014;
       }
       @media (max-width: 720px) {
-        #snapshot-gallery { padding: 9vh 0 8vh; }
+        #snapshot-gallery { padding: 4vh 0 8vh; }
         .snapshot-strip img { height: 240px; }
       }
     </style>
@@ -258,13 +246,6 @@
 
     <div id="snapshot-block" style="display: none;">
       <section id="snapshot-gallery">
-        <div class="snapshot-shell">
-          <div>
-            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Snapshots · Inspiration</p>
-            <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">灵感快照</h2>
-            <p style="margin: 14px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em;">摄影:小红书 @OKMyLittleTelevision</p>
-          </div>
-        </div>
         <div class="snapshot-strip" aria-label="Inspiration photo strip">
           <img src="./images/xhs-01.jpg" alt="Inspiration photo 1" loading="lazy" />
           <img src="./images/xhs-02.jpg" alt="Inspiration photo 2" loading="lazy" />
@@ -311,7 +292,41 @@
           } else {
             root.appendChild(section);
           }
+          startSnapshotAutoscroll(section.querySelector('.snapshot-strip'));
           block.remove();
+        }
+
+        function startSnapshotAutoscroll(strip) {
+          if (!strip || strip.dataset.autoscrollReady) return;
+          strip.dataset.autoscrollReady = 'true';
+
+          var originalImages = Array.from(strip.children);
+          originalImages.forEach(function (image) {
+            var clone = image.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.removeAttribute('alt');
+            strip.appendChild(clone);
+          });
+          var firstClone = strip.children[originalImages.length];
+
+          var previousTime = performance.now();
+          var speed = 42;
+
+          function frame(currentTime) {
+            var elapsed = Math.min(currentTime - previousTime, 50);
+            previousTime = currentTime;
+
+            if (!document.hidden) {
+              strip.scrollLeft += speed * elapsed / 1000;
+              var loopWidth = firstClone.offsetLeft - originalImages[0].offsetLeft;
+              if (loopWidth > 0 && strip.scrollLeft >= loopWidth) {
+                strip.scrollLeft -= loopWidth;
+              }
+            }
+            requestAnimationFrame(frame);
+          }
+
+          requestAnimationFrame(frame);
         }
 
         var root = document.getElementById('root');
