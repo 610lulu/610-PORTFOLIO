@@ -28,11 +28,20 @@
         gap: 4vh;
       }
       .deepscape-heading {
+        width: 100%;
+      }
+      .deepscape-title-row {
         display: flex;
         justify-content: space-between;
-        align-items: flex-end;
+        align-items: center;
         gap: 32px;
         flex-wrap: wrap;
+      }
+      .deepscape-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        flex: 0 0 auto;
       }
       .deepscape-video {
         flex: 1;
@@ -51,6 +60,8 @@
       }
       @media (max-width: 720px) {
         #deepscape-project { min-height: auto; padding: 11vh 7vw 7vh; }
+        .deepscape-title-row { align-items: flex-start; }
+        .deepscape-actions { width: 100%; }
         .deepscape-video { min-height: 260px; }
       }
       #photography-project {
@@ -108,15 +119,15 @@
       <section id="deepscape-project">
         <div class="deepscape-shell">
           <div class="deepscape-heading">
-            <div>
-              <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Featured Project · Interactive Website</p>
+            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Featured Project · Interactive Website</p>
+            <div class="deepscape-title-row">
               <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">01-Deepscape Reverie</h2>
-              <p style="max-width: 900px; margin: 20px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.75; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.02em;">This design centers on the individual memories of Shenjing Village, integrating residents' oral histories and spatial memories through digital technology. By mapping the relationships between "space—events—emotions" via knowledge graphs, it abstracts these into spatial prototypes guided by light and shadow. Combining dreamcore-style imagery with scripted game chapters, the design constructs an online exhibition narrative experience that encourages user participation in memory interaction. This achieves the digital translation of individual memories into collective memory, exploring new pathways for digital heritage presentation.</p>
+              <div class="deepscape-actions">
+                <a href="https://610lulu.github.io/Deepscape-Reverie/" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">Open Full Experience ↗</a>
+                <a href="https://github.com/610lulu/Deepscape-Reverie" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
+              </div>
             </div>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="https://610lulu.github.io/Deepscape-Reverie/" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">Open Full Experience ↗</a>
-              <a href="https://github.com/610lulu/Deepscape-Reverie" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
-            </div>
+            <p style="max-width: 900px; margin: 20px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.75; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.02em;">This design centers on the individual memories of Shenjing Village, integrating residents' oral histories and spatial memories through digital technology. By mapping the relationships between "space—events—emotions" via knowledge graphs, it abstracts these into spatial prototypes guided by light and shadow. Combining dreamcore-style imagery with scripted game chapters, the design constructs an online exhibition narrative experience that encourages user participation in memory interaction. This achieves the digital translation of individual memories into collective memory, exploring new pathways for digital heritage presentation.</p>
           </div>
           <div class="deepscape-video" aria-label="Deepscape Reverie video preview">
             <video
