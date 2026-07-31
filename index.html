@@ -655,5 +655,24 @@
         });
       })();
     </script>
+    <script>
+      (function () {
+        var replacementSrc = './images/0731-1.png?v=cooperation-project-20260731';
+
+        function replaceFirstCooperationProjectImage() {
+          document.querySelectorAll('img[alt="Damas"]').forEach(function (image) {
+            if (image.getAttribute('src') !== replacementSrc) {
+              image.setAttribute('src', replacementSrc);
+            }
+          });
+        }
+
+        replaceFirstCooperationProjectImage();
+        new MutationObserver(replaceFirstCooperationProjectImage).observe(
+          document.getElementById('root'),
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
   </body>
 </html>
