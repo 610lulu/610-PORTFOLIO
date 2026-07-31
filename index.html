@@ -534,9 +534,9 @@
           var section = block.querySelector('#photography-project');
           if (!section) return;
 
-          var selectedWork = root.querySelector('#smart-care-project') || root.querySelector('#deepscape-project');
-          if (selectedWork && selectedWork.parentNode) {
-            selectedWork.parentNode.insertBefore(section, selectedWork.nextSibling);
+          var contact = root.querySelector('#footer');
+          if (contact && contact.parentNode) {
+            contact.parentNode.insertBefore(section, contact);
           } else {
             root.appendChild(section);
           }
@@ -547,7 +547,7 @@
         if (!root) return;
 
         var observer = new MutationObserver(function () {
-          if (root.querySelector('#smart-care-project')) {
+          if (root.querySelector('#footer')) {
             observer.disconnect();
             insertPhotographyBlock();
           }
