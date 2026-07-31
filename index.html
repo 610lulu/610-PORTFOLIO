@@ -82,6 +82,12 @@
         width: 100%;
         text-align: center !important;
       }
+      #hero-section img[code-path="src/sections/HeroField.tsx:77:15"] {
+        filter: none !important;
+      }
+      img[src*="610.jpg"] {
+        filter: none !important;
+      }
       @media (max-width: 767px) {
         nav button {
           margin: -10px -7px !important;
@@ -96,6 +102,36 @@
           bottom: 8vh;
           left: 8vw;
           min-height: 0;
+        }
+      }
+      /* Keep cooperation-project cards in normal document flow. */
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: clamp(56px, 7vw, 104px) clamp(28px, 5vw, 72px) !important;
+        padding: 0 6vw !important;
+        align-items: start !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"] {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-width: 0 !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:93:15"] {
+        width: 100% !important;
+        max-width: none !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:142:17"] {
+        margin-top: 22px !important;
+        min-height: 68px;
+        gap: 20px;
+      }
+      @media (max-width: 1023px) {
+        #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
+          grid-template-columns: 1fr !important;
+          gap: 64px !important;
+          padding: 0 5vw !important;
         }
       }
       #deepscape-project,
@@ -233,8 +269,48 @@
         width: 100%;
         height: 100vh;
         min-height: 640px;
+        position: relative;
         background: #000;
         overflow: hidden;
+      }
+      .footer-columns-balanced {
+        grid-template-columns: minmax(480px, 1.65fr) minmax(190px, .65fr) minmax(160px, .55fr) !important;
+        column-gap: clamp(56px, 7vw, 128px) !important;
+        row-gap: 56px !important;
+        align-items: start !important;
+      }
+      @media (max-width: 900px) {
+        .footer-columns-balanced {
+          grid-template-columns: 1fr !important;
+          row-gap: 48px !important;
+        }
+      }
+      .photography-title-overlay {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 82px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        padding: 0 14px;
+        box-sizing: border-box;
+        background: #000;
+        color: #fff;
+        pointer-events: none;
+      }
+      .photography-title-overlay strong {
+        font: 700 17px/1 "Noto Sans SC", sans-serif;
+        letter-spacing: .28em;
+        white-space: nowrap;
+      }
+      .photography-title-overlay span {
+        color: rgba(255,255,255,.46);
+        font: 500 10px/1 "Noto Sans SC", sans-serif;
+        letter-spacing: .34em;
+        white-space: nowrap;
       }
       #photography-project iframe {
         width: 100%;
@@ -337,13 +413,104 @@
           'About': 'hero-section',
           'Motivation': 'philosophy',
           'Selected Works': 'deepscape-project',
-          'Cooperation Project': 'gallery',
-          'Award & Plan': 'mediums',
+          'Cooperation Projects': 'gallery',
+          'Awards & Plans': 'mediums',
           'My Life': 'photography-project',
           'Contact': 'footer'
         };
         var navigationLabels = Object.keys(navigationTargets);
         var indicatorFrame = 0;
+
+        function pluralizeSectionLabels() {
+          document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
+            var label = node.textContent.trim();
+            if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
+            if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
+          });
+
+          document.querySelectorAll('#gallery h3, #root h1').forEach(function (title) {
+            if (title.textContent.trim() === 'Damas') title.textContent = 'Startup Town';
+          });
+          document.querySelectorAll('#gallery [code-path="src/sections/ImmersiveGallery.tsx:151:21"]').forEach(function (meta) {
+            if (meta.textContent.trim().startsWith('01')) {
+              meta.textContent = '01 - The Future Laboratory, Tsinghua University';
+            }
+          });
+
+          var footerHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
+            return node.textContent.trim() === 'Navigation';
+          });
+          var footerLinks = footerHeading && footerHeading.parentElement && footerHeading.parentElement.lastElementChild;
+          if (!footerLinks) return;
+
+          var footerColumns = footerHeading.parentElement.parentElement;
+          if (footerColumns) footerColumns.classList.add('footer-columns-balanced');
+          var contactHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
+            return node.textContent.trim() === 'Contact';
+          });
+          var contactColumn = contactHeading && contactHeading.parentElement;
+          if (footerColumns && contactColumn && footerColumns.firstElementChild !== contactColumn) {
+            footerColumns.insertBefore(contactColumn, footerColumns.firstElementChild);
+          }
+          if (contactColumn && !contactColumn.querySelector('.footer-skills')) {
+            var skillsBlock = document.createElement('div');
+            skillsBlock.className = 'footer-skills';
+            skillsBlock.style.cssText = 'margin-top:30px;max-width:680px;';
+
+            var skillsHeading = document.createElement('p');
+            skillsHeading.textContent = 'Skills';
+            skillsHeading.style.cssText = 'margin:0 0 16px;font-size:11px;letter-spacing:.25em;color:rgba(237,232,228,.3);text-transform:uppercase;';
+            skillsBlock.appendChild(skillsHeading);
+
+            [
+              'AI Visual Generation: Stable Diffusion / Midjourney / Prompt Design',
+              'Storyboarding & Shot Design: Script Visualization / Shot Scale Design / Camera Movement / Character Blocking / Scene Composition / Lighting Rhythm',
+              'Spatial & Scene Design: Rhino / Blender / D5 / Architectural Spatial Narrative / Scene Concept Design',
+              'Motion Visuals & Interaction: TouchDesigner / Figma Make / Cursor / Data Analysis'
+            ].forEach(function (skill) {
+              var skillLine = document.createElement('p');
+              skillLine.style.cssText = 'margin:0 0 20px;font-size:15px;line-height:1.75;font-weight:400;color:#EDE8E4;';
+              var separator = skill.indexOf(':');
+              var category = document.createElement('span');
+              category.textContent = skill.slice(0, separator + 1);
+              category.style.cssText = 'display:block;margin-bottom:4px;font-weight:500;opacity:.82;';
+              var tools = document.createElement('span');
+              tools.textContent = skill.slice(separator + 1).trim();
+              tools.style.cssText = 'display:block;font-weight:400;opacity:.5;';
+              skillLine.appendChild(category);
+              skillLine.appendChild(tools);
+              skillsBlock.appendChild(skillLine);
+            });
+
+            contactColumn.appendChild(skillsBlock);
+          }
+
+          [
+            { label: 'Awards & Plans', href: '#mediums' },
+            { label: 'My Life', href: '#photography-project' },
+            { label: 'Contact', href: '#footer' }
+          ].forEach(function (item) {
+            var exists = Array.from(footerLinks.querySelectorAll('a')).some(function (link) {
+              return link.textContent.trim() === item.label;
+            });
+            if (exists) return;
+
+            var reference = footerLinks.querySelector('a:last-of-type');
+            var link = reference ? reference.cloneNode(false) : document.createElement('a');
+            link.textContent = item.label;
+            link.href = item.href;
+            if (!reference) {
+              link.style.cssText = 'color:#EDE8E4;opacity:.6;font-size:15px;text-decoration:none;line-height:1.8;transition:opacity .4s;';
+            }
+            footerLinks.appendChild(link);
+          });
+        }
+
+        pluralizeSectionLabels();
+        new MutationObserver(pluralizeSectionLabels).observe(document.body, {
+          childList: true,
+          subtree: true
+        });
 
         function setCurrentNavigation(label) {
           var nav = document.querySelector('nav');
@@ -438,6 +605,7 @@
 
         var navigationObserver = new MutationObserver(function () {
           if (!document.querySelector('nav button')) return;
+          pluralizeSectionLabels();
           scheduleNavigationIndicator();
           navigationObserver.disconnect();
         });
@@ -516,7 +684,7 @@
     <div id="photography-block" style="display: none;">
       <section id="photography-project">
         <iframe
-          src="https://610lulu.github.io/Photography-Portfolio-2/"
+          src="./photography.html?v=my-life-copy-1"
           title="Photography Portfolio"
           allow="fullscreen"
         ></iframe>
@@ -660,13 +828,103 @@
 
         function replaceFirstCooperationProjectImage() {
           document.querySelectorAll('img[alt="Damas"]').forEach(function (image) {
-            if (image.getAttribute('src') !== replacementSrc) {
+            if (!image.dataset.cooperationCarouselReady && image.getAttribute('src') !== replacementSrc) {
               image.setAttribute('src', replacementSrc);
+            }
+
+            var detailGrid = image.parentElement;
+            while (detailGrid && detailGrid !== document.body) {
+              var directArticle = Array.from(detailGrid.children || []).find(function (child) {
+                return child.tagName === 'ARTICLE';
+              });
+              if (directArticle) break;
+              detailGrid = detailGrid.parentElement;
+            }
+            if (!detailGrid || detailGrid === document.body) return;
+
+            var copyColumn = Array.from(detailGrid.children).find(function (child) {
+              return child.tagName === 'ARTICLE';
+            });
+            var imageColumn = Array.from(detailGrid.children).find(function (child) {
+              return child !== copyColumn && child.contains(image);
+            });
+            var imageFrame = image.parentElement;
+            if (!copyColumn || !imageColumn || !imageFrame) return;
+
+            copyColumn.style.setProperty('display', 'none', 'important');
+            detailGrid.style.setProperty('display', 'block', 'important');
+            detailGrid.style.setProperty('grid-template-columns', '1fr', 'important');
+            detailGrid.style.setProperty('padding', '5vh 5vw 9vh', 'important');
+            detailGrid.style.setProperty('width', '100%', 'important');
+            detailGrid.style.setProperty('max-width', 'none', 'important');
+
+            imageColumn.style.setProperty('position', 'relative', 'important');
+            imageColumn.style.setProperty('top', '0', 'important');
+            imageColumn.style.setProperty('width', '100%', 'important');
+            imageColumn.style.setProperty('max-width', '1400px', 'important');
+            imageColumn.style.setProperty('margin', '0 auto', 'important');
+
+            imageFrame.style.setProperty('width', '100%', 'important');
+            imageFrame.style.setProperty('height', 'auto', 'important');
+            imageFrame.style.setProperty('position', 'relative', 'important');
+            imageFrame.style.setProperty('aspect-ratio', 'auto', 'important');
+            imageFrame.style.setProperty('border', '1px solid rgba(255,255,255,0.12)', 'important');
+            imageFrame.style.setProperty('border-radius', '8px', 'important');
+            imageFrame.style.setProperty('box-shadow', '0 24px 64px rgba(0,0,0,0.32)', 'important');
+
+            image.style.setProperty('width', '100%', 'important');
+            image.style.setProperty('height', 'auto', 'important');
+            image.style.setProperty('object-fit', 'contain', 'important');
+
+            if (!image.dataset.cooperationCarouselReady) {
+              image.dataset.cooperationCarouselReady = 'true';
+              image.dataset.slide = '0';
+
+              var nextButton = document.createElement('button');
+              nextButton.type = 'button';
+              nextButton.setAttribute('aria-label', 'View next image');
+              nextButton.textContent = '›';
+              nextButton.style.cssText = 'position:absolute;right:24px;top:50%;transform:translateY(-50%);z-index:5;width:58px;height:58px;border:1.5px solid #fff;border-radius:50%;background:rgba(255,255,255,.06);color:#fff;font:200 42px/1 "Helvetica Neue",Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:0 0 5px 2px;cursor:pointer;text-shadow:0 2px 12px rgba(0,0,0,.5);box-shadow:0 0 0 1px rgba(5,10,15,.25),0 0 14px rgba(255,255,255,.2);opacity:.9;transition:transform .25s ease,opacity .25s ease,background .25s ease;';
+              nextButton.animate(
+                [
+                  { opacity: .62, boxShadow: '0 0 0 1px rgba(5,10,15,.25),0 0 8px rgba(255,255,255,.16)' },
+                  { opacity: 1, boxShadow: '0 0 0 1px rgba(5,10,15,.25),0 0 22px rgba(255,255,255,.62)' },
+                  { opacity: .62, boxShadow: '0 0 0 1px rgba(5,10,15,.25),0 0 8px rgba(255,255,255,.16)' }
+                ],
+                { duration: 1600, iterations: Infinity, easing: 'ease-in-out' }
+              );
+              nextButton.addEventListener('mouseenter', function () {
+                nextButton.style.opacity = '1';
+                nextButton.style.color = '#fff';
+                nextButton.style.background = 'rgba(255,255,255,.14)';
+                nextButton.style.transform = 'translate(5px,-50%)';
+              });
+              nextButton.addEventListener('mouseleave', function () {
+                nextButton.style.opacity = '.82';
+                nextButton.style.color = '#fff';
+                nextButton.style.background = 'rgba(255,255,255,.06)';
+                nextButton.style.transform = 'translateY(-50%)';
+              });
+              nextButton.addEventListener('click', function () {
+                var showSecond = image.dataset.slide !== '1';
+                image.dataset.slide = showSecond ? '1' : '0';
+                image.setAttribute('src', showSecond ? './images/0731-8.png?v=cooperation-slide-2' : replacementSrc);
+                nextButton.textContent = showSecond ? '‹' : '›';
+                nextButton.setAttribute('aria-label', showSecond ? 'View previous image' : 'View next image');
+              });
+              imageFrame.appendChild(nextButton);
+            }
+
+            var detailPage = detailGrid.parentElement;
+            var detailHeader = detailPage && detailPage.firstElementChild;
+            if (detailHeader && detailHeader.lastElementChild) {
+              detailHeader.lastElementChild.style.setProperty('display', 'none', 'important');
             }
           });
         }
 
         replaceFirstCooperationProjectImage();
+        window.setInterval(replaceFirstCooperationProjectImage, 250);
         new MutationObserver(replaceFirstCooperationProjectImage).observe(
           document.getElementById('root'),
           { childList: true, subtree: true }
@@ -675,6 +933,20 @@
     </script>
     <script>
       (function () {
+        var awards = [
+          { year: '2025', name: 'China Creative Challenges Contest – National Second Prize' },
+          { year: '2025', name: 'China Creative Challenges Contest – National Third Prize' },
+          { year: '2025', name: 'Internet Plus Competition – Second Prize' },
+          { year: '2025', name: 'Asian University Creative Design Exhibition – Selected Work Award' },
+          { year: '2025', name: 'Milan Design Week China Collegiate Design Competition & Exhibition – Provincial – Second Prize' },
+          { year: '2025', name: 'University-Level Scholarship' },
+          { year: '2025', name: 'AdventureX 2025 – First Prize in “Intelligent for Good” Track' },
+          { year: '2025', name: 'AdventureX 2025 – First Prize in “Minimax” Track' },
+          { year: '2025', name: 'AdventureX 2025 – Ten Framework Rising Star' },
+          { year: '2024', name: 'BMW University Joint Challenge Camp – Bronze Prize' },
+          { year: '2023', name: 'Beautiful Guangdong Rural Revitalization Design Competition – Second Prize' },
+          { year: '2023', name: 'Guangdong-Hong Kong-Macao Greater Bay Area Creative Marketing Competition – Bronze Prize' }
+        ];
         var planParagraphs = [
           'My undergraduate studies have focused on architectural space, product design, mapping-based research, and interaction experience. These experiences have gradually led me to realize that the future of interaction design should not be confined to screens and interfaces, but should extend into the physical environments in which people live and work.',
           'In the future, I hope to continue exploring the theme of “seamless interaction in intelligent environments.” Through user-centred design, human–computer interaction, and social and humanistic research, I aim to further strengthen my abilities in user research, behavioural observation, needs analysis, and experience evaluation. In doing so, I hope to develop a more accurate and comprehensive understanding of the relationships between people, spaces, devices, and digital systems.',
@@ -688,21 +960,54 @@
           if (!section || section.dataset.researchPlanReady) return;
 
           var columns = section.children;
+          var sectionLabel = section.querySelector(':scope > div:first-child > p');
           var list = columns[0] && columns[0].querySelector('div');
           var firstRow = list && list.children[0];
+          var planRow = list && list.children[1];
+          var archiveRow = list && list.children[2];
           var rightColumn = columns[1];
-          if (!firstRow || !rightColumn) return;
+          if (!firstRow || !planRow || !rightColumn) return;
 
           section.dataset.researchPlanReady = 'true';
+          if (sectionLabel) sectionLabel.textContent = 'Awards & Plan';
           firstRow.querySelectorAll('text').forEach(function (label) {
+            label.textContent = 'Honours and Awards';
+          });
+          planRow.querySelectorAll('text').forEach(function (label) {
             label.textContent = 'Research and Study Plan';
           });
+          if (archiveRow) archiveRow.remove();
+          planRow.setAttribute('role', 'button');
+          planRow.setAttribute('tabindex', '0');
+          planRow.setAttribute('aria-expanded', 'false');
           firstRow.setAttribute('role', 'button');
           firstRow.setAttribute('tabindex', '0');
           firstRow.setAttribute('aria-expanded', 'false');
 
           var originalDetail = rightColumn.firstElementChild;
           if (originalDetail) originalDetail.style.display = 'none';
+
+          var awardsDetail = document.createElement('div');
+          awardsDetail.hidden = true;
+          awardsDetail.style.cssText = 'width:100%;max-height:68vh;overflow-y:auto;padding-right:12px;color:rgba(237,232,228,0.78);';
+          var awardsHeading = document.createElement('p');
+          awardsHeading.textContent = 'Awards';
+          awardsHeading.style.cssText = 'margin:0 0 24px;color:#30B0D0;font:700 12px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.2em;text-transform:uppercase;';
+          awardsDetail.appendChild(awardsHeading);
+          awards.forEach(function (award) {
+            var awardRow = document.createElement('div');
+            awardRow.style.cssText = 'margin:0 0 20px;padding:0 0 18px;border-bottom:1px solid rgba(255,255,255,.08);';
+            var awardYear = document.createElement('p');
+            awardYear.textContent = '[ ' + award.year + ' ]';
+            awardYear.style.cssText = 'margin:0 0 6px;font:400 11px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.14em;color:rgba(237,232,228,.48);';
+            var awardName = document.createElement('p');
+            awardName.textContent = award.name;
+            awardName.style.cssText = 'margin:0;font:500 14px/1.65 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.88);';
+            awardRow.appendChild(awardYear);
+            awardRow.appendChild(awardName);
+            awardsDetail.appendChild(awardRow);
+          });
+          rightColumn.appendChild(awardsDetail);
 
           var detail = document.createElement('div');
           detail.hidden = true;
@@ -720,11 +1025,26 @@
           rightColumn.appendChild(detail);
 
           function showPlan() {
+            awardsDetail.hidden = true;
             detail.hidden = false;
+            firstRow.setAttribute('aria-expanded', 'false');
+            planRow.setAttribute('aria-expanded', 'true');
+          }
+          function showAwards() {
+            detail.hidden = true;
+            awardsDetail.hidden = false;
+            planRow.setAttribute('aria-expanded', 'false');
             firstRow.setAttribute('aria-expanded', 'true');
           }
-          firstRow.addEventListener('click', showPlan);
+          firstRow.addEventListener('click', showAwards);
           firstRow.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              showAwards();
+            }
+          });
+          planRow.addEventListener('click', showPlan);
+          planRow.addEventListener('keydown', function (event) {
             if (event.key === 'Enter' || event.key === ' ') {
               event.preventDefault();
               showPlan();

@@ -1,0 +1,23 @@
+{
+  "name": "610-portfolio-main",
+  "version": "1.0.0",
+  "description": "[Live Site](https://610lulu.github.io/610-PORTFOLIO/)",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/610lulu/610-PORTFOLIO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/610lulu/610-PORTFOLIO/issues"
+  },
+  "homepage": "https://github.com/610lulu/610-PORTFOLIO#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "@types/node": "^26.1.2"
+  }
+}
