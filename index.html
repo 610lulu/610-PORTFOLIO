@@ -257,7 +257,32 @@
 
     <div id="snapshot-block" style="display: none;">
       <section id="snapshot-gallery">
-        <div class="snapshot-strip" aria-label="Inspiration photo strip"></div>
+        <div class="snapshot-strip" aria-label="Inspiration photo strip">
+          <img src="./images/xhs-01.jpg" alt="Inspiration photo 1" loading="lazy" />
+          <img src="./images/xhs-02.jpg" alt="Inspiration photo 2" loading="lazy" />
+          <img src="./images/xhs-03.jpg" alt="Inspiration photo 3" loading="lazy" />
+          <img src="./images/xhs-04.jpg" alt="Inspiration photo 4" loading="lazy" />
+          <img src="./images/xhs-05.jpg" alt="Inspiration photo 5" loading="lazy" />
+          <img src="./images/xhs-06.jpg" alt="Inspiration photo 6" loading="lazy" />
+          <img src="./images/xhs-07.jpg" alt="Inspiration photo 7" loading="lazy" />
+          <img src="./images/xhs-08.jpg" alt="Inspiration photo 8" loading="lazy" />
+          <img src="./images/xhs-09.jpg" alt="Inspiration photo 9" loading="lazy" />
+          <img src="./images/xhs-10.jpg" alt="Inspiration photo 10" loading="lazy" />
+          <img src="./images/xhs-11.jpg" alt="Inspiration photo 11" loading="lazy" />
+          <img src="./images/xhs-12.jpg" alt="Inspiration photo 12" loading="lazy" />
+          <img src="./images/xhs-13.jpg" alt="Inspiration photo 13" loading="lazy" />
+          <img src="./images/xhs-14.jpg" alt="Inspiration photo 14" loading="lazy" />
+          <img src="./images/xhs-15.jpg" alt="Inspiration photo 15" loading="lazy" />
+          <img src="./images/xhs-16.jpg" alt="Inspiration photo 16" loading="lazy" />
+          <img src="./images/xhs-17.jpg" alt="Inspiration photo 17" loading="lazy" />
+          <img src="./images/xhs-18.jpg" alt="Inspiration photo 18" loading="lazy" />
+          <img src="./images/xhs-19.jpg" alt="Inspiration photo 19" loading="lazy" />
+          <img src="./images/xhs-20.jpg" alt="Inspiration photo 20" loading="lazy" />
+          <img src="./images/xhs-21.jpg" alt="Inspiration photo 21" loading="lazy" />
+          <img src="./images/xhs-22.jpg" alt="Inspiration photo 22" loading="lazy" />
+          <img src="./images/xhs-23.jpg" alt="Inspiration photo 23" loading="lazy" />
+          <img src="./images/xhs-24.jpg" alt="Inspiration photo 24" loading="lazy" />
+        </div>
       </section>
     </div>
 
@@ -287,8 +312,6 @@
           strip.dataset.autoscrollReady = 'true';
 
           var originalImages = Array.from(strip.children);
-          if (originalImages.length === 0) return;
-
           originalImages.forEach(function (image) {
             var clone = image.cloneNode(true);
             clone.setAttribute('aria-hidden', 'true');
@@ -333,6 +356,5 @@
         });
       })();
     </script>
-
   </body>
 </html>
