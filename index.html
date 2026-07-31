@@ -673,5 +673,71 @@
         );
       })();
     </script>
+    <script>
+      (function () {
+        var planParagraphs = [
+          'My undergraduate studies have focused on architectural space, product design, mapping-based research, and interaction experience. These experiences have gradually led me to realize that the future of interaction design should not be confined to screens and interfaces, but should extend into the physical environments in which people live and work.',
+          'In the future, I hope to continue exploring the theme of “seamless interaction in intelligent environments.” Through user-centred design, human–computer interaction, and social and humanistic research, I aim to further strengthen my abilities in user research, behavioural observation, needs analysis, and experience evaluation. In doing so, I hope to develop a more accurate and comprehensive understanding of the relationships between people, spaces, devices, and digital systems.',
+          'A central focus of my research will be the balance between system proactivity and user control. An ideal intelligent environment should neither depend on frequent and explicit commands nor make decisions on behalf of users without sufficient understanding or consent. Instead, it should provide support in a natural and unobtrusive manner, while ensuring that its operational logic remains transparent. It should also give careful consideration to privacy, trust, and user autonomy.',
+          'I also hope to undertake a professional internship at a company or design studio working in interaction design, intelligent environments, or technological innovation. This experience would allow me to understand how designers, engineers, researchers, and business teams collaborate in real-world projects. By participating in practical work, I hope to test and refine my design methods while developing a deeper understanding of the relationships among technological feasibility, user needs, and commercial contexts.',
+          'In the future, I aspire to become an interaction designer who can bridge design and technology. I hope to contribute to innovation in intelligent products, smart environments, and digital services, making technology not only more efficient, but also more natural, trustworthy, and emotionally meaningful.'
+        ];
+
+        function enhanceResearchPlan() {
+          var section = document.querySelector('#mediums > section');
+          if (!section || section.dataset.researchPlanReady) return;
+
+          var columns = section.children;
+          var list = columns[0] && columns[0].querySelector('div');
+          var firstRow = list && list.children[0];
+          var rightColumn = columns[1];
+          if (!firstRow || !rightColumn) return;
+
+          section.dataset.researchPlanReady = 'true';
+          firstRow.querySelectorAll('text').forEach(function (label) {
+            label.textContent = 'Research and Study Plan';
+          });
+          firstRow.setAttribute('role', 'button');
+          firstRow.setAttribute('tabindex', '0');
+          firstRow.setAttribute('aria-expanded', 'false');
+
+          var originalDetail = rightColumn.firstElementChild;
+          if (originalDetail) originalDetail.style.display = 'none';
+
+          var detail = document.createElement('div');
+          detail.hidden = true;
+          detail.style.cssText = 'width:100%;max-height:68vh;overflow-y:auto;padding-right:12px;color:rgba(237,232,228,0.72);';
+          var heading = document.createElement('p');
+          heading.textContent = 'Research and Study Plan';
+          heading.style.cssText = 'margin:0 0 24px;color:#30B0D0;font:700 12px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.2em;text-transform:uppercase;';
+          detail.appendChild(heading);
+          planParagraphs.forEach(function (copy) {
+            var paragraph = document.createElement('p');
+            paragraph.textContent = copy;
+            paragraph.style.cssText = 'margin:0 0 18px;font:300 14px/1.85 "Noto Sans SC",sans-serif;';
+            detail.appendChild(paragraph);
+          });
+          rightColumn.appendChild(detail);
+
+          function showPlan() {
+            detail.hidden = false;
+            firstRow.setAttribute('aria-expanded', 'true');
+          }
+          firstRow.addEventListener('click', showPlan);
+          firstRow.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              showPlan();
+            }
+          });
+        }
+
+        enhanceResearchPlan();
+        new MutationObserver(enhanceResearchPlan).observe(
+          document.getElementById('root'),
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
   </body>
 </html>
