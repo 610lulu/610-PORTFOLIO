@@ -80,6 +80,36 @@
       @media (max-width: 720px) {
         #photography-project { min-height: 560px; }
       }
+      #snapshot-gallery {
+        width: 100%;
+        padding: 4vh 0 10vh;
+        box-sizing: border-box;
+        background: #05080a;
+        color: #fff;
+        overflow: hidden;
+      }
+      .snapshot-strip {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        padding: 0 6vw 20px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,.25) transparent;
+      }
+      .snapshot-strip img {
+        height: 340px;
+        width: auto;
+        flex: 0 0 auto;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,.12);
+        display: block;
+        background: #0b1014;
+      }
+      @media (max-width: 720px) {
+        #snapshot-gallery { padding: 4vh 0 8vh; }
+        .snapshot-strip img { height: 240px; }
+      }
     </style>
   </head>
   <body>
@@ -221,6 +251,85 @@
 
         window.addEventListener('load', function () {
           setTimeout(insertPhotographyBlock, 200);
+        });
+      })();
+    </script>
+
+    <div id="snapshot-block" style="display: none;">
+      <section id="snapshot-gallery">
+        <div class="snapshot-strip" aria-label="Inspiration photo strip"></div>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        function insertSnapshotBlock() {
+          var root = document.getElementById('root');
+          var block = document.getElementById('snapshot-block');
+          if (!root || !block) return;
+
+          var section = block.querySelector('#snapshot-gallery');
+          if (!section) return;
+
+          // 照片墙放在摄影网站之后（或 root 末尾）
+          var photography = root.querySelector('#photography-project');
+          if (photography && photography.parentNode) {
+            photography.parentNode.insertBefore(section, photography.nextSibling);
+          } else {
+            root.appendChild(section);
+          }
+          startSnapshotAutoscroll(section.querySelector('.snapshot-strip'));
+          block.remove();
+        }
+
+        function startSnapshotAutoscroll(strip) {
+          if (!strip || strip.dataset.autoscrollReady) return;
+          strip.dataset.autoscrollReady = 'true';
+
+          var originalImages = Array.from(strip.children);
+          if (originalImages.length === 0) return;
+
+          originalImages.forEach(function (image) {
+            var clone = image.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.removeAttribute('alt');
+            strip.appendChild(clone);
+          });
+          var firstClone = strip.children[originalImages.length];
+
+          var previousTime = performance.now();
+          var speed = 42;
+
+          function frame(currentTime) {
+            var elapsed = Math.min(currentTime - previousTime, 50);
+            previousTime = currentTime;
+
+            if (!document.hidden) {
+              strip.scrollLeft += speed * elapsed / 1000;
+              var loopWidth = firstClone.offsetLeft - originalImages[0].offsetLeft;
+              if (loopWidth > 0 && strip.scrollLeft >= loopWidth) {
+                strip.scrollLeft -= loopWidth;
+              }
+            }
+            requestAnimationFrame(frame);
+          }
+
+          requestAnimationFrame(frame);
+        }
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        var observer = new MutationObserver(function () {
+          if (root.querySelector('#photography-project')) {
+            observer.disconnect();
+            insertSnapshotBlock();
+          }
+        });
+        observer.observe(root, { childList: true, subtree: true });
+
+        window.addEventListener('load', function () {
+          setTimeout(insertSnapshotBlock, 300);
         });
       })();
     </script>
