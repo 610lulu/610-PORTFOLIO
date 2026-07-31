@@ -7,9 +7,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=cooperation-awards-nav-2"></script>
+    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=responsive-awards-nav-3"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
     <style>
+      nav button {
+        min-height: 44px !important;
+        margin: -10px -8px !important;
+        padding: 10px 8px !important;
+        touch-action: manipulation;
+      }
+      @media (max-width: 767px) {
+        nav button {
+          margin: -10px -7px !important;
+          padding: 10px 7px !important;
+        }
+      }
       #deepscape-project,
       #smart-care-project {
         width: 100%;
@@ -243,6 +255,40 @@
         </div>
       </section>
     </div>
+
+    <script>
+      (function () {
+        var navigationTargets = {
+          'About': 'hero-section',
+          'Motivation': 'philosophy',
+          'Selected Work': 'deepscape-project',
+          'Cooperation Project': 'gallery',
+          'Award Statistics': 'mediums',
+          'Contact': 'footer'
+        };
+
+        document.addEventListener('click', function (event) {
+          var button = event.target.closest && event.target.closest('nav button');
+          if (!button) return;
+
+          var targetId = navigationTargets[button.textContent.trim()];
+          var target = targetId && document.getElementById(targetId);
+          if (!target) return;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          var nav = button.closest('nav');
+          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var destination = Math.max(
+            0,
+            target.getBoundingClientRect().top + window.scrollY - navHeight
+          );
+
+          window.scrollTo({ top: destination, behavior: 'auto' });
+        }, true);
+      })();
+    </script>
 
     <script>
       (function () {
