@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=responsive-awards-nav-3"></script>
+    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=other-works-labels-4"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
     <style>
       nav button {
@@ -53,8 +53,32 @@
       #hero-section [code-path="src/sections/HeroField.tsx:152:13"] {
         display: none !important;
       }
+      #hero-section [code-path="src/sections/HeroField.tsx:24:7"] {
+        grid-template-columns: 1fr !important;
+      }
+      #hero-section [code-path="src/sections/HeroField.tsx:36:9"] {
+        align-items: center !important;
+      }
+      #hero-section [code-path="src/sections/HeroField.tsx:45:11"] {
+        text-align: center !important;
+      }
+      #hero-section [code-path="src/sections/HeroField.tsx:102:9"] {
+        position: absolute !important;
+        right: 6vw;
+        bottom: 10vh;
+        left: 6vw;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box;
+        max-width: none !important;
+        padding-bottom: 0;
+        text-align: center !important;
+      }
       #hero-section [code-path="src/sections/HeroField.tsx:113:13"] {
         margin-bottom: 0 !important;
+        margin-left: 0 !important;
+        width: 100%;
+        text-align: center !important;
       }
       @media (max-width: 767px) {
         nav button {
@@ -64,6 +88,12 @@
         nav button::after {
           right: 7px;
           left: 7px;
+        }
+        #hero-section [code-path="src/sections/HeroField.tsx:102:9"] {
+          right: 8vw;
+          bottom: 8vh;
+          left: 8vw;
+          min-height: 0;
         }
       }
       #deepscape-project,
@@ -252,7 +282,7 @@
       <section id="deepscape-project">
         <div class="deepscape-shell">
           <div class="deepscape-heading">
-            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Work · Independent work</p>
+          <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">01-Deepscape Reverie</h2>
               <div class="deepscape-actions">
@@ -279,7 +309,7 @@
       <section id="smart-care-project">
         <div class="deepscape-shell">
           <div class="deepscape-heading">
-            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Work · Independent work</p>
+          <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">02-Smart Care</h2>
               <div class="deepscape-actions" aria-label="Smart Care project links coming soon">
@@ -305,7 +335,7 @@
         var navigationTargets = {
           'About': 'hero-section',
           'Motivation': 'philosophy',
-          'Selected Work': 'deepscape-project',
+          'Selected Works': 'deepscape-project',
           'Cooperation Project': 'gallery',
           'Award Statistics': 'mediums',
           'Contact': 'footer'
