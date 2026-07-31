@@ -10,7 +10,8 @@
     <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=project-gallery-nav-1"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
     <style>
-      #deepscape-project {
+      #deepscape-project,
+      #smart-care-project {
         width: 100%;
         min-height: 100vh;
         padding: 9vh 6vw 5vh;
@@ -58,8 +59,22 @@
         display: block;
         object-fit: cover;
       }
+      .smart-care-image {
+        width: 100%;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 10px;
+        background: #0b1014;
+        box-shadow: 0 28px 80px rgba(0,0,0,.45);
+      }
+      .smart-care-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
       @media (max-width: 720px) {
-        #deepscape-project { min-height: auto; padding: 11vh 7vw 7vh; }
+        #deepscape-project,
+        #smart-care-project { min-height: auto; padding: 11vh 7vw 7vh; }
         .deepscape-title-row { align-items: flex-start; }
         .deepscape-actions { width: 100%; }
         .deepscape-video { min-height: 260px; }
@@ -142,6 +157,24 @@
           </div>
         </div>
       </section>
+      <section id="smart-care-project">
+        <div class="deepscape-shell">
+          <div class="deepscape-heading">
+            <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Work · Independent work</p>
+            <div class="deepscape-title-row">
+              <h2 style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">02-Smart Care</h2>
+            </div>
+            <p style="width: 100%; margin: 20px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.75; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.02em;">Many older adults face barriers in independently managing chronic conditions, protecting their privacy, and using conventional digital products. To address these challenges, I designed an AI-powered companion device that integrates health monitoring, age-friendly interaction, daily health management, and emotional companionship.</p>
+          </div>
+          <div class="smart-care-image">
+            <img
+              src="./images/project-elderly-robot.jpg"
+              alt="Smart Care AI companion device for older adults"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
     </div>
 
     <script>
@@ -178,14 +211,17 @@
 
           var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
           if (!deepscapeSection) return;
+          var smartCareSection = deepscapeBlock.querySelector('#smart-care-project');
 
           // 把 Deepscape 项目放在 Motivation 之后
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
             philosophy.appendChild(deepscapeSection);
+            if (smartCareSection) philosophy.appendChild(smartCareSection);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(deepscapeSection);
+            if (smartCareSection) root.appendChild(smartCareSection);
           }
           initLazyVideo(deepscapeSection);
           deepscapeBlock.remove();
@@ -229,9 +265,9 @@
           var section = block.querySelector('#photography-project');
           if (!section) return;
 
-          var deepscape = root.querySelector('#deepscape-project');
-          if (deepscape && deepscape.parentNode) {
-            deepscape.parentNode.insertBefore(section, deepscape.nextSibling);
+          var selectedWork = root.querySelector('#smart-care-project') || root.querySelector('#deepscape-project');
+          if (selectedWork && selectedWork.parentNode) {
+            selectedWork.parentNode.insertBefore(section, selectedWork.nextSibling);
           } else {
             root.appendChild(section);
           }
@@ -242,7 +278,7 @@
         if (!root) return;
 
         var observer = new MutationObserver(function () {
-          if (root.querySelector('#deepscape-project')) {
+          if (root.querySelector('#smart-care-project')) {
             observer.disconnect();
             insertPhotographyBlock();
           }
