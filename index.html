@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=award-plan-label-5"></script>
+    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=my-life-nav-6"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
     <style>
       nav button {
@@ -36,7 +36,8 @@
       nav[data-current-section="deepscape-project"] button:nth-child(3),
       nav[data-current-section="gallery"] button:nth-child(4),
       nav[data-current-section="mediums"] button:nth-child(5),
-      nav[data-current-section="footer"] button:nth-child(6),
+      nav[data-current-section="photography-project"] button:nth-child(6),
+      nav[data-current-section="footer"] button:nth-child(7),
       nav button.nav-current {
         opacity: 1 !important;
       }
@@ -45,7 +46,8 @@
       nav[data-current-section="deepscape-project"] button:nth-child(3)::after,
       nav[data-current-section="gallery"] button:nth-child(4)::after,
       nav[data-current-section="mediums"] button:nth-child(5)::after,
-      nav[data-current-section="footer"] button:nth-child(6)::after,
+      nav[data-current-section="photography-project"] button:nth-child(6)::after,
+      nav[data-current-section="footer"] button:nth-child(7)::after,
       nav button.nav-current::after {
         transform: scaleX(1);
       }
@@ -338,6 +340,7 @@
           'Selected Works': 'deepscape-project',
           'Cooperation Project': 'gallery',
           'Award & Plan': 'mediums',
+          'My Life': 'photography-project',
           'Contact': 'footer'
         };
         var navigationLabels = Object.keys(navigationTargets);
@@ -369,11 +372,16 @@
           var navHeight = nav.getBoundingClientRect().height;
           var marker = window.scrollY + navHeight + Math.min(window.innerHeight * 0.24, 180);
           var currentLabel = navigationLabels[0];
+          var currentSectionTop = -Infinity;
 
           navigationLabels.forEach(function (label) {
             var section = document.getElementById(navigationTargets[label]);
-            if (section && section.getBoundingClientRect().top + window.scrollY <= marker) {
+            if (!section) return;
+
+            var sectionTop = section.getBoundingClientRect().top + window.scrollY;
+            if (sectionTop <= marker && sectionTop > currentSectionTop) {
               currentLabel = label;
+              currentSectionTop = sectionTop;
             }
           });
 
@@ -392,6 +400,15 @@
           }
         }
 
+        function alignNavigationTarget(target, nav) {
+          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var destination = Math.max(
+            0,
+            target.getBoundingClientRect().top + window.scrollY - navHeight
+          );
+          window.scrollTo({ top: destination, behavior: 'auto' });
+        }
+
         document.addEventListener('click', function (event) {
           var button = event.target.closest && event.target.closest('nav button');
           if (!button) return;
@@ -404,14 +421,16 @@
           event.stopImmediatePropagation();
 
           var nav = button.closest('nav');
-          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var destination = Math.max(
-            0,
-            target.getBoundingClientRect().top + window.scrollY - navHeight
-          );
-
           setCurrentNavigation(button.textContent.trim());
-          window.scrollTo({ top: destination, behavior: 'auto' });
+          alignNavigationTarget(target, nav);
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              alignNavigationTarget(target, nav);
+            });
+          });
+          window.setTimeout(function () {
+            alignNavigationTarget(target, nav);
+          }, 160);
         }, true);
 
         window.addEventListener('scroll', scheduleNavigationIndicator, { passive: true });
