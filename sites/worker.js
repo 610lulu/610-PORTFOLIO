@@ -10,6 +10,17 @@ export default {
     }
 
     const assetResponse = await env.ASSETS.fetch(request)
+    const isDocument = url.pathname === '/' || url.pathname === '/index.html'
+    if (isDocument && assetResponse.ok) {
+      const headers = new Headers(assetResponse.headers)
+      headers.set('cache-control', 'no-cache, no-store, must-revalidate')
+      return new Response(assetResponse.body, {
+        status: assetResponse.status,
+        statusText: assetResponse.statusText,
+        headers,
+      })
+    }
+
     if (assetResponse.status !== 404 || request.method !== 'GET') {
       return assetResponse
     }

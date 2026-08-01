@@ -49,6 +49,28 @@ $index = [regex]::Replace(
   "var videoSrc = './video/$previewName';",
   1
 )
+
+# Keep the deployed homepage self-contained. Some networks can load the HTML
+# while delaying or challenging its JavaScript and stylesheet subrequests,
+# which leaves visitors stuck on the initial shell.
+$styleTagPattern = '<link\s+rel="stylesheet"\s+crossorigin\s+href="\./(?<path>assets/[^"]+\.css)">'
+$styleTagMatch = [regex]::Match($index, $styleTagPattern)
+if (-not $styleTagMatch.Success) { throw 'Missing application stylesheet tag in index.html.' }
+$stylePath = Join-Path $clientRoot ($styleTagMatch.Groups['path'].Value.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
+if (-not (Test-Path -LiteralPath $stylePath)) { throw "Missing application stylesheet: $stylePath" }
+$styleSource = [System.IO.File]::ReadAllText($stylePath, [System.Text.Encoding]::UTF8)
+if ($styleSource -match '</style') { throw 'Application stylesheet cannot be safely inlined.' }
+$index = $index.Replace($styleTagMatch.Value, "<style>`n$styleSource`n</style>")
+
+$scriptTagPattern = '<script\s+type="module"\s+crossorigin\s+src="\./(?<path>assets/[^"?]+\.js)(?:\?[^\"]*)?"></script>'
+$scriptTagMatch = [regex]::Match($index, $scriptTagPattern)
+if (-not $scriptTagMatch.Success) { throw 'Missing application module tag in index.html.' }
+$scriptPath = Join-Path $clientRoot ($scriptTagMatch.Groups['path'].Value.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
+if (-not (Test-Path -LiteralPath $scriptPath)) { throw "Missing application module: $scriptPath" }
+$scriptSource = [System.IO.File]::ReadAllText($scriptPath, [System.Text.Encoding]::UTF8)
+if ($scriptSource -match '</script') { throw 'Application module cannot be safely inlined.' }
+$index = $index.Replace($scriptTagMatch.Value, "<script type=`"module`">`n$scriptSource`n</script>")
+
 [System.IO.File]::WriteAllText((Join-Path $clientRoot 'index.html'), $index, [System.Text.UTF8Encoding]::new($false))
 
 $photography = [System.IO.File]::ReadAllText((Join-Path $projectRoot 'photography.html'), [System.Text.Encoding]::UTF8)
