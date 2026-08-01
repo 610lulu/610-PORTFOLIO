@@ -933,6 +933,42 @@
     </script>
     <script>
       (function () {
+        var videoSrc = './video/7月12日.mp4';
+
+        function attachFourthProjectVideo() {
+          document.querySelectorAll('img[alt="PostWing"]').forEach(function (image) {
+            if (image.dataset.videoAttached) return;
+
+            var isDetail = image.getAttribute('code-path') === 'src/pages/ProjectDetail.tsx:215:13';
+            var video = document.createElement('video');
+            video.src = videoSrc;
+            video.setAttribute('aria-label', 'PostWing project video');
+            video.setAttribute('playsinline', '');
+            video.muted = true;
+            video.loop = !isDetail;
+            video.autoplay = !isDetail;
+            video.preload = isDetail ? 'metadata' : 'auto';
+            video.controls = isDetail;
+            video.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;background:#05080a;';
+            video.dataset.videoAttached = 'true';
+
+            image.dataset.videoAttached = 'true';
+            image.replaceWith(video);
+            if (!isDetail) {
+              video.play().catch(function () {});
+            }
+          });
+        }
+
+        attachFourthProjectVideo();
+        new MutationObserver(attachFourthProjectVideo).observe(
+          document.getElementById('root'),
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
+    <script>
+      (function () {
         var awards = [
           { year: '2025', name: 'China Creative Challenges Contest – National Second Prize' },
           { year: '2025', name: 'China Creative Challenges Contest – National Third Prize' },
