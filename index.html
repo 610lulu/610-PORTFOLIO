@@ -4,12 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lu Portfolio — Systems Interaction</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=my-life-nav-6"></script>
+    <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=performance-1"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
     <style>
+      body,
+      .font-sans-body {
+        font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif !important;
+      }
+      h1, h2, h3, h4, h5, h6,
+      .font-serif-display {
+        font-family: Georgia, "Songti SC", "STSong", serif !important;
+      }
+      .static-fluid-fallback,
+      .initial-shell {
+        background:
+          radial-gradient(circle at 72% 18%, rgba(32, 116, 132, .32), transparent 34%),
+          radial-gradient(circle at 24% 48%, rgba(19, 68, 83, .42), transparent 42%),
+          linear-gradient(150deg, #071118 0%, #050a0f 58%, #07151b 100%);
+      }
+      .static-fluid-fallback {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .initial-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        color: #fff;
+      }
+      .initial-shell-inner {
+        text-align: center;
+      }
+      .initial-wordmark {
+        margin: 0;
+        font: 300 clamp(48px, 8vw, 112px)/.92 Georgia, "Songti SC", serif;
+        letter-spacing: .12em;
+      }
+      .initial-kicker {
+        margin-top: 28px;
+        font: 400 11px/1.5 "PingFang SC", "Microsoft YaHei", sans-serif;
+        letter-spacing: .28em;
+        color: rgba(255,255,255,.68);
+      }
+      #deepscape-project,
+      #smart-care-project,
+      #gallery,
+      #mediums,
+      #photography-project,
+      #snapshot-gallery,
+      footer {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 800px;
+      }
       nav button {
         min-height: 44px !important;
         margin: -10px -8px !important;
@@ -354,7 +402,14 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-shell" aria-label="Loading portfolio">
+        <div class="initial-shell-inner">
+          <p class="initial-wordmark">SYSTEMS<br />INTERACTION</p>
+          <p class="initial-kicker">PORTFOLIO · CREATING SINCE 2024</p>
+        </div>
+      </div>
+    </div>
 
     <div id="deepscape-block" style="display: none;">
       <section id="deepscape-project">
@@ -398,7 +453,7 @@
           </div>
           <div class="smart-care-image">
             <img
-              src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3"
+              src="./images/project-elderly-robot.webp?v=performance-1"
               alt="Smart Care AI companion device for older adults"
               loading="lazy"
             />
@@ -802,6 +857,14 @@
           if (!strip || strip.dataset.autoscrollReady) return;
           strip.dataset.autoscrollReady = 'true';
 
+          var isVisible = !('IntersectionObserver' in window);
+          if ('IntersectionObserver' in window) {
+            var visibilityObserver = new IntersectionObserver(function (entries) {
+              isVisible = entries[0].isIntersecting;
+            }, { rootMargin: '200px 0px' });
+            visibilityObserver.observe(strip);
+          }
+
           var originalImages = Array.from(strip.children);
           originalImages.forEach(function (image) {
             var clone = image.cloneNode(true);
@@ -818,7 +881,7 @@
             var elapsed = Math.min(currentTime - previousTime, 50);
             previousTime = currentTime;
 
-            if (!document.hidden) {
+            if (!document.hidden && isVisible) {
               strip.scrollLeft += speed * elapsed / 1000;
               var loopWidth = firstClone.offsetLeft - originalImages[0].offsetLeft;
               if (loopWidth > 0 && strip.scrollLeft >= loopWidth) {
@@ -849,7 +912,7 @@
     </script>
     <script>
       (function () {
-        var replacementSrc = './images/0731-1.png?v=cooperation-project-20260731';
+        var replacementSrc = './images/0731-1.webp?v=performance-1';
 
         function replaceFirstCooperationProjectImage() {
           document.querySelectorAll('img[alt="Damas"]').forEach(function (image) {
@@ -933,7 +996,7 @@
               nextButton.addEventListener('click', function () {
                 var showSecond = image.dataset.slide !== '1';
                 image.dataset.slide = showSecond ? '1' : '0';
-                image.setAttribute('src', showSecond ? './images/0731-8.png?v=cooperation-slide-2' : replacementSrc);
+                image.setAttribute('src', showSecond ? './images/0731-8.webp?v=performance-1' : replacementSrc);
                 nextButton.textContent = showSecond ? '‹' : '›';
                 nextButton.setAttribute('aria-label', showSecond ? 'View previous image' : 'View next image');
               });
@@ -949,7 +1012,6 @@
         }
 
         replaceFirstCooperationProjectImage();
-        window.setInterval(replaceFirstCooperationProjectImage, 250);
         new MutationObserver(replaceFirstCooperationProjectImage).observe(
           document.getElementById('root'),
           { childList: true, subtree: true }
@@ -959,6 +1021,7 @@
     <script>
       (function () {
         var videoSrc = './video/7月12日.mp4';
+        var previewVideoSrc = './video/7月12日-preview.mp4';
 
         function attachFourthProjectVideo() {
           document.querySelectorAll('img[alt="PostWing"]').forEach(function (image) {
@@ -987,7 +1050,7 @@
 
             function loadAndPlayVideo() {
               if (video.src) return;
-              video.src = videoSrc;
+              video.src = previewVideoSrc;
               video.preload = 'metadata';
               video.play().catch(function () {});
             }
