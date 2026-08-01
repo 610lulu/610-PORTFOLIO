@@ -684,15 +684,39 @@
     <div id="photography-block" style="display: none;">
       <section id="photography-project">
         <iframe
-          src="./photography.html?v=my-life-copy-1"
+          data-src="./photography.html?v=my-life-copy-1"
           title="Photography Portfolio"
           allow="fullscreen"
+          loading="lazy"
         ></iframe>
       </section>
     </div>
 
     <script>
       (function () {
+        function initLazyPhotography(section) {
+          var iframe = section.querySelector('iframe[data-src]');
+          if (!iframe) return;
+
+          function loadPhotography() {
+            if (!iframe.dataset.src) return;
+            iframe.src = iframe.dataset.src;
+            iframe.removeAttribute('data-src');
+          }
+
+          if (!('IntersectionObserver' in window)) {
+            iframe.addEventListener('click', loadPhotography, { once: true });
+            return;
+          }
+
+          var observer = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            observer.disconnect();
+            loadPhotography();
+          }, { rootMargin: '500px 0px' });
+          observer.observe(section);
+        }
+
         function insertPhotographyBlock() {
           var root = document.getElementById('root');
           var block = document.getElementById('photography-block');
@@ -707,6 +731,7 @@
           } else {
             root.appendChild(section);
           }
+          initLazyPhotography(section);
           block.remove();
         }
 
@@ -941,21 +966,41 @@
 
             var isDetail = image.getAttribute('code-path') === 'src/pages/ProjectDetail.tsx:215:13';
             var video = document.createElement('video');
-            video.src = videoSrc;
             video.setAttribute('aria-label', 'PostWing project video');
             video.setAttribute('playsinline', '');
+            video.poster = image.currentSrc || image.src;
             video.muted = true;
             video.loop = !isDetail;
-            video.autoplay = !isDetail;
-            video.preload = isDetail ? 'metadata' : 'auto';
+            video.autoplay = false;
+            video.preload = isDetail ? 'metadata' : 'none';
             video.controls = isDetail;
             video.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;background:#05080a;';
             video.dataset.videoAttached = 'true';
 
             image.dataset.videoAttached = 'true';
             image.replaceWith(video);
-            if (!isDetail) {
+
+            if (isDetail) {
+              video.src = videoSrc;
+              return;
+            }
+
+            function loadAndPlayVideo() {
+              if (video.src) return;
+              video.src = videoSrc;
+              video.preload = 'metadata';
               video.play().catch(function () {});
+            }
+
+            if (!('IntersectionObserver' in window)) {
+              video.addEventListener('click', loadAndPlayVideo, { once: true });
+            } else {
+              var observer = new IntersectionObserver(function (entries) {
+                if (!entries[0].isIntersecting) return;
+                observer.disconnect();
+                loadAndPlayVideo();
+              }, { rootMargin: '200px 0px' });
+              observer.observe(video);
             }
           });
         }
