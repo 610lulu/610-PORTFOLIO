@@ -11,6 +11,3 @@ node_modules/
 /.playwright-mcp/
 /debug.log
 /photography-portfolio/
-/dist/
-/.sites-source/
-/.sites-deploy.tar.gz
