@@ -1,5 +1,4 @@
 const http = require("http")
-const https = require("https")
 const fs = require("fs")
 const path = require("path")
 
@@ -19,14 +18,6 @@ const mime = {
 
 http.createServer((request, response) => {
   const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname)
-  if (pathname.startsWith("/Photography-Portfolio-2/")) {
-    const remote = `https://610lulu.github.io${pathname}`
-    https.get(remote, (upstream) => {
-      response.writeHead(upstream.statusCode || 502, upstream.headers)
-      upstream.pipe(response)
-    }).on("error", () => response.writeHead(502).end("Photography asset unavailable"))
-    return
-  }
   const requested = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "")
   const file = path.resolve(root, requested)
 

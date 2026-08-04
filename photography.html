@@ -4,30 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YILIN LU — A Gallery of My Life</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      crossorigin
-      href="https://610lulu.github.io/Photography-Portfolio-2/assets/index-B7ECTXVx.css"
-    />
+    <link rel="stylesheet" href="./fonts/local-fonts.css" />
+    <link rel="stylesheet" href="./photography-assets/index-B7ECTXVx.css" />
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">
-      const moduleUrl = 'https://610lulu.github.io/Photography-Portfolio-2/assets/index-zJ8K2fHp.js'
-      const source = await fetch(moduleUrl).then((response) => response.text())
-      const localized = source
-        .replaceAll('/Photography-Portfolio-2/', 'https://610lulu.github.io/Photography-Portfolio-2/')
-        .replaceAll('./photos/', 'https://610lulu.github.io/Photography-Portfolio-2/photos/')
-      const blobUrl = URL.createObjectURL(new Blob([localized], { type: 'text/javascript' }))
-      await import(blobUrl)
-      URL.revokeObjectURL(blobUrl)
-    </script>
+    <script type="module" src="./photography-assets/index-zJ8K2fHp.js"></script>
     <script>
       (function () {
         function updatePhotographyLabels() {
