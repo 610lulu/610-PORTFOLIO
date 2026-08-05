@@ -505,7 +505,11 @@
         }
 
         pluralizeSectionLabels();
-        new MutationObserver(pluralizeSectionLabels).observe(document.body, {
+        var sectionLabelObserver = new MutationObserver(function () {
+          sectionLabelObserver.disconnect();
+          pluralizeSectionLabels();
+        });
+        sectionLabelObserver.observe(document.body, {
           childList: true,
           subtree: true
         });
