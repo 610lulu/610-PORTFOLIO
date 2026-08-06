@@ -615,6 +615,68 @@
       })();
     </script>
 
+
+    <script>
+      (function () {
+        var shouldReturnToCooperationProjects = false;
+        var returnTimer = 0;
+
+        function alignCooperationProjects() {
+          var gallery = document.getElementById('gallery');
+          if (!gallery) return false;
+
+          var nav = document.querySelector('nav');
+          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var destination = Math.max(
+            0,
+            gallery.getBoundingClientRect().top + window.scrollY - navHeight
+          );
+
+          window.scrollTo({ top: destination, behavior: 'auto' });
+          if (nav) nav.dataset.currentSection = 'gallery';
+          document.querySelectorAll('nav button').forEach(function (button) {
+            var isCurrent = button.textContent.trim() === 'Cooperation Projects';
+            button.classList.toggle('nav-current', isCurrent);
+            if (isCurrent) {
+              button.setAttribute('aria-current', 'location');
+            } else {
+              button.removeAttribute('aria-current');
+            }
+          });
+          return true;
+        }
+
+        function finishReturnToCooperationProjects() {
+          if (!shouldReturnToCooperationProjects || !alignCooperationProjects()) return;
+
+          shouldReturnToCooperationProjects = false;
+          window.clearTimeout(returnTimer);
+          window.history.replaceState(null, '', '#gallery');
+
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(alignCooperationProjects);
+          });
+          window.setTimeout(alignCooperationProjects, 180);
+        }
+
+        document.addEventListener('click', function (event) {
+          var button = event.target.closest && event.target.closest('button');
+          if (!button || button.textContent.trim().toUpperCase().indexOf('BACK') === -1) return;
+
+          var detailPage = button.parentElement && button.parentElement.parentElement;
+          if (!detailPage || !detailPage.querySelector('img')) return;
+
+          shouldReturnToCooperationProjects = true;
+          returnTimer = window.setTimeout(finishReturnToCooperationProjects, 0);
+        }, true);
+
+        new MutationObserver(finishReturnToCooperationProjects).observe(
+          document.getElementById('root'),
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
+
     <script>
       (function () {
         function initLazyVideo(section) {
