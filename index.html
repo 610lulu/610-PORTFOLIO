@@ -1010,6 +1010,31 @@
     <script>
       (function () {
         var awards = [
+          {
+            year: '07/2025',
+            name: 'Geek Lab, Peking University – Visual Design Work',
+            description: 'Created particle-based simulations and motion graphics using TouchDesigner and AI workflows. The work was selected for exhibition, highlighting the narrative potential of generative visual design.'
+          },
+          {
+            year: '12/2024',
+            name: 'The Future Laboratory, Tsinghua University – Corporate Cartoon IP Design Project',
+            description: 'Worked on an IP character design project for a technology park company, integrating AI (Stable Diffusion) and AR technologies to create an interactive digital experience. Responsible for model training and interaction prototyping; the final outcome became part of the company’s brand presentation.'
+          },
+          {
+            year: '06/2024 – 07/2024',
+            name: 'DigitalFUTURES, Tongji University',
+            description: 'Participated in the Digital Futures parametric design workshop at Tongji University, focusing on an urban design project based in Kuwait. Employed parametric modeling techniques to simulate the structural logic of temporary architectural forms, while integrating AIGC technologies to assist the design process. Developed a comprehensive set of visual renderings and tangible 3D prototypes to demonstrate the spatial and structural outcomes.'
+          },
+          {
+            year: '06/2024',
+            name: 'Guangzhou Triennial – “Rag Garden” Community Art Project',
+            description: 'Joined Jason Ho’s mapping workshop. Co-organized a community co-creation workshop with residents of Kangle Village and assisted in exhibition layout and visual design. The project encouraged cultural participation and highlighted how art can foster local connections.'
+          },
+          {
+            year: '05/2022',
+            name: 'Internet Plus Competition – Solar Photovoltaic Project',
+            description: 'Conducted 3D modeling and visualization for a solar energy system and completed a digital presentation highlighting the intersection between sustainable energy and visual communication.'
+          },
           { year: '2025', name: 'China Creative Challenges Contest – National Second Prize' },
           { year: '2025', name: 'China Creative Challenges Contest – National Third Prize' },
           { year: '2025', name: 'Internet Plus Competition – Second Prize' },
@@ -1047,7 +1072,7 @@
           section.dataset.researchPlanReady = 'true';
           if (sectionLabel) sectionLabel.textContent = 'Awards & Plan';
           firstRow.querySelectorAll('text').forEach(function (label) {
-            label.textContent = 'Honours and Awards';
+            label.textContent = 'Projects and Awards';
           });
           planRow.querySelectorAll('text').forEach(function (label) {
             label.textContent = 'Research and Study Plan';
@@ -1067,7 +1092,7 @@
           awardsDetail.hidden = true;
           awardsDetail.style.cssText = 'width:100%;max-height:68vh;overflow-y:auto;padding-right:12px;color:rgba(237,232,228,0.78);';
           var awardsHeading = document.createElement('p');
-          awardsHeading.textContent = 'Awards';
+          awardsHeading.textContent = 'Projects and Awards';
           awardsHeading.style.cssText = 'margin:0 0 24px;color:#30B0D0;font:700 12px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.2em;text-transform:uppercase;';
           awardsDetail.appendChild(awardsHeading);
           awards.forEach(function (award) {
@@ -1081,6 +1106,12 @@
             awardName.style.cssText = 'margin:0;font:500 14px/1.65 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.88);';
             awardRow.appendChild(awardYear);
             awardRow.appendChild(awardName);
+            if (award.description) {
+              var awardDescription = document.createElement('p');
+              awardDescription.textContent = award.description;
+              awardDescription.style.cssText = 'margin:5px 0 0;font:300 13px/1.75 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.66);';
+              awardRow.appendChild(awardDescription);
+            }
             awardsDetail.appendChild(awardRow);
           });
           rightColumn.appendChild(awardsDetail);
