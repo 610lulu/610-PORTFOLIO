@@ -508,11 +508,15 @@
         var sectionLabelObserver = new MutationObserver(function () {
           sectionLabelObserver.disconnect();
           pluralizeSectionLabels();
+          observeSectionLabels();
         });
-        sectionLabelObserver.observe(document.body, {
-          childList: true,
-          subtree: true
-        });
+        function observeSectionLabels() {
+          sectionLabelObserver.observe(document.body, {
+            childList: true,
+            subtree: true
+          });
+        }
+        observeSectionLabels();
 
         function setCurrentNavigation(label) {
           var nav = document.querySelector('nav');
