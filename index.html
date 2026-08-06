@@ -420,6 +420,14 @@
         var indicatorFrame = 0;
 
         function pluralizeSectionLabels() {
+          var heroTitleFirstLine = document.querySelector('#hero-section h2 span:first-child');
+          if (heroTitleFirstLine && heroTitleFirstLine.textContent.trim() === 'SYSTEMS') {
+            heroTitleFirstLine.textContent = 'DIGITAL';
+          }
+          if (document.title.indexOf('Systems Interaction') !== -1) {
+            document.title = document.title.replace('Systems Interaction', 'Digital Interaction');
+          }
+
           document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
             var label = node.textContent.trim();
             if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
