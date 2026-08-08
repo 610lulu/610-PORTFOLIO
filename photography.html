@@ -32,6 +32,17 @@
               .replace(/A gallery of light and shadow/gi, 'A GALLERY OF MY LIFE')
               .replace(/POLAROID/gi, 'CCD');
             if (updated !== value) node.nodeValue = updated;
+
+            if (updated.toUpperCase().includes('A GALLERY OF MY LIFE')) {
+              var decorativeLine = node.parentElement && node.parentElement.nextElementSibling;
+              if (
+                decorativeLine &&
+                decorativeLine.classList.contains('h-px') &&
+                decorativeLine.classList.contains('w-16')
+              ) {
+                decorativeLine.remove();
+              }
+            }
           }
         }
 
