@@ -1048,6 +1048,35 @@
           { year: '2023', name: 'Beautiful Guangdong Rural Revitalization Design Competition – Second Prize' },
           { year: '2023', name: 'Guangdong-Hong Kong-Macao Greater Bay Area Creative Marketing Competition – Bronze Prize' }
         ];
+        var workExperiences = [
+          {
+            company: 'Alibaba Group Holding Limited',
+            location: 'Hangzhou, China',
+            city: 'Hangzhou',
+            country: 'China',
+            role: 'Interaction Design Intern',
+            period: '03/2024 \u2013 05/2024',
+            highlights: [
+              'Participated in the experience redesign of core e-commerce flows, leading the interaction optimization of the \u201cShopping Cart\u201d and \u201cCheckout\u201d pages.',
+              'Conducted user research and competitive analysis to guide data-driven design decisions.',
+              'Created high-fidelity prototypes with Figma and collaborated closely with PMs and developers.',
+              'The new version increased checkout conversion by 6% and reduced customer inquiries by 20%.'
+            ]
+          },
+          {
+            company: 'Guangdong\u2013Hong Kong\u2013Macao Youth Innovation and Entrepreneurship Incubator',
+            location: 'Guangzhou, China',
+            city: 'Guangzhou',
+            country: 'China',
+            role: 'Design Assistant',
+            period: '05/2023 \u2013 08/2023',
+            highlights: [
+              'Developed brand identities and packaging systems for five start-up teams, enhancing visual consistency and recognition.',
+              'Contributed to the design of user engagement and gamification systems, increasing platform activity by over 30%.',
+              'Supported a brand upgrade project that helped a team secure RMB 500,000 in seed funding.'
+            ]
+          }
+        ];
         var planParagraphs = [
           'My undergraduate studies have focused on architectural space, product design, mapping-based research, and interaction experience. These experiences have gradually led me to realize that the future of interaction design should not be confined to screens and interfaces, but should extend into the physical environments in which people live and work.',
           'In the future, I hope to continue exploring the theme of “seamless interaction in intelligent environments.” Through user-centred design, human–computer interaction, and social and humanistic research, I aim to further strengthen my abilities in user research, behavioural observation, needs analysis, and experience evaluation. In doing so, I hope to develop a more accurate and comprehensive understanding of the relationships between people, spaces, devices, and digital systems.',
@@ -1072,7 +1101,7 @@
           section.dataset.researchPlanReady = 'true';
           if (sectionLabel) sectionLabel.textContent = 'Awards & Plan';
           var workRow = firstRow.cloneNode(true);
-          workRow.style.cursor = 'default';
+          workRow.style.cursor = 'pointer';
           workRow.setAttribute('aria-label', 'Work Experience');
           workRow.querySelectorAll('text').forEach(function (label, index) {
             label.textContent = 'Work Experience';
@@ -1086,6 +1115,10 @@
             label.textContent = 'Research and Study Plan';
           });
           if (archiveRow) archiveRow.remove();
+          workRow.setAttribute('role', 'button');
+          workRow.setAttribute('tabindex', '0');
+          workRow.setAttribute('aria-expanded', 'false');
+          workRow.setAttribute('aria-controls', 'work-experience-detail');
           planRow.setAttribute('role', 'button');
           planRow.setAttribute('tabindex', '0');
           planRow.setAttribute('aria-expanded', 'false');
@@ -1095,6 +1128,64 @@
 
           var originalDetail = rightColumn.firstElementChild;
           if (originalDetail) originalDetail.style.display = 'none';
+
+          var workDetail = document.createElement('div');
+          workDetail.id = 'work-experience-detail';
+          workDetail.hidden = true;
+          workDetail.style.cssText = 'width:100%;max-height:68vh;overflow-y:auto;padding-right:12px;color:rgba(237,232,228,0.78);';
+          var workHeading = document.createElement('p');
+          workHeading.textContent = 'Work Experience';
+          workHeading.style.cssText = 'margin:0 0 24px;color:#30B0D0;font:700 12px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.2em;text-transform:uppercase;';
+          workDetail.appendChild(workHeading);
+          workExperiences.forEach(function (experience, experienceIndex) {
+            var experienceBlock = document.createElement('section');
+            experienceBlock.style.cssText = 'margin:0 0 26px;padding:0 0 24px;' + (experienceIndex < workExperiences.length - 1 ? 'border-bottom:1px solid rgba(255,255,255,.08);' : '');
+
+            var companyLine = document.createElement('p');
+            companyLine.style.cssText = 'margin:0 0 10px;font:600 14px/1.65 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.92);';
+            var companyIcon = document.createElement('span');
+            companyIcon.textContent = '\u25a6';
+            companyIcon.setAttribute('aria-hidden', 'true');
+            companyIcon.style.cssText = 'margin-right:7px;color:#30B0D0;font-style:normal;';
+            var companyName = document.createElement('span');
+            companyName.textContent = experience.company;
+            companyName.style.fontStyle = 'italic';
+            var companyLocation = document.createElement('span');
+            companyLocation.textContent = ' \u2013 ' + experience.location;
+            companyLocation.style.cssText = 'color:#30B0D0;font-style:normal;font-weight:400;';
+            companyLine.appendChild(companyIcon);
+            companyLine.appendChild(companyName);
+            companyLine.appendChild(companyLocation);
+
+            var meta = document.createElement('p');
+            meta.textContent = 'City: ' + experience.city + '   |   Country: ' + experience.country;
+            meta.style.cssText = 'margin:0 0 7px;font:400 12px/1.65 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.68);';
+
+            var role = document.createElement('p');
+            role.textContent = experience.role;
+            role.style.cssText = 'margin:0 0 8px;font:700 13px/1.6 "Noto Sans SC",sans-serif;color:#30B0D0;';
+
+            var period = document.createElement('p');
+            period.textContent = '[ ' + experience.period + ' ]';
+            period.style.cssText = 'margin:0 0 10px;font:400 11px/1.5 "Noto Sans SC",sans-serif;letter-spacing:.08em;color:rgba(237,232,228,.48);';
+
+            var highlights = document.createElement('ul');
+            highlights.style.cssText = 'margin:0;padding-left:20px;list-style:disc outside;font:300 13px/1.7 "Noto Sans SC",sans-serif;color:rgba(237,232,228,.72);';
+            experience.highlights.forEach(function (highlight) {
+              var item = document.createElement('li');
+              item.textContent = highlight;
+              item.style.margin = '0 0 3px';
+              highlights.appendChild(item);
+            });
+
+            experienceBlock.appendChild(companyLine);
+            experienceBlock.appendChild(meta);
+            experienceBlock.appendChild(role);
+            experienceBlock.appendChild(period);
+            experienceBlock.appendChild(highlights);
+            workDetail.appendChild(experienceBlock);
+          });
+          rightColumn.appendChild(workDetail);
 
           var awardsDetail = document.createElement('div');
           awardsDetail.hidden = true;
@@ -1140,17 +1231,36 @@
           rightColumn.appendChild(detail);
 
           function showPlan() {
+            workDetail.hidden = true;
             awardsDetail.hidden = true;
             detail.hidden = false;
+            workRow.setAttribute('aria-expanded', 'false');
             firstRow.setAttribute('aria-expanded', 'false');
             planRow.setAttribute('aria-expanded', 'true');
           }
           function showAwards() {
+            workDetail.hidden = true;
             detail.hidden = true;
             awardsDetail.hidden = false;
+            workRow.setAttribute('aria-expanded', 'false');
             planRow.setAttribute('aria-expanded', 'false');
             firstRow.setAttribute('aria-expanded', 'true');
           }
+          function showWorkExperience() {
+            awardsDetail.hidden = true;
+            detail.hidden = true;
+            workDetail.hidden = false;
+            firstRow.setAttribute('aria-expanded', 'false');
+            planRow.setAttribute('aria-expanded', 'false');
+            workRow.setAttribute('aria-expanded', 'true');
+          }
+          workRow.addEventListener('click', showWorkExperience);
+          workRow.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              showWorkExperience();
+            }
+          });
           firstRow.addEventListener('click', showAwards);
           firstRow.addEventListener('keydown', function (event) {
             if (event.key === 'Enter' || event.key === ' ') {
