@@ -1308,5 +1308,29 @@
         );
       })();
     </script>
+    <script>
+      (function () {
+        var originalFooterCopy = "I'm an emerging designer working across product-service systems and digital interaction — currently open to collaborations and new opportunities. If my work resonates with you, I'd love to hear from you. This entire website was designed and built by me.";
+        var updatedFooterCopy = "If my work resonates with you, I'd love to hear from you. This entire website was designed and built by me.";
+
+        function updateFooterCopy() {
+          var footer = document.getElementById('footer');
+          if (!footer) return;
+          var walker = document.createTreeWalker(footer, NodeFilter.SHOW_TEXT);
+          var node;
+          while ((node = walker.nextNode())) {
+            if ((node.nodeValue || '').trim() === originalFooterCopy) {
+              node.nodeValue = updatedFooterCopy;
+            }
+          }
+        }
+
+        updateFooterCopy();
+        new MutationObserver(updateFooterCopy).observe(
+          document.getElementById('root'),
+          { childList: true, characterData: true, subtree: true }
+        );
+      })();
+    </script>
   </body>
 </html>
