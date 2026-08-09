@@ -1438,5 +1438,41 @@
         );
       })();
     </script>
+    <script>
+      (function () {
+        var youtubeUrl = 'https://www.youtube.com/@610lulu';
+
+        function addYouTubeSocialLink() {
+          var footer = document.getElementById('footer');
+          if (!footer || footer.querySelector('a[href="' + youtubeUrl + '"]')) return;
+
+          var headings = footer.querySelectorAll('p');
+          var socialHeading = Array.prototype.find.call(headings, function (heading) {
+            return (heading.textContent || '').trim().toLowerCase() === 'social';
+          });
+          var linkList = socialHeading && socialHeading.nextElementSibling;
+          var referenceLink = linkList && linkList.querySelector('a');
+          if (!referenceLink) return;
+
+          var youtubeLink = document.createElement('a');
+          youtubeLink.href = youtubeUrl;
+          youtubeLink.textContent = 'YouTube';
+          youtubeLink.style.cssText = referenceLink.style.cssText;
+          youtubeLink.addEventListener('mouseenter', function () {
+            youtubeLink.style.opacity = '1';
+          });
+          youtubeLink.addEventListener('mouseleave', function () {
+            youtubeLink.style.opacity = '0.6';
+          });
+          linkList.appendChild(youtubeLink);
+        }
+
+        addYouTubeSocialLink();
+        new MutationObserver(addYouTubeSocialLink).observe(
+          document.getElementById('root'),
+          { childList: true, subtree: true }
+        );
+      })();
+    </script>
   </body>
 </html>
