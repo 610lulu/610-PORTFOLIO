@@ -240,7 +240,6 @@
         color: #fff;
       }
       #hero-section::before,
-      #selected-works::before,
       #photography-project::before,
       #footer > footer::before {
         position: absolute;
@@ -262,9 +261,17 @@
         content: "About";
         top: clamp(92px, 14vh, 124px);
       }
-      #selected-works::before {
+      .selected-works-shell::before {
         content: "Selected Works";
-        top: clamp(64px, 9vh, 88px);
+        display: block;
+        margin-bottom: 48px;
+        font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.8;
+        letter-spacing: .3em;
+        color: rgba(237, 232, 228, .35);
+        text-transform: uppercase;
       }
       #photography-project::before { content: "My Life"; }
       #footer > footer::before { content: "Contact"; }
