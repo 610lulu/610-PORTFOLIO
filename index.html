@@ -266,22 +266,41 @@
       .project-back {
         width: fit-content;
         margin: 0 0 28px;
-        padding: 0;
-        border: 0;
-        background: none;
-        color: rgba(255,255,255,.62);
+        padding: 10px 16px 10px 13px;
+        border: 1px solid rgba(48,176,208,.55);
+        border-radius: 999px;
+        background: rgba(48,176,208,.1);
+        box-shadow: 0 0 18px rgba(48,176,208,.1);
+        color: rgba(255,255,255,.92);
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
         font-family: "Noto Sans SC", sans-serif;
-        font-size: 10px;
-        font-weight: 500;
-        letter-spacing: .22em;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .18em;
         text-transform: uppercase;
-        transition: color .25s ease, transform .25s ease;
+        transition: color .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .25s ease;
+      }
+      .project-back::before {
+        content: "←";
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: 0;
       }
       .project-back:hover,
       .project-back:focus-visible {
         color: #fff;
+        border-color: #30b0d0;
+        background: rgba(48,176,208,.18);
+        box-shadow: 0 0 24px rgba(48,176,208,.18);
         transform: translateX(-4px);
+      }
+      .project-back:focus-visible {
+        outline: 2px solid rgba(48,176,208,.75);
+        outline-offset: 3px;
       }
       [data-project-detail][hidden] {
         display: none !important;
@@ -550,7 +569,7 @@
       <section id="deepscape-project" data-project-detail hidden>
         <div class="deepscape-shell">
           <div class="deepscape-heading">
-          <button class="project-back" type="button" data-project-back>← Back to Selected Works</button>
+          <button class="project-back" type="button" data-project-back>Back to Selected Works</button>
           <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">01-Deepscape Reverie</h2>
@@ -578,7 +597,7 @@
       <section id="smart-care-project" data-project-detail hidden>
         <div class="deepscape-shell">
           <div class="deepscape-heading">
-          <button class="project-back" type="button" data-project-back>← Back to Selected Works</button>
+          <button class="project-back" type="button" data-project-back>Back to Selected Works</button>
           <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">02-Smart Care</h2>
