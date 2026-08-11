@@ -132,9 +132,7 @@
           padding: 0 5vw !important;
         }
       }
-      #selected-works,
-      #deepscape-project,
-      #smart-care-project {
+      #selected-works {
         width: 100%;
         min-height: 100vh;
         padding: 9vh 6vw 5vh;
@@ -263,171 +261,13 @@
         white-space: nowrap;
         text-transform: uppercase;
       }
-      .project-back {
-        width: fit-content;
-        margin: 0 0 28px;
-        padding: 10px 16px 10px 13px;
-        border: 1px solid rgba(48,176,208,.55);
-        border-radius: 999px;
-        background: rgba(48,176,208,.1);
-        box-shadow: 0 0 18px rgba(48,176,208,.1);
-        color: rgba(255,255,255,.92);
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        font-family: "Noto Sans SC", sans-serif;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: .18em;
-        text-transform: uppercase;
-        transition: color .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease, transform .25s ease;
-      }
-      .project-back::before {
-        content: "←";
-        font-size: 17px;
-        font-weight: 400;
-        line-height: 1;
-        letter-spacing: 0;
-      }
-      .project-back:hover,
-      .project-back:focus-visible {
-        color: #fff;
-        border-color: #30b0d0;
-        background: rgba(48,176,208,.18);
-        box-shadow: 0 0 24px rgba(48,176,208,.18);
-        transform: translateX(-4px);
-      }
-      .project-back:focus-visible {
-        outline: 2px solid rgba(48,176,208,.75);
-        outline-offset: 3px;
-      }
-      [data-project-detail][hidden] {
-        display: none !important;
-      }
-      .deepscape-shell {
-        width: 100%;
-        max-width: 1440px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 4vh;
-      }
-      .deepscape-heading {
-        width: 100%;
-      }
-      .deepscape-title-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 32px;
-        flex-wrap: wrap;
-      }
-      .deepscape-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        flex: 0 0 auto;
-      }
-      .firefly-title {
-        animation: firefly-glow 6.8s ease-in-out infinite;
-        will-change: opacity, filter, text-shadow;
-      }
-      #smart-care-project .firefly-title {
-        animation-delay: -2.4s;
-      }
-      @keyframes firefly-glow {
-        0%, 100% {
-          opacity: .72;
-          filter: brightness(.86);
-          text-shadow: 0 0 0 rgba(224, 255, 176, 0);
-        }
-        9% {
-          opacity: .94;
-          filter: brightness(1.08);
-          text-shadow: 0 0 12px rgba(224, 255, 176, .18);
-        }
-        17% {
-          opacity: .66;
-          filter: brightness(.8);
-          text-shadow: 0 0 3px rgba(224, 255, 176, .04);
-        }
-        31% {
-          opacity: 1;
-          filter: brightness(1.2);
-          text-shadow: 0 0 22px rgba(224, 255, 176, .28);
-        }
-        38% {
-          opacity: .78;
-          filter: brightness(.92);
-          text-shadow: 0 0 7px rgba(224, 255, 176, .1);
-        }
-        57% {
-          opacity: .9;
-          filter: brightness(1.04);
-          text-shadow: 0 0 15px rgba(224, 255, 176, .2);
-        }
-        63% {
-          opacity: .7;
-          filter: brightness(.84);
-          text-shadow: 0 0 4px rgba(224, 255, 176, .06);
-        }
-        79% {
-          opacity: .98;
-          filter: brightness(1.14);
-          text-shadow: 0 0 19px rgba(224, 255, 176, .24);
-        }
-        88% {
-          opacity: .75;
-          filter: brightness(.9);
-          text-shadow: 0 0 6px rgba(224, 255, 176, .08);
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .firefly-title {
-          animation: none;
-          opacity: 1;
-          filter: none;
-          text-shadow: none;
-        }
-      }
-      .deepscape-video {
-        flex: 1;
-        min-height: 380px;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,.14);
-        border-radius: 10px;
-        background: #000;
-        box-shadow: 0 28px 80px rgba(0,0,0,.45);
-      }
-      .deepscape-video video {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-      }
-      .smart-care-image {
-        width: 100%;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,.14);
-        border-radius: 10px;
-        background: #0b1014;
-        box-shadow: 0 28px 80px rgba(0,0,0,.45);
-      }
-      .smart-care-image img {
-        width: 100%;
-        height: auto;
-        display: block;
-      }
       @media (max-width: 1100px) {
         .selected-works-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
       @media (max-width: 720px) {
-        #selected-works,
-        #deepscape-project,
-        #smart-care-project { min-height: auto; padding: 11vh 7vw 7vh; }
+        #selected-works { min-height: auto; padding: 11vh 7vw 7vh; }
         .selected-works-grid {
           grid-template-columns: 1fr;
           gap: 52px;
@@ -436,9 +276,6 @@
           opacity: 1;
           transform: none;
         }
-        .deepscape-title-row { align-items: flex-start; }
-        .deepscape-actions { width: 100%; }
-        .deepscape-video { min-height: 260px; }
       }
       #photography-project {
         width: 100%;
@@ -535,7 +372,7 @@
       <section id="selected-works" aria-label="Selected Works">
         <div class="selected-works-shell">
           <div class="selected-works-grid">
-            <a class="selected-work-card" href="#deepscape-project" data-project-target="deepscape-project" aria-label="View Deepscape Reverie project">
+            <a class="selected-work-card" href="./deepscape-reverie.html" aria-label="View Deepscape Reverie project">
               <div class="selected-work-media">
                 <img src="./images/Deepscape Reverie封面页.jpg" alt="Dreamlike landscape from Deepscape Reverie" loading="lazy" />
               </div>
@@ -544,7 +381,7 @@
                 <h3 class="selected-work-title">Deepscape Reverie</h3>
               </div>
             </a>
-            <a class="selected-work-card" href="#smart-care-project" data-project-target="smart-care-project" aria-label="View Smart Care project">
+            <a class="selected-work-card" href="./smart-care.html" aria-label="View Smart Care project">
               <div class="selected-work-media">
                 <img src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3" alt="Smart Care AI companion device for older adults" loading="lazy" />
               </div>
@@ -563,56 +400,6 @@
                 <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <section id="deepscape-project" data-project-detail hidden>
-        <div class="deepscape-shell">
-          <div class="deepscape-heading">
-          <button class="project-back" type="button" data-project-back>Back to Selected Works</button>
-          <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
-            <div class="deepscape-title-row">
-              <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">01-Deepscape Reverie</h2>
-              <div class="deepscape-actions">
-                <span aria-disabled="true" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">Open PDF ↗</span>
-                <a href="https://610lulu.github.io/Deepscape-Reverie/" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">Open Full Experience ↗</a>
-                <a href="https://github.com/610lulu/Deepscape-Reverie" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
-              </div>
-            </div>
-            <p style="width: 100%; margin: 20px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.75; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.02em;">This design centers on the individual memories of Shenjing Village, integrating residents' oral histories and spatial memories through digital technology. By mapping the relationships between "space—events—emotions" via knowledge graphs, it abstracts these into spatial prototypes guided by light and shadow. Combining dreamcore-style imagery with scripted game chapters, the design constructs an online exhibition narrative experience that encourages user participation in memory interaction. This achieves the digital translation of individual memories into collective memory, exploring new pathways for digital heritage presentation.</p>
-          </div>
-          <div class="deepscape-video" aria-label="Deepscape Reverie video preview">
-            <video
-              data-src="./video/deepscape-preview-720p.mp4"
-              poster="./images/Deepscape Reverie封面页.jpg"
-              controls
-              muted
-              loop
-              playsinline
-              preload="none"
-            ></video>
-          </div>
-        </div>
-      </section>
-      <section id="smart-care-project" data-project-detail hidden>
-        <div class="deepscape-shell">
-          <div class="deepscape-heading">
-          <button class="project-back" type="button" data-project-back>Back to Selected Works</button>
-          <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
-            <div class="deepscape-title-row">
-              <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">02-Smart Care</h2>
-              <div class="deepscape-actions" aria-label="Smart Care project links">
-                <a href="https://github.com/610lulu/Smart-Care" target="_blank" rel="noopener noreferrer" style="padding: 12px 20px; border: 1px solid rgba(255,255,255,0.36); border-radius: 999px; color: #fff; text-decoration: none; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">View GitHub</a>
-              </div>
-            </div>
-            <p style="width: 100%; margin: 20px 0 0; font-family: 'Noto Sans SC', sans-serif; font-size: clamp(14px, 1.2vw, 17px); line-height: 1.75; font-weight: 300; color: rgba(255,255,255,0.65); letter-spacing: 0.02em;">Many older adults face barriers in independently managing chronic conditions, protecting their privacy, and using conventional digital products. To address these challenges, I designed an AI-powered companion device that integrates health monitoring, age-friendly interaction, daily health management, and emotional companionship.</p>
-          </div>
-          <div class="smart-care-image">
-            <img
-              src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3"
-              alt="Smart Care AI companion device for older adults"
-              loading="lazy"
-            />
           </div>
         </div>
       </section>
@@ -810,10 +597,6 @@
           if (!button) return;
 
           var navigationLabel = button.textContent.trim();
-          if (navigationLabel === 'Selected Works' && window.showSelectedWorksOverview) {
-            window.showSelectedWorksOverview();
-          }
-
           var targetId = navigationTargets[navigationLabel];
           var target = targetId && document.getElementById(targetId);
           if (!target) return;
@@ -912,138 +695,40 @@
 
     <script>
       (function () {
-        function initLazyVideo(section) {
-          var video = section.querySelector('video[data-src]');
-          if (!video) return;
-
-          function loadVideo() {
-            if (!video.dataset.src) return;
-            video.src = video.dataset.src;
-            video.removeAttribute('data-src');
-            video.load();
-          }
-
-          if (!('IntersectionObserver' in window)) {
-            loadVideo();
-            return;
-          }
-
-          var videoObserver = new IntersectionObserver(function (entries) {
-            if (!entries[0].isIntersecting) return;
-            videoObserver.disconnect();
-            loadVideo();
-          }, { rootMargin: '300px 0px' });
-
-          videoObserver.observe(video);
-        }
-
-        function alignSelectedWork(element) {
-          if (!element) return;
+        function alignSelectedWorks(section) {
+          if (!section || window.location.hash !== '#selected-works') return;
           var nav = document.querySelector('nav');
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
           var destination = Math.max(
             0,
-            element.getBoundingClientRect().top + window.scrollY - navHeight
+            section.getBoundingClientRect().top + window.scrollY - navHeight
           );
           window.scrollTo({ top: destination, behavior: 'auto' });
         }
 
-        function showSelectedWork(projectId, shouldAlign) {
-          var overview = document.getElementById('selected-works');
-          if (!overview) return;
-
-          var selectedProject = null;
-          document.querySelectorAll('[data-project-detail]').forEach(function (section) {
-            var isSelected = section.id === projectId;
-            section.hidden = !isSelected;
-            if (isSelected) selectedProject = section;
-          });
-          overview.hidden = Boolean(selectedProject);
-
-          var target = selectedProject || overview;
-          if (shouldAlign !== false) {
-            window.requestAnimationFrame(function () {
-              window.requestAnimationFrame(function () {
-                alignSelectedWork(target);
-                var focusTarget = selectedProject && selectedProject.querySelector('.project-back');
-                if (focusTarget) focusTarget.focus({ preventScroll: true });
-              });
-            });
-          }
-        }
-
-        function projectFromLocation() {
-          var projectId = window.location.hash.slice(1);
-          return document.getElementById(projectId) && document.getElementById(projectId).hasAttribute('data-project-detail')
-            ? projectId
-            : null;
-        }
-
-        window.showSelectedWorksOverview = function () {
-          if (projectFromLocation()) {
-            window.history.replaceState(null, '', '#selected-works');
-          }
-          showSelectedWork(null, false);
-        };
-
-        document.addEventListener('click', function (event) {
-          var overviewLink = event.target.closest && event.target.closest('a[href="#selected-works"]');
-          if (overviewLink) {
-            event.preventDefault();
-            window.history.replaceState(null, '', '#selected-works');
-            showSelectedWork(null, true);
-            return;
-          }
-
-          var projectLink = event.target.closest && event.target.closest('[data-project-target]');
-          if (projectLink) {
-            event.preventDefault();
-            var projectId = projectLink.getAttribute('data-project-target');
-            window.history.pushState({ selectedWorksProject: projectId }, '', '#' + projectId);
-            showSelectedWork(projectId, true);
-            return;
-          }
-
-          var backButton = event.target.closest && event.target.closest('[data-project-back]');
-          if (!backButton) return;
-
-          if (window.history.state && window.history.state.selectedWorksProject) {
-            window.history.back();
-          } else {
-            window.history.replaceState(null, '', '#selected-works');
-            showSelectedWork(null, true);
-          }
-        });
-
-        window.addEventListener('popstate', function () {
-          showSelectedWork(projectFromLocation(), true);
-        });
-
-        function insertDeepscapeBlock() {
+        function insertSelectedWorks() {
           var root = document.getElementById('root');
           var deepscapeBlock = document.getElementById('deepscape-block');
           if (!root || !deepscapeBlock) return;
 
           var selectedWorksSection = deepscapeBlock.querySelector('#selected-works');
-          var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
-          if (!selectedWorksSection || !deepscapeSection) return;
-          var smartCareSection = deepscapeBlock.querySelector('#smart-care-project');
+          if (!selectedWorksSection) return;
 
-          // 把 Selected Works 概览和按需展示的项目详情放在 Motivation 之后。
+          // 把 Selected Works 概览放在 Motivation 之后；项目详情使用独立页面。
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
             philosophy.appendChild(selectedWorksSection);
-            philosophy.appendChild(deepscapeSection);
-            if (smartCareSection) philosophy.appendChild(smartCareSection);
           } else {
             // 如果找不到，就追加到 root 末尾
             root.appendChild(selectedWorksSection);
-            root.appendChild(deepscapeSection);
-            if (smartCareSection) root.appendChild(smartCareSection);
           }
-          initLazyVideo(deepscapeSection);
           deepscapeBlock.remove();
-          showSelectedWork(projectFromLocation(), false);
+
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              alignSelectedWorks(selectedWorksSection);
+            });
+          });
         }
 
         var root = document.getElementById('root');
@@ -1053,14 +738,14 @@
         var observer = new MutationObserver(function () {
           if (root.querySelector('#philosophy')) {
             observer.disconnect();
-            insertDeepscapeBlock();
+            insertSelectedWorks();
           }
         });
         observer.observe(root, { childList: true, subtree: true });
 
         // 兜底：页面完全加载后再执行一次
         window.addEventListener('load', function () {
-          setTimeout(insertDeepscapeBlock, 100);
+          setTimeout(insertSelectedWorks, 100);
         });
       })();
     </script>
