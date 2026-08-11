@@ -31,7 +31,7 @@
       }
       nav[data-current-section="hero-section"] button:nth-child(1),
       nav[data-current-section="philosophy"] button:nth-child(2),
-      nav[data-current-section="deepscape-project"] button:nth-child(3),
+      nav[data-current-section="selected-works"] button:nth-child(3),
       nav[data-current-section="gallery"] button:nth-child(4),
       nav[data-current-section="mediums"] button:nth-child(5),
       nav[data-current-section="photography-project"] button:nth-child(6),
@@ -41,7 +41,7 @@
       }
       nav[data-current-section="hero-section"] button:nth-child(1)::after,
       nav[data-current-section="philosophy"] button:nth-child(2)::after,
-      nav[data-current-section="deepscape-project"] button:nth-child(3)::after,
+      nav[data-current-section="selected-works"] button:nth-child(3)::after,
       nav[data-current-section="gallery"] button:nth-child(4)::after,
       nav[data-current-section="mediums"] button:nth-child(5)::after,
       nav[data-current-section="photography-project"] button:nth-child(6)::after,
@@ -132,6 +132,7 @@
           padding: 0 5vw !important;
         }
       }
+      #selected-works,
       #deepscape-project,
       #smart-care-project {
         width: 100%;
@@ -141,6 +142,169 @@
         display: flex;
         background: #05080a;
         color: #fff;
+      }
+      #selected-works {
+        align-items: center;
+        padding-top: clamp(92px, 12vh, 148px);
+        padding-bottom: clamp(72px, 10vh, 124px);
+      }
+      .selected-works-shell {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+      .selected-works-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 32px;
+        margin-bottom: clamp(38px, 5vw, 72px);
+      }
+      .selected-works-eyebrow,
+      .selected-work-number,
+      .selected-work-type {
+        margin: 0;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1.4;
+        letter-spacing: .28em;
+        text-transform: uppercase;
+      }
+      .selected-works-eyebrow,
+      .selected-work-type {
+        color: rgba(255,255,255,.46);
+      }
+      .selected-works-title {
+        margin: 12px 0 0;
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(40px, 6vw, 82px);
+        font-weight: 300;
+        line-height: .98;
+        letter-spacing: .04em;
+      }
+      .selected-works-intro {
+        max-width: 420px;
+        margin: 0;
+        color: rgba(255,255,255,.58);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: clamp(13px, 1.1vw, 16px);
+        font-weight: 300;
+        line-height: 1.75;
+      }
+      .selected-works-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(48px, 6vw, 88px) clamp(24px, 4vw, 56px);
+      }
+      .selected-work-card {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+      }
+      .selected-work-media {
+        position: relative;
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 10px;
+        background: #0b1014;
+      }
+      .selected-work-media::after {
+        content: "View project  ↗";
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        padding: 11px 15px;
+        border: 1px solid rgba(255,255,255,.38);
+        border-radius: 999px;
+        background: rgba(5,8,10,.72);
+        color: #fff;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity .35s ease, transform .35s ease, background .35s ease;
+        backdrop-filter: blur(12px);
+      }
+      .selected-work-media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transform: scale(1.001);
+        transition: transform .7s cubic-bezier(.2,.7,.2,1), filter .7s ease;
+      }
+      .selected-work-card:hover .selected-work-media img,
+      .selected-work-card:focus-visible .selected-work-media img {
+        transform: scale(1.035);
+        filter: brightness(.78);
+      }
+      .selected-work-card:hover .selected-work-media::after,
+      .selected-work-card:focus-visible .selected-work-media::after {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .selected-work-card:focus-visible {
+        outline: 2px solid #30b0d0;
+        outline-offset: 8px;
+        border-radius: 10px;
+      }
+      .selected-work-meta {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: start;
+        gap: 18px;
+        margin-top: 20px;
+      }
+      .selected-work-number {
+        color: #30b0d0;
+        padding-top: 6px;
+      }
+      .selected-work-title {
+        margin: 0;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: clamp(20px, 2vw, 30px);
+        font-weight: 400;
+        line-height: 1.2;
+        letter-spacing: .035em;
+        text-transform: uppercase;
+      }
+      .selected-work-summary {
+        grid-column: 2 / -1;
+        max-width: 680px;
+        margin: -2px 0 0;
+        color: rgba(255,255,255,.5);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+      .project-back {
+        width: fit-content;
+        margin: 0 0 28px;
+        padding: 0;
+        border: 0;
+        background: none;
+        color: rgba(255,255,255,.62);
+        cursor: pointer;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+        transition: color .25s ease, transform .25s ease;
+      }
+      .project-back:hover,
+      .project-back:focus-visible {
+        color: #fff;
+        transform: translateX(-4px);
+      }
+      [data-project-detail][hidden] {
+        display: none !important;
       }
       .deepscape-shell {
         width: 100%;
@@ -257,8 +421,36 @@
         display: block;
       }
       @media (max-width: 720px) {
+        #selected-works,
         #deepscape-project,
         #smart-care-project { min-height: auto; padding: 11vh 7vw 7vh; }
+        .selected-works-heading {
+          display: block;
+          margin-bottom: 42px;
+        }
+        .selected-works-intro {
+          margin-top: 22px;
+        }
+        .selected-works-grid {
+          grid-template-columns: 1fr;
+          gap: 52px;
+        }
+        .selected-work-media::after {
+          opacity: 1;
+          transform: none;
+        }
+        .selected-work-meta {
+          grid-template-columns: auto minmax(0, 1fr);
+        }
+        .selected-work-type {
+          grid-column: 2;
+          grid-row: 2;
+        }
+        .selected-work-summary {
+          grid-column: 2;
+          grid-row: 3;
+          margin-top: 0;
+        }
         .deepscape-title-row { align-items: flex-start; }
         .deepscape-actions { width: 100%; }
         .deepscape-video { min-height: 260px; }
@@ -355,9 +547,45 @@
     <div id="root"></div>
 
     <div id="deepscape-block" style="display: none;">
-      <section id="deepscape-project">
+      <section id="selected-works" aria-labelledby="selected-works-title">
+        <div class="selected-works-shell">
+          <div class="selected-works-heading">
+            <div>
+              <p class="selected-works-eyebrow">Independent projects · 2025–2026</p>
+              <h2 id="selected-works-title" class="selected-works-title">Selected Works</h2>
+            </div>
+            <p class="selected-works-intro">A selection of independent projects exploring memory, intelligent environments, and more human ways of interacting with technology.</p>
+          </div>
+          <div class="selected-works-grid">
+            <a class="selected-work-card" href="#deepscape-project" data-project-target="deepscape-project" aria-label="View Deepscape Reverie project">
+              <div class="selected-work-media">
+                <img src="./images/Deepscape Reverie封面页.jpg" alt="Dreamlike landscape from Deepscape Reverie" loading="lazy" />
+              </div>
+              <div class="selected-work-meta">
+                <span class="selected-work-number">01</span>
+                <h3 class="selected-work-title">Deepscape Reverie</h3>
+                <span class="selected-work-type">Digital heritage · Interactive narrative</span>
+                <p class="selected-work-summary">An online exhibition experience translating individual memories of Shenjing Village into a shared, participatory spatial narrative.</p>
+              </div>
+            </a>
+            <a class="selected-work-card" href="#smart-care-project" data-project-target="smart-care-project" aria-label="View Smart Care project">
+              <div class="selected-work-media">
+                <img src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3" alt="Smart Care AI companion device for older adults" loading="lazy" />
+              </div>
+              <div class="selected-work-meta">
+                <span class="selected-work-number">02</span>
+                <h3 class="selected-work-title">Smart Care</h3>
+                <span class="selected-work-type">AI product · Inclusive interaction</span>
+                <p class="selected-work-summary">An age-friendly AI companion integrating health monitoring, daily support, privacy-aware interaction, and emotional companionship.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section id="deepscape-project" data-project-detail hidden>
         <div class="deepscape-shell">
           <div class="deepscape-heading">
+          <button class="project-back" type="button" data-project-back>← Back to Selected Works</button>
           <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">01-Deepscape Reverie</h2>
@@ -382,9 +610,10 @@
           </div>
         </div>
       </section>
-      <section id="smart-care-project">
+      <section id="smart-care-project" data-project-detail hidden>
         <div class="deepscape-shell">
           <div class="deepscape-heading">
+          <button class="project-back" type="button" data-project-back>← Back to Selected Works</button>
           <p style="margin: 0 0 14px; font-family: 'Noto Sans SC', sans-serif; font-size: 11px; letter-spacing: 0.28em; color: rgba(255,255,255,0.48); text-transform: uppercase;">Selected Works · Independent work</p>
             <div class="deepscape-title-row">
               <h2 class="firefly-title" style="margin: 0; font-family: 'Noto Serif SC', serif; font-size: clamp(32px, 5vw, 64px); font-weight: 300; letter-spacing: 0.08em;">02-Smart Care</h2>
@@ -410,7 +639,7 @@
         var navigationTargets = {
           'About': 'hero-section',
           'Motivation': 'philosophy',
-          'Selected Works': 'deepscape-project',
+          'Selected Works': 'selected-works',
           'Cooperation Projects': 'gallery',
           'Awards & Plans': 'mediums',
           'My Life': 'photography-project',
@@ -432,6 +661,9 @@
             var label = node.textContent.trim();
             if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
             if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
+            if (node.matches && node.matches('footer a') && label === 'Selected Works') {
+              node.setAttribute('href', '#selected-works');
+            }
           });
 
           document.querySelectorAll('#gallery h3, #root h1').forEach(function (title) {
@@ -593,7 +825,12 @@
           var button = event.target.closest && event.target.closest('nav button');
           if (!button) return;
 
-          var targetId = navigationTargets[button.textContent.trim()];
+          var navigationLabel = button.textContent.trim();
+          if (navigationLabel === 'Selected Works' && window.showSelectedWorksOverview) {
+            window.showSelectedWorksOverview();
+          }
+
+          var targetId = navigationTargets[navigationLabel];
           var target = targetId && document.getElementById(targetId);
           if (!target) return;
 
@@ -601,7 +838,7 @@
           event.stopImmediatePropagation();
 
           var nav = button.closest('nav');
-          setCurrentNavigation(button.textContent.trim());
+          setCurrentNavigation(navigationLabel);
           alignNavigationTarget(target, nav);
           window.requestAnimationFrame(function () {
             window.requestAnimationFrame(function () {
@@ -716,27 +953,113 @@
           videoObserver.observe(video);
         }
 
+        function alignSelectedWork(element) {
+          if (!element) return;
+          var nav = document.querySelector('nav');
+          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var destination = Math.max(
+            0,
+            element.getBoundingClientRect().top + window.scrollY - navHeight
+          );
+          window.scrollTo({ top: destination, behavior: 'auto' });
+        }
+
+        function showSelectedWork(projectId, shouldAlign) {
+          var overview = document.getElementById('selected-works');
+          if (!overview) return;
+
+          var selectedProject = null;
+          document.querySelectorAll('[data-project-detail]').forEach(function (section) {
+            var isSelected = section.id === projectId;
+            section.hidden = !isSelected;
+            if (isSelected) selectedProject = section;
+          });
+          overview.hidden = Boolean(selectedProject);
+
+          var target = selectedProject || overview;
+          if (shouldAlign !== false) {
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(function () {
+                alignSelectedWork(target);
+                var focusTarget = selectedProject && selectedProject.querySelector('.project-back');
+                if (focusTarget) focusTarget.focus({ preventScroll: true });
+              });
+            });
+          }
+        }
+
+        function projectFromLocation() {
+          var projectId = window.location.hash.slice(1);
+          return document.getElementById(projectId) && document.getElementById(projectId).hasAttribute('data-project-detail')
+            ? projectId
+            : null;
+        }
+
+        window.showSelectedWorksOverview = function () {
+          if (projectFromLocation()) {
+            window.history.replaceState(null, '', '#selected-works');
+          }
+          showSelectedWork(null, false);
+        };
+
+        document.addEventListener('click', function (event) {
+          var overviewLink = event.target.closest && event.target.closest('a[href="#selected-works"]');
+          if (overviewLink) {
+            event.preventDefault();
+            window.history.replaceState(null, '', '#selected-works');
+            showSelectedWork(null, true);
+            return;
+          }
+
+          var projectLink = event.target.closest && event.target.closest('[data-project-target]');
+          if (projectLink) {
+            event.preventDefault();
+            var projectId = projectLink.getAttribute('data-project-target');
+            window.history.pushState({ selectedWorksProject: projectId }, '', '#' + projectId);
+            showSelectedWork(projectId, true);
+            return;
+          }
+
+          var backButton = event.target.closest && event.target.closest('[data-project-back]');
+          if (!backButton) return;
+
+          if (window.history.state && window.history.state.selectedWorksProject) {
+            window.history.back();
+          } else {
+            window.history.replaceState(null, '', '#selected-works');
+            showSelectedWork(null, true);
+          }
+        });
+
+        window.addEventListener('popstate', function () {
+          showSelectedWork(projectFromLocation(), true);
+        });
+
         function insertDeepscapeBlock() {
           var root = document.getElementById('root');
           var deepscapeBlock = document.getElementById('deepscape-block');
           if (!root || !deepscapeBlock) return;
 
+          var selectedWorksSection = deepscapeBlock.querySelector('#selected-works');
           var deepscapeSection = deepscapeBlock.querySelector('#deepscape-project');
-          if (!deepscapeSection) return;
+          if (!selectedWorksSection || !deepscapeSection) return;
           var smartCareSection = deepscapeBlock.querySelector('#smart-care-project');
 
-          // 把 Deepscape 项目放在 Motivation 之后
+          // 把 Selected Works 概览和按需展示的项目详情放在 Motivation 之后。
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
+            philosophy.appendChild(selectedWorksSection);
             philosophy.appendChild(deepscapeSection);
             if (smartCareSection) philosophy.appendChild(smartCareSection);
           } else {
             // 如果找不到，就追加到 root 末尾
+            root.appendChild(selectedWorksSection);
             root.appendChild(deepscapeSection);
             if (smartCareSection) root.appendChild(smartCareSection);
           }
           initLazyVideo(deepscapeSection);
           deepscapeBlock.remove();
+          showSelectedWork(projectFromLocation(), false);
         }
 
         var root = document.getElementById('root');
