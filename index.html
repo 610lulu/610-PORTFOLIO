@@ -133,6 +133,7 @@
         }
       }
       #selected-works {
+        position: relative;
         width: 100%;
         min-height: 100vh;
         padding: 9vh 6vw 5vh;
@@ -140,6 +141,49 @@
         display: flex;
         background: #05080a;
         color: #fff;
+      }
+      #hero-section::before,
+      #selected-works::before,
+      #photography-project::before,
+      #footer > footer::before {
+        position: absolute;
+        top: clamp(44px, 6vh, 72px);
+        left: 8vw;
+        z-index: 8;
+        margin: 0;
+        padding: 0;
+        font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.8;
+        letter-spacing: .3em;
+        color: rgba(237, 232, 228, .35);
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+      #hero-section::before {
+        content: "About";
+        top: clamp(92px, 14vh, 124px);
+      }
+      #selected-works::before { content: "Selected Works"; }
+      #photography-project::before { content: "My Life"; }
+      #footer > footer::before { content: "Contact"; }
+      #philosophy [code-path="src/sections/PhilosophyCarousel.tsx:115:15"],
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"],
+      #mediums [code-path="src/sections/MediumsGlossary.tsx:204:9"] {
+        margin-bottom: 48px !important;
+        padding: 0 !important;
+        font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        line-height: 1.8 !important;
+        letter-spacing: .3em !important;
+        color: rgba(237, 232, 228, .35) !important;
+        text-transform: uppercase !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:37:7"] {
+        padding-right: 8vw !important;
+        padding-left: 8vw !important;
       }
       #selected-works {
         align-items: center;
