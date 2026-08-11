@@ -102,12 +102,36 @@
           min-height: 0;
         }
       }
-      /* Keep cooperation-project cards in normal document flow. */
+      /* Cooperation Projects follows the same overview-card rhythm as Selected Works. */
+      #gallery,
+      #gallery > section {
+        background: #05080a !important;
+      }
+      #gallery > section {
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: clamp(92px, 12vh, 148px) 6vw clamp(72px, 10vh, 124px) !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:37:7"] {
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto 48px !important;
+        padding: 0 !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"] {
+        margin-bottom: 0 !important;
+      }
+      #gallery h2 {
+        display: none !important;
+      }
       #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
         display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: clamp(56px, 7vw, 104px) clamp(28px, 5vw, 72px) !important;
-        padding: 0 6vw !important;
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: clamp(36px, 4vw, 64px) clamp(14px, 1.7vw, 28px) !important;
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 !important;
         align-items: start !important;
       }
       #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"] {
@@ -120,16 +144,89 @@
         width: 100% !important;
         max-width: none !important;
       }
-      #gallery [code-path="src/sections/ImmersiveGallery.tsx:142:17"] {
-        margin-top: 22px !important;
-        min-height: 68px;
-        gap: 20px;
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:99:17"] {
+        display: grid !important;
+        place-items: center;
+        aspect-ratio: 4 / 3 !important;
+        border-radius: 10px !important;
+        background:
+          radial-gradient(circle at 18% 20%, rgba(48,176,208,.07), transparent 34%),
+          linear-gradient(135deg, #080c0f, #05080a 58%, #0a0f12) !important;
+        box-shadow: none !important;
       }
-      @media (max-width: 1023px) {
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:99:17"] img {
+        display: none !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:99:17"]::before {
+        color: rgba(255,255,255,.12);
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(54px, 7vw, 112px);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: .08em;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"]:nth-child(1)
+        [code-path="src/sections/ImmersiveGallery.tsx:99:17"]::before { content: "01"; }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"]:nth-child(2)
+        [code-path="src/sections/ImmersiveGallery.tsx:99:17"]::before { content: "02"; }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"]:nth-child(3)
+        [code-path="src/sections/ImmersiveGallery.tsx:99:17"]::before { content: "03"; }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:82:13"]:nth-child(4)
+        [code-path="src/sections/ImmersiveGallery.tsx:99:17"]::before { content: "04"; }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:142:17"] {
+        display: block !important;
+        min-height: 0;
+        margin-top: 20px !important;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:150:19"] {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+        gap: clamp(10px, 1vw, 14px);
+        min-width: 0;
+      }
+      #gallery [code-path="src/sections/ImmersiveGallery.tsx:151:21"] {
+        margin: 0 !important;
+        padding-top: 5px;
+        color: #30b0d0 !important;
+        font-size: 10px !important;
+        font-weight: 500;
+        line-height: 1.4;
+        letter-spacing: .28em !important;
+        white-space: nowrap;
+      }
+      #gallery h3 {
+        overflow: hidden;
+        margin: 0 !important;
+        border: 0 !important;
+        font-family: "Noto Sans SC", sans-serif !important;
+        font-size: clamp(14px, 1.1vw, 18px) !important;
+        font-weight: 400 !important;
+        line-height: 1.2 !important;
+        letter-spacing: .035em !important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-transform: uppercase;
+      }
+      .cooperation-project-placeholder {
+        min-width: 0;
+      }
+      .cooperation-project-placeholder .selected-work-media {
+        width: 100%;
+      }
+      @media (max-width: 1100px) {
+        #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        }
+      }
+      @media (max-width: 720px) {
+        #gallery > section {
+          min-height: auto;
+          padding: 11vh 7vw 7vh !important;
+        }
         #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
           grid-template-columns: 1fr !important;
-          gap: 64px !important;
-          padding: 0 5vw !important;
+          gap: 52px !important;
         }
       }
       #selected-works {
@@ -180,10 +277,6 @@
         letter-spacing: .3em !important;
         color: rgba(237, 232, 228, .35) !important;
         text-transform: uppercase !important;
-      }
-      #gallery [code-path="src/sections/ImmersiveGallery.tsx:37:7"] {
-        padding-right: 8vw !important;
-        padding-left: 8vw !important;
       }
       #selected-works {
         align-items: center;
@@ -484,11 +577,31 @@
           document.querySelectorAll('#gallery h3, #root h1').forEach(function (title) {
             if (title.textContent.trim() === 'Damas') title.textContent = 'Startup Town';
           });
-          document.querySelectorAll('#gallery [code-path="src/sections/ImmersiveGallery.tsx:151:21"]').forEach(function (meta) {
-            if (meta.textContent.trim().startsWith('01')) {
-              meta.textContent = '01 - The Future Laboratory, Tsinghua University';
-            }
+          var galleryLabel = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"]');
+          if (galleryLabel) galleryLabel.textContent = 'Cooperation Projects';
+
+          document.querySelectorAll('#gallery [code-path="src/sections/ImmersiveGallery.tsx:151:21"]').forEach(function (meta, index) {
+            meta.textContent = String(index + 1).padStart(2, '0');
           });
+
+          var galleryGrid = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"]');
+          if (galleryGrid && !galleryGrid.querySelector('.cooperation-project-placeholder')) {
+            var placeholder = document.createElement('div');
+            placeholder.className = 'selected-work-card selected-work-placeholder cooperation-project-placeholder';
+            placeholder.setAttribute('role', 'img');
+            placeholder.setAttribute('aria-label', 'Cooperation project 05 placeholder');
+
+            var placeholderMedia = document.createElement('div');
+            placeholderMedia.className = 'selected-work-media';
+            var placeholderNumber = document.createElement('span');
+            placeholderNumber.className = 'selected-work-placeholder-number';
+            placeholderNumber.textContent = '05';
+            placeholderNumber.setAttribute('aria-hidden', 'true');
+
+            placeholderMedia.appendChild(placeholderNumber);
+            placeholder.appendChild(placeholderMedia);
+            galleryGrid.appendChild(placeholder);
+          }
 
           var footerHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
             return node.textContent.trim() === 'Navigation';
