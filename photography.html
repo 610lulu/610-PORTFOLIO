@@ -10,6 +10,34 @@
       #root header {
         display: none !important;
       }
+      .photography-outro {
+        width: min(920px, 64vw);
+        margin: 0 auto;
+        text-align: left;
+        transform: translateX(-7vw);
+      }
+      .photography-outro p {
+        margin: 0;
+        color: rgba(255, 255, 255, .72);
+        font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+        font-size: clamp(14px, 1.15vw, 18px);
+        font-weight: 400;
+        line-height: 1.72;
+        letter-spacing: .015em;
+      }
+      .photography-outro p + p {
+        margin-top: clamp(16px, 2.4vh, 26px);
+      }
+      @media (max-width: 720px) {
+        .photography-outro {
+          width: 84vw;
+          transform: none;
+        }
+        .photography-outro p {
+          font-size: 13px;
+          line-height: 1.62;
+        }
+      }
     </style>
   </head>
   <body>
@@ -17,10 +45,38 @@
     <script type="module" src="./photography-assets/index-zJ8K2fHp.js"></script>
     <script>
       (function () {
+        var outroParagraphs = [
+          'I have a deep passion for photography. To me, it is more than a means of documentation—it is a way of discovering, sensing, and understanding the world.',
+          'I enjoy immersing myself in different environments, exploring them and pausing where connections emerge between people and their surroundings. Through images, I capture the moments that resonate with me, along with the thoughts and reflections they evoke.',
+          'When I return to these images, the act of documentation itself becomes a starting point for creation. Through color grading, 3D reconstruction, rendering, and other forms of post-production, I reshape and reinterpret them. In this process, the images gradually move away from their original reality, becoming increasingly aligned with the stream of consciousness that exists in my mind.'
+        ];
+
+        function renderPhotographyOutro(sourceNode) {
+          var paragraph = sourceNode.parentElement;
+          var panel = paragraph && paragraph.parentElement;
+          if (!panel || panel.dataset.photographyOutro === 'true') return;
+
+          var outro = document.createElement('div');
+          outro.className = 'photography-outro';
+          outroParagraphs.forEach(function (text) {
+            var item = document.createElement('p');
+            item.textContent = text;
+            outro.appendChild(item);
+          });
+
+          panel.dataset.photographyOutro = 'true';
+          panel.replaceChildren(outro);
+        }
+
         function updatePhotographyLabels() {
           var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
           var node;
           while ((node = walker.nextNode())) {
+            var parentTag = node.parentElement && node.parentElement.tagName;
+            if (parentTag === 'SCRIPT' || parentTag === 'STYLE' || parentTag === 'TITLE') {
+              continue;
+            }
+
             var value = node.nodeValue || '';
             var trimmed = value.trim().toUpperCase();
 
@@ -28,8 +84,8 @@
               node.nodeValue = '';
               continue;
             }
-            if (trimmed.includes('MMXXVI')) {
-              node.nodeValue = '';
+            if (trimmed.includes('MMXXVI') && parentTag === 'P') {
+              renderPhotographyOutro(node);
               continue;
             }
 
