@@ -161,8 +161,7 @@
         margin-bottom: clamp(38px, 5vw, 72px);
       }
       .selected-works-eyebrow,
-      .selected-work-number,
-      .selected-work-type {
+      .selected-work-number {
         margin: 0;
         font-family: "Noto Sans SC", sans-serif;
         font-size: 10px;
@@ -171,8 +170,7 @@
         letter-spacing: .28em;
         text-transform: uppercase;
       }
-      .selected-works-eyebrow,
-      .selected-work-type {
+      .selected-works-eyebrow {
         color: rgba(255,255,255,.46);
       }
       .selected-works-title {
@@ -253,9 +251,28 @@
         outline-offset: 8px;
         border-radius: 10px;
       }
+      .selected-work-placeholder .selected-work-media {
+        display: grid;
+        place-items: center;
+        border-color: rgba(255,255,255,.08);
+        background:
+          radial-gradient(circle at 18% 20%, rgba(48,176,208,.07), transparent 34%),
+          linear-gradient(135deg, #080c0f, #05080a 58%, #0a0f12);
+      }
+      .selected-work-placeholder .selected-work-media::after {
+        display: none;
+      }
+      .selected-work-placeholder-number {
+        color: rgba(255,255,255,.12);
+        font-family: "Noto Serif SC", serif;
+        font-size: clamp(64px, 10vw, 148px);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: .08em;
+      }
       .selected-work-meta {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-columns: auto minmax(0, 1fr);
         align-items: start;
         gap: 18px;
         margin-top: 20px;
@@ -272,16 +289,6 @@
         line-height: 1.2;
         letter-spacing: .035em;
         text-transform: uppercase;
-      }
-      .selected-work-summary {
-        grid-column: 2 / -1;
-        max-width: 680px;
-        margin: -2px 0 0;
-        color: rgba(255,255,255,.5);
-        font-family: "Noto Sans SC", sans-serif;
-        font-size: 13px;
-        font-weight: 300;
-        line-height: 1.7;
       }
       .project-back {
         width: fit-content;
@@ -439,18 +446,6 @@
           opacity: 1;
           transform: none;
         }
-        .selected-work-meta {
-          grid-template-columns: auto minmax(0, 1fr);
-        }
-        .selected-work-type {
-          grid-column: 2;
-          grid-row: 2;
-        }
-        .selected-work-summary {
-          grid-column: 2;
-          grid-row: 3;
-          margin-top: 0;
-        }
         .deepscape-title-row { align-items: flex-start; }
         .deepscape-actions { width: 100%; }
         .deepscape-video { min-height: 260px; }
@@ -564,8 +559,6 @@
               <div class="selected-work-meta">
                 <span class="selected-work-number">01</span>
                 <h3 class="selected-work-title">Deepscape Reverie</h3>
-                <span class="selected-work-type">Digital heritage · Interactive narrative</span>
-                <p class="selected-work-summary">An online exhibition experience translating individual memories of Shenjing Village into a shared, participatory spatial narrative.</p>
               </div>
             </a>
             <a class="selected-work-card" href="#smart-care-project" data-project-target="smart-care-project" aria-label="View Smart Care project">
@@ -575,10 +568,18 @@
               <div class="selected-work-meta">
                 <span class="selected-work-number">02</span>
                 <h3 class="selected-work-title">Smart Care</h3>
-                <span class="selected-work-type">AI product · Inclusive interaction</span>
-                <p class="selected-work-summary">An age-friendly AI companion integrating health monitoring, daily support, privacy-aware interaction, and emotional companionship.</p>
               </div>
             </a>
+            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 03 placeholder">
+              <div class="selected-work-media">
+                <span class="selected-work-placeholder-number" aria-hidden="true">03</span>
+              </div>
+            </div>
+            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 04 placeholder">
+              <div class="selected-work-media">
+                <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
