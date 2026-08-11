@@ -246,7 +246,7 @@
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
         align-items: start;
-        gap: 18px;
+        gap: clamp(10px, 1vw, 14px);
         margin-top: 20px;
       }
       .selected-work-number {
@@ -256,10 +256,11 @@
       .selected-work-title {
         margin: 0;
         font-family: "Noto Sans SC", sans-serif;
-        font-size: clamp(20px, 2vw, 30px);
+        font-size: clamp(16px, 1.25vw, 20px);
         font-weight: 400;
         line-height: 1.2;
         letter-spacing: .035em;
+        white-space: nowrap;
         text-transform: uppercase;
       }
       .project-back {
