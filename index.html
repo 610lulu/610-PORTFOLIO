@@ -60,6 +60,7 @@
         align-items: center !important;
       }
       #hero-section [code-path="src/sections/HeroField.tsx:45:11"] {
+        font-size: clamp(42px, 5.2vw, 84px) !important;
         text-align: center !important;
       }
       #hero-section [code-path="src/sections/HeroField.tsx:102:9"] {
@@ -100,6 +101,9 @@
           bottom: 8vh;
           left: 8vw;
           min-height: 0;
+        }
+        #hero-section [code-path="src/sections/HeroField.tsx:45:11"] {
+          font-size: clamp(30px, 8.2vw, 46px) !important;
         }
       }
       /* Cooperation Projects follows the same overview-card rhythm as Selected Works. */
@@ -257,8 +261,7 @@
         pointer-events: none;
       }
       #hero-section::before {
-        content: "About";
-        top: clamp(92px, 14vh, 124px);
+        content: none;
       }
       .selected-works-shell::before {
         content: "Selected Works";
