@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lu Portfolio — Systems Interaction</title>
+    <title>Lu Portfolio — Lu Yilin</title>
     <link rel="stylesheet" href="./fonts/local-fonts.css" />
     <script type="module" crossorigin src="./assets/index-tQcG7ILw.js?v=my-life-nav-6"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CHlT8d6n.css">
@@ -580,13 +580,12 @@
         var indicatorFrame = 0;
 
         function pluralizeSectionLabels() {
-          var heroTitleFirstLine = document.querySelector('#hero-section h2 span:first-child');
-          if (heroTitleFirstLine && heroTitleFirstLine.textContent.trim() === 'SYSTEMS') {
-            heroTitleFirstLine.textContent = 'DIGITAL';
+          var heroTitleLines = document.querySelectorAll('#hero-section h2 span');
+          if (heroTitleLines.length >= 2) {
+            heroTitleLines[0].textContent = 'Lu';
+            heroTitleLines[1].textContent = 'Yilin';
           }
-          if (document.title.indexOf('Systems Interaction') !== -1) {
-            document.title = document.title.replace('Systems Interaction', 'Digital Interaction');
-          }
+          document.title = 'Lu Portfolio — Lu Yilin';
 
           document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
             var label = node.textContent.trim();
