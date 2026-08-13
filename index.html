@@ -62,6 +62,10 @@
       #hero-section [code-path="src/sections/HeroField.tsx:45:11"] {
         font-size: clamp(42px, 5.2vw, 84px) !important;
         text-align: center !important;
+        white-space: nowrap;
+      }
+      #hero-section [code-path="src/sections/HeroField.tsx:45:11"] > span {
+        display: inline !important;
       }
       #hero-section [code-path="src/sections/HeroField.tsx:102:9"] {
         position: absolute !important;
@@ -583,7 +587,7 @@
           var heroTitleLines = document.querySelectorAll('#hero-section h2 span');
           if (heroTitleLines.length >= 2) {
             heroTitleLines[0].textContent = 'Lu';
-            heroTitleLines[1].textContent = 'Yilin';
+            heroTitleLines[1].textContent = ' Yilin';
           }
           document.title = 'Lu Portfolio — Lu Yilin';
 
