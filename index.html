@@ -112,14 +112,14 @@
         background: #05080a !important;
       }
       #gallery > section {
-        min-height: 100vh;
+        min-height: auto;
         box-sizing: border-box;
-        padding: clamp(92px, 12vh, 148px) 6vw clamp(72px, 10vh, 124px) !important;
+        padding: clamp(56px, 8vh, 84px) 6vw clamp(48px, 7vh, 72px) !important;
       }
       #gallery [code-path="src/sections/ImmersiveGallery.tsx:37:7"] {
         width: 100%;
         max-width: 1600px;
-        margin: 0 auto 48px !important;
+        margin: 0 auto 32px !important;
         padding: 0 !important;
       }
       #gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"] {
@@ -222,6 +222,9 @@
         overflow-wrap: anywhere;
         white-space: normal;
       }
+      .cooperation-project-placeholder .selected-work-meta {
+        display: block;
+      }
       @media (max-width: 1400px) {
         #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
           grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -235,7 +238,7 @@
       @media (max-width: 720px) {
         #gallery > section {
           min-height: auto;
-          padding: 11vh 7vw 7vh !important;
+          padding: 8vh 7vw 6vh !important;
         }
         #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
           grid-template-columns: 1fr !important;
@@ -624,15 +627,11 @@
 
               var projectMeta = document.createElement('div');
               projectMeta.className = 'selected-work-meta';
-              var metaNumber = document.createElement('span');
-              metaNumber.className = 'selected-work-number';
-              metaNumber.textContent = projectNumber;
               var title = document.createElement('h3');
               title.className = 'selected-work-title';
               title.textContent = projectTitle;
 
               placeholderMedia.appendChild(placeholderNumber);
-              projectMeta.appendChild(metaNumber);
               projectMeta.appendChild(title);
               placeholder.appendChild(placeholderMedia);
               placeholder.appendChild(projectMeta);
