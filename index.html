@@ -130,7 +130,7 @@
       }
       #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
         display: grid !important;
-        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
         gap: clamp(36px, 4vw, 64px) clamp(14px, 1.7vw, 28px) !important;
         width: 100%;
         max-width: 1600px;
@@ -218,7 +218,16 @@
       .cooperation-project-placeholder .selected-work-media {
         width: 100%;
       }
-      @media (max-width: 1100px) {
+      .cooperation-project-placeholder .selected-work-title {
+        overflow-wrap: anywhere;
+        white-space: normal;
+      }
+      @media (max-width: 1400px) {
+        #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        }
+      }
+      @media (max-width: 900px) {
         #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
           grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         }
@@ -585,33 +594,51 @@
             }
           });
 
-          document.querySelectorAll('#gallery h3, #root h1').forEach(function (title) {
-            if (title.textContent.trim() === 'Damas') title.textContent = 'Startup Town';
-          });
           var galleryLabel = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"]');
           if (galleryLabel) galleryLabel.textContent = 'Cooperation Projects';
 
-          document.querySelectorAll('#gallery [code-path="src/sections/ImmersiveGallery.tsx:151:21"]').forEach(function (meta, index) {
-            meta.textContent = String(index + 1).padStart(2, '0');
-          });
-
           var galleryGrid = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"]');
-          if (galleryGrid && !galleryGrid.querySelector('.cooperation-project-placeholder')) {
-            var placeholder = document.createElement('div');
-            placeholder.className = 'selected-work-card selected-work-placeholder cooperation-project-placeholder';
-            placeholder.setAttribute('role', 'img');
-            placeholder.setAttribute('aria-label', 'Cooperation project 05 placeholder');
+          if (galleryGrid && !galleryGrid.dataset.cooperationPlaceholdersReady) {
+            var cooperationProjects = [
+              'Black River',
+              'Temporary Building',
+              'NOMAD',
+              'AI Intelligent Headphones',
+              'Startup Town',
+              'HeartLink Mars'
+            ];
 
-            var placeholderMedia = document.createElement('div');
-            placeholderMedia.className = 'selected-work-media';
-            var placeholderNumber = document.createElement('span');
-            placeholderNumber.className = 'selected-work-placeholder-number';
-            placeholderNumber.textContent = '05';
-            placeholderNumber.setAttribute('aria-hidden', 'true');
+            galleryGrid.replaceChildren();
+            cooperationProjects.forEach(function (projectTitle, index) {
+              var projectNumber = String(index + 1).padStart(2, '0');
+              var placeholder = document.createElement('article');
+              placeholder.className = 'selected-work-card selected-work-placeholder cooperation-project-placeholder';
+              placeholder.setAttribute('aria-label', projectNumber + '. ' + projectTitle + ' placeholder');
 
-            placeholderMedia.appendChild(placeholderNumber);
-            placeholder.appendChild(placeholderMedia);
-            galleryGrid.appendChild(placeholder);
+              var placeholderMedia = document.createElement('div');
+              placeholderMedia.className = 'selected-work-media';
+              var placeholderNumber = document.createElement('span');
+              placeholderNumber.className = 'selected-work-placeholder-number';
+              placeholderNumber.textContent = projectNumber;
+              placeholderNumber.setAttribute('aria-hidden', 'true');
+
+              var projectMeta = document.createElement('div');
+              projectMeta.className = 'selected-work-meta';
+              var metaNumber = document.createElement('span');
+              metaNumber.className = 'selected-work-number';
+              metaNumber.textContent = projectNumber;
+              var title = document.createElement('h3');
+              title.className = 'selected-work-title';
+              title.textContent = projectTitle;
+
+              placeholderMedia.appendChild(placeholderNumber);
+              projectMeta.appendChild(metaNumber);
+              projectMeta.appendChild(title);
+              placeholder.appendChild(placeholderMedia);
+              placeholder.appendChild(projectMeta);
+              galleryGrid.appendChild(placeholder);
+            });
+            galleryGrid.dataset.cooperationPlaceholdersReady = 'true';
           }
 
           var footerHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
