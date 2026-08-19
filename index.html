@@ -29,14 +29,14 @@
         transform-origin: center;
         transition: transform .22s ease;
       }
-      nav[data-current-section="mediums"] button:nth-child(1),
-      nav[data-current-section="photography-project"] button:nth-child(2),
+      nav[data-current-section="photography-project"] button:nth-child(1),
+      nav[data-current-section="mediums"] button:nth-child(2),
       nav[data-current-section="footer"] button:nth-child(3),
       nav button.nav-current {
         opacity: 1 !important;
       }
-      nav[data-current-section="mediums"] button:nth-child(1)::after,
-      nav[data-current-section="photography-project"] button:nth-child(2)::after,
+      nav[data-current-section="photography-project"] button:nth-child(1)::after,
+      nav[data-current-section="mediums"] button:nth-child(2)::after,
       nav[data-current-section="footer"] button:nth-child(3)::after,
       nav button.nav-current::after {
         transform: scaleX(1);
@@ -540,8 +540,8 @@
           'gallery'
         ];
         var navigationTargets = {
-          'Awards & Plans': 'mediums',
           'My Life': 'photography-project',
+          'Awards & Plans': 'mediums',
           'Contact': 'footer'
         };
         var navigationLabels = Object.keys(navigationTargets);
@@ -572,6 +572,17 @@
             var label = node.textContent.trim();
             if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
           });
+
+          var firstNavigationButton = document.querySelector('nav button');
+          var navigationButtonContainer = firstNavigationButton && firstNavigationButton.parentElement;
+          if (navigationButtonContainer) {
+            navigationLabels.forEach(function (label) {
+              var button = Array.from(navigationButtonContainer.querySelectorAll('button')).find(function (candidate) {
+                return candidate.textContent.trim() === label;
+              });
+              if (button) navigationButtonContainer.appendChild(button);
+            });
+          }
 
           var footerHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
             return node.textContent.trim() === 'Navigation';
@@ -622,8 +633,8 @@
           }
 
           [
-            { label: 'Awards & Plans', href: '#mediums' },
             { label: 'My Life', href: '#photography-project' },
+            { label: 'Awards & Plans', href: '#mediums' },
             { label: 'Contact', href: '#footer' }
           ].forEach(function (item) {
             var exists = Array.from(footerLinks.querySelectorAll('a')).some(function (link) {
@@ -779,8 +790,11 @@
           var section = block.querySelector('#photography-project');
           if (!section) return;
 
+          var awardsPlans = root.querySelector('#mediums');
           var contact = root.querySelector('#footer');
-          if (contact && contact.parentNode) {
+          if (awardsPlans && awardsPlans.parentNode) {
+            awardsPlans.parentNode.insertBefore(section, awardsPlans);
+          } else if (contact && contact.parentNode) {
             contact.parentNode.insertBefore(section, contact);
           } else {
             root.appendChild(section);
