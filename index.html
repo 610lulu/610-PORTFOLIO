@@ -29,23 +29,15 @@
         transform-origin: center;
         transition: transform .22s ease;
       }
-      nav[data-current-section="hero-section"] button:nth-child(1),
-      nav[data-current-section="philosophy"] button:nth-child(2),
-      nav[data-current-section="selected-works"] button:nth-child(3),
-      nav[data-current-section="gallery"] button:nth-child(4),
-      nav[data-current-section="mediums"] button:nth-child(5),
-      nav[data-current-section="photography-project"] button:nth-child(6),
-      nav[data-current-section="footer"] button:nth-child(7),
+      nav[data-current-section="mediums"] button:nth-child(1),
+      nav[data-current-section="photography-project"] button:nth-child(2),
+      nav[data-current-section="footer"] button:nth-child(3),
       nav button.nav-current {
         opacity: 1 !important;
       }
-      nav[data-current-section="hero-section"] button:nth-child(1)::after,
-      nav[data-current-section="philosophy"] button:nth-child(2)::after,
-      nav[data-current-section="selected-works"] button:nth-child(3)::after,
-      nav[data-current-section="gallery"] button:nth-child(4)::after,
-      nav[data-current-section="mediums"] button:nth-child(5)::after,
-      nav[data-current-section="photography-project"] button:nth-child(6)::after,
-      nav[data-current-section="footer"] button:nth-child(7)::after,
+      nav[data-current-section="mediums"] button:nth-child(1)::after,
+      nav[data-current-section="photography-project"] button:nth-child(2)::after,
+      nav[data-current-section="footer"] button:nth-child(3)::after,
       nav button.nav-current::after {
         transform: scaleX(1);
       }
@@ -532,50 +524,22 @@
   <body>
     <div id="root"></div>
 
-    <div id="deepscape-block" style="display: none;">
-      <section id="selected-works" aria-label="Selected Works">
-        <div class="selected-works-shell">
-          <div class="selected-works-grid">
-            <a class="selected-work-card" href="./deepscape-reverie.html" aria-label="View Deepscape Reverie project">
-              <div class="selected-work-media">
-                <img src="./images/Deepscape Reverie封面页.jpg" alt="Dreamlike landscape from Deepscape Reverie" loading="lazy" />
-              </div>
-              <div class="selected-work-meta">
-                <span class="selected-work-number">01</span>
-                <h3 class="selected-work-title">Deepscape Reverie</h3>
-              </div>
-            </a>
-            <a class="selected-work-card" href="./smart-care.html" aria-label="View Smart Care project">
-              <div class="selected-work-media">
-                <img src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3" alt="Smart Care AI companion device for older adults" loading="lazy" />
-              </div>
-              <div class="selected-work-meta">
-                <span class="selected-work-number">02</span>
-                <h3 class="selected-work-title">Smart Care</h3>
-              </div>
-            </a>
-            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 03 placeholder">
-              <div class="selected-work-media">
-                <span class="selected-work-placeholder-number" aria-hidden="true">03</span>
-              </div>
-            </div>
-            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 04 placeholder">
-              <div class="selected-work-media">
-                <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
     <script>
       (function () {
+        var retiredNavigationLabels = [
+          'About',
+          'Motivation',
+          'Selected Works',
+          'Cooperation Project',
+          'Cooperation Projects'
+        ];
+        var retiredSectionIds = [
+          'hero-section',
+          'philosophy',
+          'selected-works',
+          'gallery'
+        ];
         var navigationTargets = {
-          'About': 'hero-section',
-          'Motivation': 'philosophy',
-          'Selected Works': 'selected-works',
-          'Cooperation Projects': 'gallery',
           'Awards & Plans': 'mediums',
           'My Life': 'photography-project',
           'Contact': 'footer'
@@ -583,65 +547,31 @@
         var navigationLabels = Object.keys(navigationTargets);
         var indicatorFrame = 0;
 
-        function pluralizeSectionLabels() {
-          var heroTitleLines = document.querySelectorAll('#hero-section h2 span');
-          if (heroTitleLines.length >= 2) {
-            heroTitleLines[0].textContent = 'Lu';
-            heroTitleLines[1].textContent = ' Yilin';
-          }
-          document.title = 'Lu Portfolio — Lu Yilin';
-
-          document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
-            var label = node.textContent.trim();
-            if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
-            if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
-            if (node.matches && node.matches('footer a') && label === 'Selected Works') {
-              node.setAttribute('href', '#selected-works');
+        function removeRetiredContent() {
+          document.querySelectorAll('nav button, footer a').forEach(function (node) {
+            if (retiredNavigationLabels.indexOf(node.textContent.trim()) !== -1) {
+              node.remove();
             }
           });
 
-          var galleryLabel = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"]');
-          if (galleryLabel) galleryLabel.textContent = 'Cooperation Projects';
+          retiredSectionIds.forEach(function (sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section) section.remove();
+          });
 
-          var galleryGrid = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"]');
-          if (galleryGrid && !galleryGrid.dataset.cooperationPlaceholdersReady) {
-            var cooperationProjects = [
-              'Black River',
-              'Temporary Building',
-              'NOMAD',
-              'AI Intelligent Headphones',
-              'Startup Town',
-              'HeartLink Mars'
-            ];
-
-            galleryGrid.replaceChildren();
-            cooperationProjects.forEach(function (projectTitle, index) {
-              var projectNumber = String(index + 1).padStart(2, '0');
-              var placeholder = document.createElement('article');
-              placeholder.className = 'selected-work-card selected-work-placeholder cooperation-project-placeholder';
-              placeholder.setAttribute('aria-label', projectNumber + '. ' + projectTitle + ' placeholder');
-
-              var placeholderMedia = document.createElement('div');
-              placeholderMedia.className = 'selected-work-media';
-              var placeholderNumber = document.createElement('span');
-              placeholderNumber.className = 'selected-work-placeholder-number';
-              placeholderNumber.textContent = projectNumber;
-              placeholderNumber.setAttribute('aria-hidden', 'true');
-
-              var projectMeta = document.createElement('div');
-              projectMeta.className = 'selected-work-meta';
-              var title = document.createElement('h3');
-              title.className = 'selected-work-title';
-              title.textContent = projectTitle;
-
-              placeholderMedia.appendChild(placeholderNumber);
-              projectMeta.appendChild(title);
-              placeholder.appendChild(placeholderMedia);
-              placeholder.appendChild(projectMeta);
-              galleryGrid.appendChild(placeholder);
-            });
-            galleryGrid.dataset.cooperationPlaceholdersReady = 'true';
+          if (retiredSectionIds.indexOf(window.location.hash.slice(1)) !== -1) {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
           }
+        }
+
+        function pluralizeSectionLabels() {
+          removeRetiredContent();
+          document.title = 'Lu Portfolio — Lu Yilin';
+
+          document.querySelectorAll('nav button, footer a, footer span, footer p').forEach(function (node) {
+            var label = node.textContent.trim();
+            if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
+          });
 
           var footerHeading = Array.from(document.querySelectorAll('footer p')).find(function (node) {
             return node.textContent.trim() === 'Navigation';
@@ -829,123 +759,6 @@
     </script>
 
 
-    <script>
-      (function () {
-        var shouldReturnToCooperationProjects = false;
-        var returnTimer = 0;
-
-        function alignCooperationProjects() {
-          var gallery = document.getElementById('gallery');
-          if (!gallery) return false;
-
-          var nav = document.querySelector('nav');
-          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var destination = Math.max(
-            0,
-            gallery.getBoundingClientRect().top + window.scrollY - navHeight
-          );
-
-          window.scrollTo({ top: destination, behavior: 'auto' });
-          if (nav) nav.dataset.currentSection = 'gallery';
-          document.querySelectorAll('nav button').forEach(function (button) {
-            var isCurrent = button.textContent.trim() === 'Cooperation Projects';
-            button.classList.toggle('nav-current', isCurrent);
-            if (isCurrent) {
-              button.setAttribute('aria-current', 'location');
-            } else {
-              button.removeAttribute('aria-current');
-            }
-          });
-          return true;
-        }
-
-        function finishReturnToCooperationProjects() {
-          if (!shouldReturnToCooperationProjects || !alignCooperationProjects()) return;
-
-          shouldReturnToCooperationProjects = false;
-          window.clearTimeout(returnTimer);
-          window.history.replaceState(null, '', '#gallery');
-
-          window.requestAnimationFrame(function () {
-            window.requestAnimationFrame(alignCooperationProjects);
-          });
-          window.setTimeout(alignCooperationProjects, 180);
-        }
-
-        document.addEventListener('click', function (event) {
-          var button = event.target.closest && event.target.closest('button');
-          if (!button || button.textContent.trim().toUpperCase().indexOf('BACK') === -1) return;
-
-          var detailPage = button.parentElement && button.parentElement.parentElement;
-          if (!detailPage || !detailPage.querySelector('img')) return;
-
-          shouldReturnToCooperationProjects = true;
-          returnTimer = window.setTimeout(finishReturnToCooperationProjects, 0);
-        }, true);
-
-        new MutationObserver(finishReturnToCooperationProjects).observe(
-          document.getElementById('root'),
-          { childList: true, subtree: true }
-        );
-      })();
-    </script>
-
-    <script>
-      (function () {
-        function alignSelectedWorks(section) {
-          if (!section || window.location.hash !== '#selected-works') return;
-          var nav = document.querySelector('nav');
-          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var destination = Math.max(
-            0,
-            section.getBoundingClientRect().top + window.scrollY - navHeight
-          );
-          window.scrollTo({ top: destination, behavior: 'auto' });
-        }
-
-        function insertSelectedWorks() {
-          var root = document.getElementById('root');
-          var deepscapeBlock = document.getElementById('deepscape-block');
-          if (!root || !deepscapeBlock) return;
-
-          var selectedWorksSection = deepscapeBlock.querySelector('#selected-works');
-          if (!selectedWorksSection) return;
-
-          // 把 Selected Works 概览放在 Motivation 之后；项目详情使用独立页面。
-          var philosophy = root.querySelector('#philosophy');
-          if (philosophy) {
-            philosophy.appendChild(selectedWorksSection);
-          } else {
-            // 如果找不到，就追加到 root 末尾
-            root.appendChild(selectedWorksSection);
-          }
-          deepscapeBlock.remove();
-
-          window.requestAnimationFrame(function () {
-            window.requestAnimationFrame(function () {
-              alignSelectedWorks(selectedWorksSection);
-            });
-          });
-        }
-
-        var root = document.getElementById('root');
-        if (!root) return;
-
-        // 监听 React 应用渲染完成
-        var observer = new MutationObserver(function () {
-          if (root.querySelector('#philosophy')) {
-            observer.disconnect();
-            insertSelectedWorks();
-          }
-        });
-        observer.observe(root, { childList: true, subtree: true });
-
-        // 兜底：页面完全加载后再执行一次
-        window.addEventListener('load', function () {
-          setTimeout(insertSelectedWorks, 100);
-        });
-      })();
-    </script>
     <div id="photography-block" style="display: none;">
       <section id="photography-project">
         <iframe
@@ -1665,3 +1478,4 @@
     </script>
   </body>
 </html>
+
