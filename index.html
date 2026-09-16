@@ -643,6 +643,16 @@
               'Startup Town',
               'HeartLink Mars'
             ];
+            var cooperationProjectImages = {
+              1: {
+                src: './images/cooperation-temporary-building.png',
+                alt: 'Temporary Building parametric design and effect simulation'
+              },
+              2: {
+                src: './images/cooperation-nomad.png',
+                alt: 'NOMAD last-mile airport companion product overview'
+              }
+            };
 
             galleryGrid.replaceChildren();
             cooperationProjects.forEach(function (projectTitle, index) {
@@ -658,11 +668,12 @@
               placeholderNumber.textContent = projectNumber;
               placeholderNumber.setAttribute('aria-hidden', 'true');
 
-              if (index === 1) {
+              var projectImageConfig = cooperationProjectImages[index];
+              if (projectImageConfig) {
                 placeholder.classList.add('has-project-image');
                 var projectImage = document.createElement('img');
-                projectImage.src = './images/cooperation-temporary-building.png';
-                projectImage.alt = 'Temporary Building parametric design and effect simulation';
+                projectImage.src = projectImageConfig.src;
+                projectImage.alt = projectImageConfig.alt;
                 projectImage.loading = 'lazy';
                 placeholderMedia.appendChild(projectImage);
               }
