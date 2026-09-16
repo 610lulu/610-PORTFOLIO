@@ -255,92 +255,12 @@
           margin-top: -12px !important;
         }
       }
-      .cooperation-showcase {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: clamp(14px, 2vw, 30px);
-        width: 100%;
-        max-width: 1320px;
-        min-height: clamp(250px, 28vw, 410px);
-        margin: clamp(72px, 10vw, 140px) auto 0;
-        padding: clamp(24px, 4vw, 56px) clamp(6px, 1.5vw, 18px);
-        overflow: hidden;
-        perspective: 1200px;
-        box-sizing: border-box;
-      }
-      .cooperation-showcase::before {
-        content: "";
-        position: absolute;
-        inset: 12% 8%;
-        background: radial-gradient(ellipse at center, rgba(48,176,208,.08), transparent 66%);
-        filter: blur(20px);
-        pointer-events: none;
-      }
-      .cooperation-showcase-panel {
-        position: relative;
-        flex: 0 0 clamp(170px, 21vw, 300px);
-        aspect-ratio: 4 / 5;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,.11);
-        border-radius: clamp(8px, 1vw, 14px);
-        background: #090d10;
-        box-shadow: 0 22px 52px rgba(0,0,0,.48);
-        transform-style: preserve-3d;
-        transition: transform .45s ease, border-color .45s ease, filter .45s ease;
-      }
-      .cooperation-showcase-panel:nth-child(1) {
-        transform: rotateY(18deg) translateZ(-24px) scale(.96);
-        transform-origin: right center;
-      }
-      .cooperation-showcase-panel:nth-child(2) {
-        transform: rotateY(7deg) translateZ(12px);
-        transform-origin: right center;
-      }
-      .cooperation-showcase-panel:nth-child(3) {
-        transform: rotateY(-7deg) translateZ(12px);
-        transform-origin: left center;
-      }
-      .cooperation-showcase-panel:nth-child(4) {
-        transform: rotateY(-18deg) translateZ(-24px) scale(.96);
-        transform-origin: left center;
-      }
-      .cooperation-showcase-panel img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: saturate(.88) brightness(.88);
-        transition: transform .55s ease, filter .45s ease;
-      }
-      .cooperation-showcase-panel:hover {
-        z-index: 2;
-        border-color: rgba(255,255,255,.3);
-        transform: rotateY(0) translateZ(70px) scale(1.04);
-      }
-      .cooperation-showcase-panel:hover img {
-        transform: scale(1.04);
-        filter: saturate(1) brightness(1);
-      }
       @media (max-width: 900px) {
         #gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"] {
           grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         }
         .cooperation-project-placeholder:nth-child(even) {
           margin-top: 44px !important;
-        }
-        .cooperation-showcase {
-          justify-content: flex-start;
-          min-height: 330px;
-          margin-top: 84px;
-          padding-inline: 24px;
-          overflow-x: auto;
-          scroll-snap-type: x proximity;
-        }
-        .cooperation-showcase-panel {
-          flex-basis: 210px;
-          scroll-snap-align: center;
         }
       }
       @media (max-width: 720px) {
@@ -354,14 +274,6 @@
         }
         .cooperation-project-placeholder:nth-child(even) {
           margin-top: 0 !important;
-        }
-        .cooperation-showcase {
-          min-height: 300px;
-          margin-top: 64px;
-          padding-inline: 18px;
-        }
-        .cooperation-showcase-panel {
-          flex-basis: min(62vw, 220px);
         }
       }
       #selected-works {
@@ -783,22 +695,6 @@
               galleryGrid.appendChild(placeholder);
             });
 
-            var showcase = document.createElement('div');
-            showcase.className = 'cooperation-showcase';
-            showcase.setAttribute('aria-label', 'Cooperation project image showcase');
-            [0, 1, 2, 4].forEach(function (projectIndex) {
-              var showcaseImageConfig = cooperationProjectImages[projectIndex];
-              if (!showcaseImageConfig) return;
-              var panel = document.createElement('div');
-              panel.className = 'cooperation-showcase-panel';
-              var image = document.createElement('img');
-              image.src = showcaseImageConfig.src;
-              image.alt = showcaseImageConfig.alt;
-              image.loading = 'lazy';
-              panel.appendChild(image);
-              showcase.appendChild(panel);
-            });
-            galleryGrid.insertAdjacentElement('afterend', showcase);
             galleryGrid.dataset.cooperationPlaceholdersReady = 'true';
           }
 
