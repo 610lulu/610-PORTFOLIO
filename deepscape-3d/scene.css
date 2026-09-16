@@ -143,7 +143,8 @@ h1 {
   gap: 10px;
 }
 
-button {
+button,
+.project-link {
   min-height: 44px;
   border: 1px solid rgba(244, 212, 191, .34);
   border-radius: 999px;
@@ -154,7 +155,14 @@ button {
   backdrop-filter: blur(14px);
 }
 
-button:hover {
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+button:hover,
+.project-link:hover {
   border-color: rgba(255, 222, 196, .76);
   background: rgba(91, 36, 25, .62);
 }

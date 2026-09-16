@@ -1,7 +1,7 @@
 const section = document.getElementById('sceneWalk');
 const launch = document.getElementById('walkLaunch3d');
 const status = document.getElementById('walk3dStatus');
-const reset = document.getElementById('walkReset3d');
+const projectLink = document.getElementById('walkProjectLink');
 const fullscreen = document.getElementById('walkFullscreen3d');
 const stops = [...document.querySelectorAll('[data-stop]')];
 let viewer;
@@ -19,7 +19,7 @@ function setActive(value) {
   document.getElementById('walkCanvas').setAttribute('aria-hidden', String(!value));
   launch.textContent = value ? 'Return to Poster' : 'Enter 3D';
   launch.setAttribute('aria-pressed', String(value));
-  reset.hidden = !value;
+  projectLink.hidden = !value;
   fullscreen.hidden = (!value && !document.fullscreenElement) || !section.requestFullscreen;
   viewer?.setActive(value);
   setStatus(value ? 'Baked light active. Drag to look around.' : 'Poster loaded. 3D loads only after you click.');
@@ -67,11 +67,6 @@ launch.addEventListener('click', async () => {
   }
 });
 
-reset.addEventListener('click', () => {
-  currentStop = 0;
-  viewer?.goTo(0);
-  updateStops();
-});
 
 fullscreen.addEventListener('click', async () => {
   try {
