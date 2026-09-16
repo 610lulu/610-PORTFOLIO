@@ -63,7 +63,9 @@ launch.addEventListener('click', async () => {
   } catch (error) {
     console.warn('Fast 3D preview unavailable:', error);
     launch.textContent = 'Retry 3D';
-    setStatus('3D could not load. Try refreshing or enabling browser hardware acceleration.');
+    projectLink.hidden = false;
+    fullscreen.hidden = true;
+    setStatus('3D preview unavailable here. View the project or retry with browser hardware acceleration enabled.');
   }
 });
 
