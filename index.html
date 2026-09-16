@@ -385,6 +385,36 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: clamp(36px, 4vw, 64px) clamp(16px, 2vw, 28px);
       }
+      .selected-work-embed {
+        margin-top: clamp(56px, 7vw, 92px);
+      }
+      .selected-work-embed-frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 14px;
+        background: #050706;
+      }
+      .selected-work-embed-frame iframe {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 0;
+      }
+      .selected-work-embed-caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 18px;
+        color: rgba(237,232,228,.72);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: clamp(12px, 1vw, 14px);
+        line-height: 1.7;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
       .selected-work-card {
         display: block;
         color: inherit;
@@ -491,6 +521,12 @@
         .selected-works-grid {
           grid-template-columns: 1fr;
           gap: 52px;
+        }
+        .selected-work-embed-frame {
+          aspect-ratio: 4 / 5;
+        }
+        .selected-work-embed-caption {
+          display: block;
         }
         .selected-work-media::after {
           opacity: 1;
@@ -619,6 +655,20 @@
               <div class="selected-work-media">
                 <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
               </div>
+            </div>
+          </div>
+          <div class="selected-work-embed" aria-label="Embedded Deepscape Reverie 3D preview">
+            <div class="selected-work-embed-frame">
+              <iframe
+                src="./deepscape-3d.html"
+                title="Deepscape Reverie School Corridor 3D preview"
+                loading="lazy"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="selected-work-embed-caption" aria-hidden="true">
+              <span>Deepscape Reverie · Fast 3D Preview</span>
+              <span>Embedded School Corridor</span>
             </div>
           </div>
         </div>
