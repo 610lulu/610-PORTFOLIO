@@ -229,8 +229,34 @@
         min-width: 0;
       }
       .cooperation-project-placeholder .selected-work-media {
+        position: relative;
         width: 100%;
         aspect-ratio: 2160 / 780 !important;
+      }
+      .cooperation-project-link {
+        position: absolute;
+        top: clamp(8px, 1vw, 14px);
+        right: clamp(8px, 1vw, 14px);
+        z-index: 2;
+        display: inline-grid;
+        width: clamp(24px, 2.1vw, 32px);
+        height: clamp(24px, 2.1vw, 32px);
+        place-items: center;
+        border: 1px solid rgba(255,255,255,.58);
+        border-radius: 999px;
+        color: rgba(255,255,255,.92);
+        background: rgba(3,8,10,.34);
+        font-size: clamp(13px, 1vw, 16px);
+        line-height: 1;
+        text-decoration: none;
+        backdrop-filter: blur(6px);
+        transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      }
+      .cooperation-project-link:hover,
+      .cooperation-project-link:focus-visible {
+        border-color: rgba(255,255,255,.86);
+        background: rgba(3,8,10,.56);
+        transform: translate(2px, -2px);
       }
       .cooperation-project-placeholder .selected-work-title {
         display: block !important;
@@ -650,7 +676,8 @@
               },
               1: {
                 src: './images/cooperation-deepscape-reverie.png',
-                alt: 'Deepscape Reverie project overview and visual scenes'
+                alt: 'Deepscape Reverie project overview and visual scenes',
+                href: 'https://www.youtube.com/watch?v=QBhg1cbaXtY'
               },
               2: {
                 src: './images/cooperation-nomad.png',
@@ -692,6 +719,16 @@
                 projectImage.alt = projectImageConfig.alt;
                 projectImage.loading = 'lazy';
                 placeholderMedia.appendChild(projectImage);
+                if (projectImageConfig.href) {
+                  var projectLink = document.createElement('a');
+                  projectLink.className = 'cooperation-project-link';
+                  projectLink.href = projectImageConfig.href;
+                  projectLink.target = '_blank';
+                  projectLink.rel = 'noopener noreferrer';
+                  projectLink.setAttribute('aria-label', 'Open ' + projectTitle + ' video');
+                  projectLink.textContent = '↗';
+                  placeholderMedia.appendChild(projectLink);
+                }
               }
 
               var projectMeta = document.createElement('div');
