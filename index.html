@@ -1379,7 +1379,9 @@
 
         function alignNavigationTarget(target, nav) {
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = target.id === 'philosophy' || target.id === 'selected-works' || target.id === 'mediums'
+          var sectionLift = target.id === 'selected-works'
+            ? Math.min(window.innerHeight * 0.09, 76)
+            : target.id === 'philosophy' || target.id === 'mediums'
             ? Math.min(window.innerHeight * 0.06, 52)
             : target.id === 'gallery'
               ? Math.min(window.innerHeight * 0.035, 32)
@@ -1606,7 +1608,7 @@
           if (!section || window.location.hash !== '#selected-works') return;
           var nav = document.querySelector('nav');
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = Math.min(window.innerHeight * 0.06, 52);
+          var sectionLift = Math.min(window.innerHeight * 0.09, 76);
           var destination = Math.max(
             0,
             section.getBoundingClientRect().top + window.scrollY - navHeight + sectionLift
