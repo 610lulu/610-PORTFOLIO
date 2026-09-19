@@ -740,29 +740,6 @@
         letter-spacing: .1em;
         text-transform: uppercase;
       }
-      .project-network-legend {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 12px 24px;
-        margin-top: 14px;
-        color: rgba(244,242,238,.48);
-        font-family: "Noto Sans SC", sans-serif;
-        font-size: 10px;
-        letter-spacing: .12em;
-        text-align: right;
-        text-transform: uppercase;
-      }
-      .project-network-legend span::before {
-        content: "";
-        display: inline-block;
-        width: 7px;
-        height: 7px;
-        margin-right: 8px;
-        border-radius: 1px;
-        background: var(--legend-color);
-        vertical-align: 1px;
-      }
       @media (max-width: 900px) {
         #github-network {
           height: auto;
@@ -807,9 +784,9 @@
           transform: translateY(-4px);
         }
       }
-      #philosophy .project-network-shell {
-        transform: translateY(clamp(30px, 4vh, 40px));
-        transform: translateY(clamp(68px, 9vh, 84px));
+      @media (min-width: 901px) {
+        #philosophy .project-network-shell {
+          transform: translateY(clamp(68px, 9vh, 84px));
         }
         #philosophy .project-network-node {
           width: min(var(--node-w), clamp(86px, 8vw, 118px));
@@ -1130,13 +1107,6 @@
             </a>
           </div>
 
-          <div class="project-network-legend" aria-label="Project cluster legend">
-            <span style="--legend-color:#765f53">Memory &amp; Narrative</span>
-            <span style="--legend-color:#587888">Visual Archives</span>
-            <span style="--legend-color:#66735e">AI Evaluation</span>
-            <span style="--legend-color:#5f8668">Generative Systems</span>
-            <span style="--legend-color:#8d6960">Physical Interaction</span>
-          </div>
         </div>
       </section>
     </div>
