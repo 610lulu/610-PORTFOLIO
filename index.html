@@ -335,6 +335,15 @@
       #hero-section::before {
         content: none;
       }
+      #philosophy {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        background: #010202 !important;
+      }
+      #philosophy > :not(#github-network):not(#selected-works) {
+        display: none !important;
+      }
       .selected-works-shell::before {
         content: "Selected Works";
         display: block;
@@ -503,7 +512,7 @@
         min-height: 100vh;
         box-sizing: border-box;
         overflow: hidden;
-        padding: clamp(84px, 11vh, 132px) 5vw clamp(72px, 10vh, 120px);
+        padding: clamp(92px, 12vh, 144px) 5vw clamp(72px, 10vh, 120px);
         background: #010202;
         color: #f4f2ee;
       }
@@ -513,7 +522,7 @@
         margin: 0 auto;
       }
       .project-network-heading {
-        display: grid;
+        display: none;
         grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
         align-items: end;
         gap: 44px;
@@ -1106,7 +1115,7 @@
       (function () {
         var navigationTargets = {
           'About': 'hero-section',
-          'Motivation': 'philosophy',
+          'Project Network': 'philosophy',
           'Selected Works': 'selected-works',
           'Cooperation Projects': 'gallery',
           'Awards & Plans': 'mediums',
@@ -1126,6 +1135,7 @@
 
           document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
             var label = node.textContent.trim();
+            if (label === 'Motivation') node.textContent = 'Project Network';
             if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
             if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
             if (node.matches && node.matches('footer a') && label === 'Selected Works') {
@@ -1600,15 +1610,15 @@
           var projectNetworkSection = deepscapeBlock.querySelector('#github-network');
           if (!selectedWorksSection) return;
 
-          // 把 Selected Works 与 GitHub 项目图谱放在 Motivation 之后。
+          // 用 GitHub 项目图谱替换原来的滚动文字，并把 Selected Works 放在其后。
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
-            philosophy.appendChild(selectedWorksSection);
             if (projectNetworkSection) philosophy.appendChild(projectNetworkSection);
+            philosophy.appendChild(selectedWorksSection);
           } else {
             // 如果找不到，就追加到 root 末尾。
-            root.appendChild(selectedWorksSection);
             if (projectNetworkSection) root.appendChild(projectNetworkSection);
+            root.appendChild(selectedWorksSection);
           }
           deepscapeBlock.remove();
 
