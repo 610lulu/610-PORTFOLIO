@@ -335,13 +335,7 @@
       #hero-section::before {
         content: none;
       }
-      #philosophy {
-        height: auto !important;
-        min-height: 0 !important;
-        overflow: visible !important;
-        background: #010202 !important;
-      }
-      #philosophy > :not(#github-network):not(#selected-works) {
+      #philosophy [code-path="src/sections/PhilosophyCarousel.tsx:200:11"] {
         display: none !important;
       }
       .selected-works-shell::before {
@@ -509,11 +503,11 @@
       #github-network {
         position: relative;
         width: 100%;
-        min-height: 100vh;
+        min-height: 110vh;
         box-sizing: border-box;
         overflow: hidden;
-        padding: clamp(92px, 12vh, 144px) 5vw clamp(72px, 10vh, 120px);
-        background: #010202;
+        padding: clamp(72px, 9vh, 108px) 3vw;
+        background: transparent;
         color: #f4f2ee;
       }
       .project-network-shell {
@@ -556,7 +550,7 @@
       .project-network-stage {
         position: relative;
         width: 100%;
-        height: clamp(720px, 72vw, 980px);
+        height: clamp(620px, 78vh, 820px);
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, .09);
         border-radius: 28px;
@@ -763,6 +757,10 @@
         vertical-align: 1px;
       }
       @media (max-width: 900px) {
+        #github-network {
+          min-height: auto;
+          padding: 4vh 8vw 10vh;
+        }
         .project-network-heading {
           grid-template-columns: 1fr;
           gap: 22px;
@@ -794,6 +792,11 @@
         .project-network-node:focus-visible,
         .project-network-node.is-active {
           transform: translateY(-4px);
+        }
+      }
+      @media (min-width: 901px) {
+        #philosophy .project-network-node {
+          width: min(var(--node-w), 10vw);
         }
       }
       @media (max-width: 560px) {
@@ -1115,7 +1118,7 @@
       (function () {
         var navigationTargets = {
           'About': 'hero-section',
-          'Project Network': 'philosophy',
+          'Motivation': 'philosophy',
           'Selected Works': 'selected-works',
           'Cooperation Projects': 'gallery',
           'Awards & Plans': 'mediums',
@@ -1135,7 +1138,6 @@
 
           document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
             var label = node.textContent.trim();
-            if (label === 'Motivation') node.textContent = 'Project Network';
             if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
             if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
             if (node.matches && node.matches('footer a') && label === 'Selected Works') {
@@ -1610,10 +1612,15 @@
           var projectNetworkSection = deepscapeBlock.querySelector('#github-network');
           if (!selectedWorksSection) return;
 
-          // 用 GitHub 项目图谱替换原来的滚动文字，并把 Selected Works 放在其后。
+          // 保留 Motivation 左侧内容，用 GitHub 项目图谱替换右侧滚动文字。
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
-            if (projectNetworkSection) philosophy.appendChild(projectNetworkSection);
+            var philosophyVisual = philosophy.querySelector('[code-path="src/sections/PhilosophyCarousel.tsx:194:9"]');
+            if (projectNetworkSection && philosophyVisual) {
+              philosophyVisual.appendChild(projectNetworkSection);
+            } else if (projectNetworkSection) {
+              philosophy.appendChild(projectNetworkSection);
+            }
             philosophy.appendChild(selectedWorksSection);
           } else {
             // 如果找不到，就追加到 root 末尾。
@@ -2373,3 +2380,4 @@
     </script>
   </body>
 </html>
+
