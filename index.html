@@ -1379,7 +1379,7 @@
 
         function alignNavigationTarget(target, nav) {
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = target.id === 'philosophy' || target.id === 'selected-works'
+          var sectionLift = target.id === 'philosophy' || target.id === 'selected-works' || target.id === 'mediums'
             ? Math.min(window.innerHeight * 0.06, 52)
             : 0;
           var destination = Math.max(
