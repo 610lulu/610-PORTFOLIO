@@ -497,6 +497,301 @@
           transform: none;
         }
       }
+      #github-network {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: clamp(84px, 11vh, 132px) 5vw clamp(72px, 10vh, 120px);
+        background: #010202;
+        color: #f4f2ee;
+      }
+      .project-network-shell {
+        width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
+      }
+      .project-network-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
+        align-items: end;
+        gap: 44px;
+        margin-bottom: clamp(38px, 5vw, 68px);
+      }
+      .project-network-kicker {
+        display: block;
+        margin-bottom: 18px;
+        color: rgba(244, 242, 238, .42);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 11px;
+        letter-spacing: .3em;
+        text-transform: uppercase;
+      }
+      .project-network-title {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(42px, 6vw, 92px);
+        font-weight: 400;
+        line-height: .95;
+        letter-spacing: -.045em;
+      }
+      .project-network-intro {
+        margin: 0;
+        color: rgba(244, 242, 238, .62);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: clamp(13px, 1.05vw, 16px);
+        font-weight: 300;
+        line-height: 1.9;
+      }
+      .project-network-stage {
+        position: relative;
+        width: 100%;
+        height: clamp(720px, 72vw, 980px);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, .09);
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(255,255,255,.18) 0, rgba(255,255,255,.055) 4%, transparent 14%),
+          radial-gradient(circle at 23% 68%, rgba(97,135,111,.08), transparent 24%),
+          radial-gradient(circle at 77% 28%, rgba(161,125,85,.08), transparent 27%),
+          #020303;
+        isolation: isolate;
+      }
+      .project-network-stage::before {
+        content: "";
+        position: absolute;
+        inset: -30%;
+        z-index: 0;
+        opacity: .18;
+        background: repeating-conic-gradient(
+          from 0deg at 50% 50%,
+          rgba(255,255,255,.2) 0deg,
+          transparent .35deg,
+          transparent 7deg
+        );
+        -webkit-mask-image: radial-gradient(circle, #000 0, transparent 53%);
+        mask-image: radial-gradient(circle, #000 0, transparent 53%);
+        pointer-events: none;
+      }
+      .project-network-lines {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        pointer-events: none;
+      }
+      .project-network-line {
+        fill: none;
+        stroke: rgba(236, 239, 235, .19);
+        stroke-width: 1.15;
+        vector-effect: non-scaling-stroke;
+        transition: opacity .24s ease, stroke .24s ease, stroke-width .24s ease;
+      }
+      .project-network-line.is-root {
+        stroke: rgba(245, 247, 244, .27);
+        stroke-width: 1.35;
+        filter: drop-shadow(0 0 3px rgba(255,255,255,.2));
+      }
+      .project-network-line.is-active {
+        stroke: rgba(255,255,255,.78);
+        stroke-width: 1.8;
+        opacity: 1;
+      }
+      .project-network-line.is-muted {
+        opacity: .08;
+      }
+      .project-network-core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 4;
+        display: grid;
+        width: 118px;
+        height: 118px;
+        place-items: center;
+        border-radius: 50%;
+        color: #0a0b0b;
+        text-align: center;
+        text-decoration: none;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, #fff 0 12%, #eceee9 22%, rgba(246,248,243,.62) 40%, rgba(255,255,255,.08) 68%, transparent 72%);
+        filter: drop-shadow(0 0 18px rgba(255,255,255,.75)) drop-shadow(0 0 54px rgba(255,255,255,.42));
+        transition: transform .24s ease, filter .24s ease;
+      }
+      .project-network-core:hover,
+      .project-network-core:focus-visible {
+        transform: translate(-50%, -50%) scale(1.08);
+        filter: drop-shadow(0 0 24px rgba(255,255,255,.9)) drop-shadow(0 0 68px rgba(255,255,255,.55));
+      }
+      .project-network-core span {
+        width: 72px;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.45;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .project-network-node {
+        --node-w: 150px;
+        position: absolute;
+        top: var(--node-y);
+        left: var(--node-x);
+        z-index: 3;
+        display: block;
+        width: var(--node-w);
+        color: #f5f3ef;
+        text-decoration: none;
+        transform: translate(-50%, -50%) rotate(var(--node-r, 0deg));
+        transform-origin: center;
+        transition: opacity .24s ease, transform .24s ease, filter .24s ease;
+      }
+      .project-network-node:hover,
+      .project-network-node:focus-visible,
+      .project-network-node.is-active {
+        z-index: 6;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
+        filter: drop-shadow(0 16px 28px rgba(0,0,0,.65));
+        outline: none;
+      }
+      .project-network-stage.has-active .project-network-node:not(.is-active):not(.is-related),
+      .project-network-stage.has-active .project-network-core:not(.is-related) {
+        opacity: .24;
+      }
+      .project-network-swatch {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: var(--node-ratio, 4 / 3);
+        overflow: hidden;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,.3);
+        border-radius: 5px;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.22), transparent 42%),
+          var(--node-color, #6d7c75);
+        box-shadow: 0 10px 28px rgba(0,0,0,.48), inset 0 0 0 5px rgba(0,0,0,.12);
+      }
+      .project-network-swatch::before,
+      .project-network-swatch::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .project-network-swatch::before {
+        top: -22%;
+        right: -12%;
+        width: 72%;
+        aspect-ratio: 1;
+        background: rgba(255,255,255,.14);
+        filter: blur(12px);
+      }
+      .project-network-swatch::after {
+        bottom: -30%;
+        left: -18%;
+        width: 78%;
+        aspect-ratio: 1;
+        background: rgba(0,0,0,.26);
+        filter: blur(16px);
+      }
+      .project-network-index {
+        position: absolute;
+        top: 9px;
+        left: 10px;
+        z-index: 1;
+        color: rgba(255,255,255,.82);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 9px;
+        letter-spacing: .16em;
+      }
+      .project-network-meta {
+        display: block;
+        padding-top: 9px;
+        text-align: left;
+      }
+      .project-network-name {
+        display: block;
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1.35;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+      .project-network-type {
+        display: block;
+        margin-top: 3px;
+        color: rgba(244,242,238,.45);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 9px;
+        line-height: 1.35;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .project-network-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        margin-top: 26px;
+        color: rgba(244,242,238,.48);
+        font-family: "Noto Sans SC", sans-serif;
+        font-size: 10px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .project-network-legend span::before {
+        content: "";
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        margin-right: 8px;
+        border-radius: 1px;
+        background: var(--legend-color);
+        vertical-align: 1px;
+      }
+      @media (max-width: 900px) {
+        .project-network-heading {
+          grid-template-columns: 1fr;
+          gap: 22px;
+        }
+        .project-network-stage {
+          height: auto;
+          min-height: 0;
+          padding: 110px 22px 28px;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 30px 20px;
+        }
+        .project-network-lines { display: none; }
+        .project-network-stage::before { opacity: .11; }
+        .project-network-core {
+          top: 58px;
+          width: 84px;
+          height: 84px;
+        }
+        .project-network-core span { width: 62px; font-size: 8px; }
+        .project-network-node {
+          position: relative;
+          top: auto;
+          left: auto;
+          width: 100%;
+          transform: none;
+        }
+        .project-network-node:hover,
+        .project-network-node:focus-visible,
+        .project-network-node.is-active {
+          transform: translateY(-4px);
+        }
+      }
+      @media (max-width: 560px) {
+        #github-network { padding-right: 7vw; padding-left: 7vw; }
+        .project-network-stage { grid-template-columns: 1fr; }
+        .project-network-swatch { aspect-ratio: 16 / 9; }
+      }
       #photography-project {
         width: 100%;
         height: 100vh;
@@ -620,6 +915,188 @@
                 <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section id="github-network" aria-labelledby="project-network-title">
+        <div class="project-network-shell">
+          <header class="project-network-heading">
+            <div>
+              <span class="project-network-kicker">GitHub Project Network · 10 Repositories</span>
+              <h2 class="project-network-title" id="project-network-title">Project<br />Constellation</h2>
+            </div>
+            <p class="project-network-intro">
+              A living map of projects across memory and narrative, visual archives, generative systems,
+              intelligent evaluation and physical computing. Follow the lines or select any colour block
+              to open its GitHub repository.
+            </p>
+          </header>
+
+          <div class="project-network-stage" aria-label="Interactive network of GitHub projects">
+            <svg class="project-network-lines" aria-hidden="true"></svg>
+
+            <a
+              class="project-network-core"
+              data-network-node="profile"
+              href="https://github.com/610lulu/610lulu"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open 610lulu GitHub profile repository"
+            >
+              <span>610LULU<br />Creative Technology</span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="portfolio"
+              data-network-links="deepscape,photography,smart-care"
+              href="https://github.com/610lulu/610-PORTFOLIO"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:49%;--node-y:10%;--node-w:172px;--node-r:-2deg;--node-color:#707a82;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">01 / WEB</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">610 Portfolio</span>
+                <span class="project-network-type">Presentation System</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="deepscape"
+              data-network-links="portfolio,visual-novel,perlin"
+              href="https://github.com/610lulu/Deepscape-Reverie"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:74%;--node-y:19%;--node-w:166px;--node-r:3deg;--node-color:#765f53;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">02 / MEMORY</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Deepscape Reverie</span>
+                <span class="project-network-type">Memory · Spatial Narrative</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="visual-novel"
+              data-network-links="deepscape,photography"
+              href="https://github.com/610lulu/Visual-Novel"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:89%;--node-y:38%;--node-w:132px;--node-r:-4deg;--node-color:#a8874f;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">03 / STORY</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Visual Novel</span>
+                <span class="project-network-type">Interactive Photography</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="photography"
+              data-network-links="portfolio,visual-novel,image-evaluation"
+              href="https://github.com/610lulu/Photography-Portfolio"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:84%;--node-y:63%;--node-w:178px;--node-r:2deg;--node-color:#587888;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">04 / ARCHIVE</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Photography Portfolio</span>
+                <span class="project-network-type">Visual Archive · Interface</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="image-evaluation"
+              data-network-links="photography"
+              href="https://github.com/610lulu/Image-Evaluation"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:67%;--node-y:84%;--node-w:158px;--node-r:-3deg;--node-color:#66735e;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">05 / AI</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Image Evaluation</span>
+                <span class="project-network-type">Agent Evaluation · Vision</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="perlin"
+              data-network-links="deepscape,firefly"
+              href="https://github.com/610lulu/Perlin-Noise-Generative-Art-Generator"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:45%;--node-y:87%;--node-w:174px;--node-r:3deg;--node-color:#5f8668;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">06 / GENERATIVE</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Perlin Noise Generator</span>
+                <span class="project-network-type">Flow Field · Creative Coding</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="firefly"
+              data-network-links="perlin,smart-care,love-voice"
+              href="https://github.com/610lulu/Home-Firefly-Engine"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:22%;--node-y:75%;--node-w:170px;--node-r:-3deg;--node-color:#a77e43;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">07 / LIGHT</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Home Firefly Engine</span>
+                <span class="project-network-type">Generative Light · ESP32</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="smart-care"
+              data-network-links="portfolio,firefly,love-voice"
+              href="https://github.com/610lulu/Smart-Care"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:10%;--node-y:51%;--node-w:154px;--node-r:4deg;--node-color:#8d6960;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">08 / CARE</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Smart Care</span>
+                <span class="project-network-type">Connected Care · Tangible UI</span>
+              </span>
+            </a>
+
+            <a
+              class="project-network-node"
+              data-network-node="love-voice"
+              data-network-links="smart-care,firefly"
+              href="https://github.com/610lulu/Love-Voice-MVP"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="--node-x:18%;--node-y:25%;--node-w:144px;--node-r:-4deg;--node-color:#86637a;"
+            >
+              <span class="project-network-swatch"><span class="project-network-index">09 / VOICE</span></span>
+              <span class="project-network-meta">
+                <span class="project-network-name">Love Voice MVP</span>
+                <span class="project-network-type">Voice Pipeline · Hardware</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="project-network-legend" aria-label="Project cluster legend">
+            <span style="--legend-color:#765f53">Memory &amp; Narrative</span>
+            <span style="--legend-color:#587888">Visual Archives</span>
+            <span style="--legend-color:#66735e">AI Evaluation</span>
+            <span style="--legend-color:#5f8668">Generative Systems</span>
+            <span style="--legend-color:#8d6960">Physical Interaction</span>
           </div>
         </div>
       </section>
@@ -996,6 +1473,113 @@
 
     <script>
       (function () {
+        var projectNetworkResizeFrame = 0;
+
+        function drawProjectNetwork(section) {
+          if (!section) return;
+          var stage = section.querySelector('.project-network-stage');
+          var svg = section.querySelector('.project-network-lines');
+          if (!stage || !svg || window.matchMedia('(max-width: 900px)').matches) {
+            if (svg) svg.textContent = '';
+            return;
+          }
+
+          var stageRect = stage.getBoundingClientRect();
+          if (!stageRect.width || !stageRect.height) return;
+          svg.setAttribute('viewBox', '0 0 ' + stageRect.width + ' ' + stageRect.height);
+          svg.textContent = '';
+
+          var nodes = Array.prototype.slice.call(stage.querySelectorAll('[data-network-node]'));
+          var nodeMap = {};
+          nodes.forEach(function (node) {
+            nodeMap[node.dataset.networkNode] = node;
+          });
+
+          function pointFor(node) {
+            var rect = node.getBoundingClientRect();
+            return {
+              x: rect.left - stageRect.left + rect.width / 2,
+              y: rect.top - stageRect.top + Math.min(rect.height, rect.width * .72) / 2
+            };
+          }
+
+          var pairs = [];
+          var seen = {};
+          nodes.forEach(function (node) {
+            var id = node.dataset.networkNode;
+            if (id !== 'profile') pairs.push(['profile', id, true]);
+
+            var links = (node.dataset.networkLinks || '').split(',').filter(Boolean);
+            links.forEach(function (target) {
+              var key = [id, target].sort().join('|');
+              if (!seen[key] && nodeMap[target]) {
+                seen[key] = true;
+                pairs.push([id, target, false]);
+              }
+            });
+          });
+
+          pairs.forEach(function (pair, index) {
+            var from = pointFor(nodeMap[pair[0]]);
+            var to = pointFor(nodeMap[pair[1]]);
+            var dx = to.x - from.x;
+            var dy = to.y - from.y;
+            var distance = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+            var bend = pair[2] ? 8 + (index % 3) * 4 : 18 + (index % 4) * 6;
+            var direction = index % 2 ? -1 : 1;
+            var controlX = (from.x + to.x) / 2 - (dy / distance) * bend * direction;
+            var controlY = (from.y + to.y) / 2 + (dx / distance) * bend * direction;
+            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', 'M ' + from.x + ' ' + from.y + ' Q ' + controlX + ' ' + controlY + ' ' + to.x + ' ' + to.y);
+            path.setAttribute('class', 'project-network-line' + (pair[2] ? ' is-root' : ''));
+            path.dataset.from = pair[0];
+            path.dataset.to = pair[1];
+            svg.appendChild(path);
+          });
+
+          if (stage.dataset.interactionsReady) return;
+          stage.dataset.interactionsReady = 'true';
+
+          function setActive(id) {
+            var activeNode = nodeMap[id];
+            var related = { profile: true };
+            related[id] = true;
+            ((activeNode && activeNode.dataset.networkLinks) || '').split(',').filter(Boolean).forEach(function (target) {
+              related[target] = true;
+            });
+
+            stage.classList.add('has-active');
+            nodes.forEach(function (node) {
+              var nodeId = node.dataset.networkNode;
+              node.classList.toggle('is-active', nodeId === id);
+              node.classList.toggle('is-related', Boolean(related[nodeId]));
+            });
+            svg.querySelectorAll('.project-network-line').forEach(function (line) {
+              var connected = line.dataset.from === id || line.dataset.to === id;
+              line.classList.toggle('is-active', connected);
+              line.classList.toggle('is-muted', !connected);
+            });
+          }
+
+          function clearActive() {
+            stage.classList.remove('has-active');
+            nodes.forEach(function (node) {
+              node.classList.remove('is-active', 'is-related');
+            });
+            svg.querySelectorAll('.project-network-line').forEach(function (line) {
+              line.classList.remove('is-active', 'is-muted');
+            });
+          }
+
+          nodes.forEach(function (node) {
+            var id = node.dataset.networkNode;
+            node.addEventListener('mouseenter', function () { setActive(id); });
+            node.addEventListener('mouseleave', clearActive);
+            node.addEventListener('focus', function () { setActive(id); });
+            node.addEventListener('blur', clearActive);
+          });
+        }
+
         function alignSelectedWorks(section) {
           if (!section || window.location.hash !== '#selected-works') return;
           var nav = document.querySelector('nav');
@@ -1013,21 +1597,25 @@
           if (!root || !deepscapeBlock) return;
 
           var selectedWorksSection = deepscapeBlock.querySelector('#selected-works');
+          var projectNetworkSection = deepscapeBlock.querySelector('#github-network');
           if (!selectedWorksSection) return;
 
-          // 把 Selected Works 概览放在 Motivation 之后；项目详情使用独立页面。
+          // 把 Selected Works 与 GitHub 项目图谱放在 Motivation 之后。
           var philosophy = root.querySelector('#philosophy');
           if (philosophy) {
             philosophy.appendChild(selectedWorksSection);
+            if (projectNetworkSection) philosophy.appendChild(projectNetworkSection);
           } else {
-            // 如果找不到，就追加到 root 末尾
+            // 如果找不到，就追加到 root 末尾。
             root.appendChild(selectedWorksSection);
+            if (projectNetworkSection) root.appendChild(projectNetworkSection);
           }
           deepscapeBlock.remove();
 
           window.requestAnimationFrame(function () {
             window.requestAnimationFrame(function () {
               alignSelectedWorks(selectedWorksSection);
+              drawProjectNetwork(projectNetworkSection);
             });
           });
         }
@@ -1047,6 +1635,12 @@
         // 兜底：页面完全加载后再执行一次
         window.addEventListener('load', function () {
           setTimeout(insertSelectedWorks, 100);
+        });
+        window.addEventListener('resize', function () {
+          window.cancelAnimationFrame(projectNetworkResizeFrame);
+          projectNetworkResizeFrame = window.requestAnimationFrame(function () {
+            drawProjectNetwork(document.getElementById('github-network'));
+          });
         });
       })();
     </script>
