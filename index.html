@@ -272,7 +272,7 @@
       }
       @media (min-width: 901px) {
         .cooperation-project-placeholder:nth-child(2) {
-          margin-top: 32px !important;
+          margin-top: 48px !important;
         }
         .cooperation-project-placeholder:nth-child(4) {
           margin-top: -72px !important;
@@ -281,7 +281,7 @@
           margin-top: -72px !important;
         }
         .cooperation-project-placeholder:nth-child(5) {
-          margin-top: -44px !important;
+          margin-top: -28px !important;
         }
       }
       @media (max-width: 900px) {
@@ -1379,8 +1379,10 @@
 
         function alignNavigationTarget(target, nav) {
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = target.id === 'philosophy' || target.id === 'selected-works' || target.id === 'gallery' || target.id === 'mediums'
+          var sectionLift = target.id === 'philosophy' || target.id === 'selected-works' || target.id === 'mediums'
             ? Math.min(window.innerHeight * 0.06, 52)
+            : target.id === 'gallery'
+              ? Math.min(window.innerHeight * 0.035, 32)
             : 0;
           var destination = Math.max(
             0,
@@ -1440,7 +1442,7 @@
 
           var nav = document.querySelector('nav');
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = Math.min(window.innerHeight * 0.06, 52);
+          var sectionLift = Math.min(window.innerHeight * 0.035, 32);
           var destination = Math.max(
             0,
             gallery.getBoundingClientRect().top + window.scrollY - navHeight + sectionLift
