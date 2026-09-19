@@ -1115,7 +1115,7 @@
       (function () {
         var navigationTargets = {
           'About': 'hero-section',
-          'Motivation': 'philosophy',
+          'GitHub': 'philosophy',
           'Selected Works': 'selected-works',
           'Cooperation Projects': 'gallery',
           'Awards & Plans': 'mediums',
@@ -1135,6 +1135,7 @@
 
           document.querySelectorAll('nav button, #gallery h2, footer a, footer span, footer p').forEach(function (node) {
             var label = node.textContent.trim();
+            if (label === 'Motivation') node.textContent = 'GitHub';
             if (label === 'Cooperation Project') node.textContent = 'Cooperation Projects';
             if (label === 'Award & Plan') node.textContent = 'Awards & Plans';
             if (node.matches && node.matches('footer a') && label === 'Selected Works') {
@@ -1144,6 +1145,9 @@
 
           var galleryLabel = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:43:9"]');
           if (galleryLabel) galleryLabel.textContent = 'Cooperation Projects';
+
+          var githubLabel = document.querySelector('#philosophy [code-path="src/sections/PhilosophyCarousel.tsx:115:15"]');
+          if (githubLabel) githubLabel.textContent = 'GITHUB';
 
           var galleryGrid = document.querySelector('#gallery [code-path="src/sections/ImmersiveGallery.tsx:73:7"]');
           if (galleryGrid && !galleryGrid.dataset.cooperationPlaceholdersReady) {
@@ -1372,12 +1376,12 @@
 
         function alignNavigationTarget(target, nav) {
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var motivationLift = target.id === 'philosophy'
+          var githubLift = target.id === 'philosophy'
             ? Math.min(window.innerHeight * 0.06, 52)
             : 0;
           var destination = Math.max(
             0,
-            target.getBoundingClientRect().top + window.scrollY - navHeight + motivationLift
+            target.getBoundingClientRect().top + window.scrollY - navHeight + githubLift
           );
           window.scrollTo({ top: destination, behavior: 'auto' });
         }
