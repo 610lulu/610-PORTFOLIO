@@ -743,12 +743,14 @@
       .project-network-legend {
         display: flex;
         flex-wrap: wrap;
+        justify-content: flex-end;
         gap: 12px 24px;
         margin-top: 14px;
         color: rgba(244,242,238,.48);
         font-family: "Noto Sans SC", sans-serif;
         font-size: 10px;
         letter-spacing: .12em;
+        text-align: right;
         text-transform: uppercase;
       }
       .project-network-legend span::before {
@@ -805,9 +807,9 @@
           transform: translateY(-4px);
         }
       }
-      @media (min-width: 901px) {
-        #philosophy .project-network-shell {
-          transform: translateY(clamp(30px, 4vh, 40px));
+      #philosophy .project-network-shell {
+        transform: translateY(clamp(30px, 4vh, 40px));
+        transform: translateY(clamp(68px, 9vh, 84px));
         }
         #philosophy .project-network-node {
           width: min(var(--node-w), clamp(86px, 8vw, 118px));
