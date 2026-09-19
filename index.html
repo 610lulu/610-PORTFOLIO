@@ -1372,9 +1372,12 @@
 
         function alignNavigationTarget(target, nav) {
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var motivationLift = target.id === 'philosophy'
+            ? Math.min(window.innerHeight * 0.06, 52)
+            : 0;
           var destination = Math.max(
             0,
-            target.getBoundingClientRect().top + window.scrollY - navHeight
+            target.getBoundingClientRect().top + window.scrollY - navHeight + motivationLift
           );
           window.scrollTo({ top: destination, behavior: 'auto' });
         }
