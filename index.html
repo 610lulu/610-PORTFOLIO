@@ -1269,7 +1269,10 @@
               event.preventDefault();
               var nav = document.querySelector('nav');
               var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-              var destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - 28);
+              var projectOffset = target.id === 'selected-work-1'
+                ? Math.min(window.innerHeight * 0.12, 96)
+                : 28;
+              var destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - projectOffset);
               menu.classList.remove('is-open');
               trigger.setAttribute('aria-expanded', 'false');
               setCurrentNavigation('Selected Works');
