@@ -49,6 +49,51 @@
       nav button.nav-current::after {
         transform: scaleX(1);
       }
+      .selected-works-subnav {
+        position: fixed;
+        top: var(--selected-works-menu-top, 68px);
+        left: var(--selected-works-menu-left, 50%);
+        z-index: 140;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 999px;
+        background: rgba(5,10,15,.88);
+        box-shadow: 0 14px 34px rgba(0,0,0,.3);
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -6px);
+        transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .selected-works-subnav.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 0);
+      }
+      .selected-works-subnav a {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        color: rgba(255,255,255,.68);
+        font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        transition: color .18s ease, background-color .18s ease;
+      }
+      .selected-works-subnav a:hover,
+      .selected-works-subnav a:focus-visible {
+        outline: none;
+        color: #fff;
+        background: rgba(48,176,208,.3);
+      }
       #hero-section [code-path="src/sections/HeroField.tsx:129:11"],
       #hero-section [code-path="src/sections/HeroField.tsx:152:13"] {
         display: none !important;
@@ -925,7 +970,7 @@
       <section id="selected-works" aria-label="Selected Works">
         <div class="selected-works-shell">
           <div class="selected-works-grid">
-            <a class="selected-work-card" href="./deepscape-reverie.html" aria-label="View Deepscape Reverie project">
+            <a class="selected-work-card" id="selected-work-1" href="./deepscape-reverie.html" aria-label="View Deepscape Reverie project">
               <div class="selected-work-media">
                 <img src="./images/Deepscape Reverie封面页.jpg" alt="Dreamlike landscape from Deepscape Reverie" loading="lazy" />
               </div>
@@ -934,7 +979,7 @@
                 <h3 class="selected-work-title">Deepscape Reverie</h3>
               </div>
             </a>
-            <a class="selected-work-card" href="./smart-care.html" aria-label="View Smart Care project">
+            <a class="selected-work-card" id="selected-work-2" href="./smart-care.html" aria-label="View Smart Care project">
               <div class="selected-work-media">
                 <img src="./images/project-elderly-robot.jpg?v=smart-care-20260731-3" alt="Smart Care AI companion device for older adults" loading="lazy" />
               </div>
@@ -943,12 +988,12 @@
                 <h3 class="selected-work-title">Smart Care</h3>
               </div>
             </a>
-            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 03 placeholder">
+            <div class="selected-work-card selected-work-placeholder" id="selected-work-3" role="img" aria-label="Selected work 03 placeholder">
               <div class="selected-work-media">
                 <span class="selected-work-placeholder-number" aria-hidden="true">03</span>
               </div>
             </div>
-            <div class="selected-work-card selected-work-placeholder" role="img" aria-label="Selected work 04 placeholder">
+            <div class="selected-work-card selected-work-placeholder" id="selected-work-4" role="img" aria-label="Selected work 04 placeholder">
               <div class="selected-work-media">
                 <span class="selected-work-placeholder-number" aria-hidden="true">04</span>
               </div>
@@ -1146,6 +1191,96 @@
         };
         var navigationLabels = Object.keys(navigationTargets);
         var indicatorFrame = 0;
+        var selectedWorksMenuCloseTimer = 0;
+
+        function ensureSelectedWorksSubnav() {
+          var trigger = Array.from(document.querySelectorAll('nav button')).find(function (button) {
+            return button.textContent.trim() === 'Selected Works';
+          });
+          if (!trigger) return;
+
+          var menu = document.getElementById('selected-works-subnav');
+          if (!menu) {
+            menu = document.createElement('div');
+            menu.id = 'selected-works-subnav';
+            menu.className = 'selected-works-subnav';
+            menu.setAttribute('role', 'navigation');
+            menu.setAttribute('aria-label', 'Selected Works projects');
+
+            ['1', '2', '3', '4'].forEach(function (number) {
+              var link = document.createElement('a');
+              link.href = '#selected-work-' + number;
+              link.textContent = number;
+              link.setAttribute('aria-label', 'Go to selected work ' + number);
+              menu.appendChild(link);
+            });
+            document.body.appendChild(menu);
+          }
+
+          trigger.classList.add('selected-works-nav-trigger');
+          trigger.setAttribute('aria-haspopup', 'true');
+          trigger.setAttribute('aria-controls', menu.id);
+          trigger.setAttribute('aria-expanded', menu.classList.contains('is-open') ? 'true' : 'false');
+
+          function positionMenu() {
+            var rect = trigger.getBoundingClientRect();
+            var menuHalfWidth = (menu.offsetWidth || 142) / 2;
+            var menuCenter = rect.left + rect.width / 2;
+            menuCenter = Math.max(menuHalfWidth + 8, Math.min(window.innerWidth - menuHalfWidth - 8, menuCenter));
+            menu.style.setProperty('--selected-works-menu-top', Math.round(rect.bottom + 8) + 'px');
+            menu.style.setProperty('--selected-works-menu-left', Math.round(menuCenter) + 'px');
+          }
+
+          function openMenu() {
+            window.clearTimeout(selectedWorksMenuCloseTimer);
+            positionMenu();
+            menu.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+
+          function scheduleCloseMenu() {
+            window.clearTimeout(selectedWorksMenuCloseTimer);
+            selectedWorksMenuCloseTimer = window.setTimeout(function () {
+              menu.classList.remove('is-open');
+              trigger.setAttribute('aria-expanded', 'false');
+            }, 140);
+          }
+
+          if (!trigger.dataset.selectedWorksMenuBound) {
+            trigger.dataset.selectedWorksMenuBound = 'true';
+            trigger.addEventListener('mouseenter', openMenu);
+            trigger.addEventListener('mouseleave', scheduleCloseMenu);
+            trigger.addEventListener('focus', openMenu);
+            trigger.addEventListener('blur', scheduleCloseMenu);
+          }
+
+          if (!menu.dataset.selectedWorksMenuBound) {
+            menu.dataset.selectedWorksMenuBound = 'true';
+            menu.addEventListener('mouseenter', openMenu);
+            menu.addEventListener('mouseleave', scheduleCloseMenu);
+            menu.addEventListener('focusin', openMenu);
+            menu.addEventListener('focusout', scheduleCloseMenu);
+            menu.addEventListener('click', function (event) {
+              var link = event.target.closest && event.target.closest('a');
+              if (!link) return;
+              var target = document.querySelector(link.getAttribute('href'));
+              if (!target) return;
+
+              event.preventDefault();
+              var nav = document.querySelector('nav');
+              var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+              var destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - 28);
+              menu.classList.remove('is-open');
+              trigger.setAttribute('aria-expanded', 'false');
+              setCurrentNavigation('Selected Works');
+              window.history.replaceState(null, '', link.getAttribute('href'));
+              window.scrollTo({ top: destination, behavior: 'smooth' });
+            });
+            window.addEventListener('resize', function () {
+              if (menu.classList.contains('is-open')) positionMenu();
+            }, { passive: true });
+          }
+        }
 
         function pluralizeSectionLabels() {
           var heroTitleLines = document.querySelectorAll('#hero-section h2 span');
@@ -1329,6 +1464,7 @@
         }
 
         pluralizeSectionLabels();
+        ensureSelectedWorksSubnav();
         var sectionLabelObserver = new MutationObserver(function () {
           sectionLabelObserver.disconnect();
           pluralizeSectionLabels();
@@ -1444,6 +1580,7 @@
         var navigationObserver = new MutationObserver(function () {
           if (!document.querySelector('nav button')) return;
           pluralizeSectionLabels();
+          ensureSelectedWorksSubnav();
           scheduleNavigationIndicator();
           navigationObserver.disconnect();
         });
