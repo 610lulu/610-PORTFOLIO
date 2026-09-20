@@ -94,6 +94,91 @@
         color: #fff;
         background: rgba(48,176,208,.3);
       }
+      .selected-works-progress {
+        position: fixed;
+        top: 50%;
+        right: clamp(22px, 3vw, 52px);
+        z-index: 130;
+        display: grid;
+        gap: 14px;
+        padding: 14px 10px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 999px;
+        background: rgba(5,10,15,.58);
+        box-shadow: 0 18px 40px rgba(0,0,0,.24);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-50%) translateX(10px);
+        transition: opacity .24s ease, transform .24s ease, visibility .24s ease;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      .selected-works-progress.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%) translateX(0);
+      }
+      .selected-works-progress a {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        color: rgba(237,232,228,.42);
+        font-family: "Noto Sans SC", "Helvetica Neue", Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: .08em;
+        text-decoration: none;
+        transition: color .22s ease, background-color .22s ease, box-shadow .22s ease;
+      }
+      .selected-works-progress a::before {
+        content: "";
+        position: absolute;
+        left: -9px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(237,232,228,.28);
+        transition: background .22s ease, box-shadow .22s ease, transform .22s ease;
+      }
+      .selected-works-progress a:hover,
+      .selected-works-progress a:focus-visible,
+      .selected-works-progress a.is-active {
+        outline: none;
+        color: #fff;
+        background: rgba(48,176,208,.18);
+      }
+      .selected-works-progress a.is-active {
+        box-shadow: inset 0 0 0 1px rgba(48,176,208,.34);
+      }
+      .selected-works-progress a.is-active::before {
+        background: #30b0d0;
+        box-shadow: 0 0 14px rgba(48,176,208,.7);
+        transform: scale(1.35);
+      }
+      @media (max-width: 860px) {
+        .selected-works-progress {
+          top: auto;
+          right: 50%;
+          bottom: 22px;
+          grid-auto-flow: column;
+          transform: translateX(50%) translateY(10px);
+        }
+        .selected-works-progress.is-visible {
+          transform: translateX(50%) translateY(0);
+        }
+        .selected-works-progress a::before {
+          top: -8px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        .selected-works-progress a.is-active::before {
+          transform: translateX(-50%) scale(1.35);
+        }
+      }
       #hero-section [code-path="src/sections/HeroField.tsx:129:11"],
       #hero-section [code-path="src/sections/HeroField.tsx:152:13"] {
         display: none !important;
@@ -1183,7 +1268,17 @@
         };
         var navigationLabels = Object.keys(navigationTargets);
         var indicatorFrame = 0;
+        var selectedWorksProgressFrame = 0;
         var selectedWorksMenuCloseTimer = 0;
+
+        function getSelectedWorkScrollDestination(target) {
+          var nav = document.querySelector('nav');
+          var navHeight = nav ? nav.getBoundingClientRect().height : 72;
+          var projectOffset = target.id === 'selected-work-1'
+            ? Math.min(window.innerHeight * 0.12, 96)
+            : 28;
+          return Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - projectOffset);
+        }
 
         function ensureSelectedWorksSubnav() {
           var trigger = Array.from(document.querySelectorAll('nav button')).find(function (button) {
@@ -1259,12 +1354,7 @@
               if (!target) return;
 
               event.preventDefault();
-              var nav = document.querySelector('nav');
-              var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-              var projectOffset = target.id === 'selected-work-1'
-                ? Math.min(window.innerHeight * 0.12, 96)
-                : 28;
-              var destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navHeight - projectOffset);
+              var destination = getSelectedWorkScrollDestination(target);
               menu.classList.remove('is-open');
               trigger.setAttribute('aria-expanded', 'false');
               setCurrentNavigation('Selected Works');
@@ -1274,6 +1364,83 @@
             window.addEventListener('resize', function () {
               if (menu.classList.contains('is-open')) positionMenu();
             }, { passive: true });
+          }
+        }
+
+        function ensureSelectedWorksProgress() {
+          var progress = document.getElementById('selected-works-progress');
+          if (!progress) {
+            progress = document.createElement('nav');
+            progress.id = 'selected-works-progress';
+            progress.className = 'selected-works-progress';
+            progress.setAttribute('aria-label', 'Selected Works position');
+
+            ['1', '2', '3', '4'].forEach(function (number) {
+              var link = document.createElement('a');
+              link.href = '#selected-work-' + number;
+              link.textContent = '0' + number;
+              link.setAttribute('aria-label', 'Go to selected work ' + number);
+              progress.appendChild(link);
+            });
+            document.body.appendChild(progress);
+          }
+
+          if (!progress.dataset.selectedWorksProgressBound) {
+            progress.dataset.selectedWorksProgressBound = 'true';
+            progress.addEventListener('click', function (event) {
+              var link = event.target.closest && event.target.closest('a');
+              if (!link) return;
+              var target = document.querySelector(link.getAttribute('href'));
+              if (!target) return;
+
+              event.preventDefault();
+              setCurrentNavigation('Selected Works');
+              window.history.replaceState(null, '', link.getAttribute('href'));
+              window.scrollTo({ top: getSelectedWorkScrollDestination(target), behavior: 'smooth' });
+            });
+          }
+
+          updateSelectedWorksProgress();
+        }
+
+        function updateSelectedWorksProgress() {
+          selectedWorksProgressFrame = 0;
+
+          var section = document.getElementById('selected-works');
+          var progress = document.getElementById('selected-works-progress');
+          if (!section || !progress) return;
+
+          var sectionRect = section.getBoundingClientRect();
+          var isVisible = sectionRect.bottom > window.innerHeight * 0.18 && sectionRect.top < window.innerHeight * 0.82;
+          progress.classList.toggle('is-visible', isVisible);
+          progress.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+
+          var marker = window.innerHeight * 0.48;
+          var active = null;
+          var bestDistance = Infinity;
+          Array.prototype.slice.call(section.querySelectorAll('.selected-work-card[id^="selected-work-"]')).forEach(function (card) {
+            var rect = card.getBoundingClientRect();
+            var distance = Math.abs(rect.top + rect.height / 2 - marker);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              active = card.id;
+            }
+          });
+
+          progress.querySelectorAll('a').forEach(function (link) {
+            var isActive = active && link.getAttribute('href') === '#' + active;
+            link.classList.toggle('is-active', isActive);
+            if (isActive) {
+              link.setAttribute('aria-current', 'location');
+            } else {
+              link.removeAttribute('aria-current');
+            }
+          });
+        }
+
+        function scheduleSelectedWorksProgress() {
+          if (!selectedWorksProgressFrame) {
+            selectedWorksProgressFrame = window.requestAnimationFrame(updateSelectedWorksProgress);
           }
         }
 
@@ -1460,6 +1627,7 @@
 
         pluralizeSectionLabels();
         ensureSelectedWorksSubnav();
+        ensureSelectedWorksProgress();
         var sectionLabelObserver = new MutationObserver(function () {
           sectionLabelObserver.disconnect();
           pluralizeSectionLabels();
@@ -1568,15 +1736,26 @@
           }, 160);
         }, true);
 
-        window.addEventListener('scroll', scheduleNavigationIndicator, { passive: true });
-        window.addEventListener('resize', scheduleNavigationIndicator, { passive: true });
-        window.addEventListener('load', scheduleNavigationIndicator);
+        window.addEventListener('scroll', function () {
+          scheduleNavigationIndicator();
+          scheduleSelectedWorksProgress();
+        }, { passive: true });
+        window.addEventListener('resize', function () {
+          scheduleNavigationIndicator();
+          scheduleSelectedWorksProgress();
+        }, { passive: true });
+        window.addEventListener('load', function () {
+          scheduleNavigationIndicator();
+          scheduleSelectedWorksProgress();
+        });
 
         var navigationObserver = new MutationObserver(function () {
           if (!document.querySelector('nav button')) return;
           pluralizeSectionLabels();
           ensureSelectedWorksSubnav();
+          ensureSelectedWorksProgress();
           scheduleNavigationIndicator();
+          scheduleSelectedWorksProgress();
           navigationObserver.disconnect();
         });
         navigationObserver.observe(document.body, { childList: true, subtree: true });
