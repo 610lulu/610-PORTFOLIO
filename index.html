@@ -1935,13 +1935,20 @@
         }
 
         function alignSelectedWorks(section) {
-          if (!section || window.location.hash !== '#selected-works') return;
+          if (!section) return;
+          var hash = window.location.hash;
+          var isProject = /^#selected-work-[1-4]$/.test(hash);
+          if (hash !== '#selected-works' && !isProject) return;
+          var target = isProject ? section.querySelector(hash) : section;
+          if (!target) return;
           var nav = document.querySelector('nav');
           var navHeight = nav ? nav.getBoundingClientRect().height : 72;
-          var sectionLift = Math.min(window.innerHeight * 0.09, 76);
+          var sectionLift = isProject
+            ? -(target.id === 'selected-work-1' ? Math.min(window.innerHeight * 0.12, 96) : 28)
+            : Math.min(window.innerHeight * 0.09, 76);
           var destination = Math.max(
             0,
-            section.getBoundingClientRect().top + window.scrollY - navHeight + sectionLift
+            target.getBoundingClientRect().top + window.scrollY - navHeight + sectionLift
           );
           window.scrollTo({ top: destination, behavior: 'auto' });
         }
@@ -1994,7 +2001,13 @@
 
         // 兜底：页面完全加载后再执行一次
         window.addEventListener('load', function () {
-          setTimeout(insertSelectedWorks, 100);
+          setTimeout(function () {
+            insertSelectedWorks();
+            alignSelectedWorks(document.getElementById('selected-works'));
+          }, 100);
+        });
+        window.addEventListener('hashchange', function () {
+          alignSelectedWorks(document.getElementById('selected-works'));
         });
         window.addEventListener('resize', function () {
           window.cancelAnimationFrame(projectNetworkResizeFrame);
